@@ -1,0 +1,144 @@
+<div class="contaider p-4">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>Agrega Bloques / Nombre Aleatorio</h3>
+                </div>
+                <div class="card-body">
+                    <form action="/bloque/add" method="post">
+                        <div class="form-group">
+                            <label for="">Nombre del Bloque</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre Bloque" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Cantidad</label>
+                            <input type="number" class="form-control" name="cantidad" placeholder="Lote / Cantidad" autofocus required>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Color (VITA Clásica):</label>
+                            <select class="form-control" name="color" placeholder="Color (VITA Clásica):" autofocus required>
+                                <option value="A1">A1</option>
+                                <option value="A2" selected>A2</option>
+                                <option value="A3">A3</option>
+                                <option value="A3.5">A3.5</option>
+                                <option value="A4">A4</option>
+                                <option value="B1">B1</option>
+                                <option value="B2">B2</option>
+                                <option value="B3">B3</option>
+                                <option value="B4">B4</option>
+                                <option value="C1">C1</option>
+                                <option value="C2">C2</option>
+                                <option value="C3">C3</option>
+                                <option value="C4">C4</option>
+                                <option value="D2">D2</option>
+                                <option value="D3">D3</option>
+                                <option value="D4">D4</option>
+                                <option value="0m1">0m1</option>
+                                <option value="0m2">0m2</option>
+                                <option value="0m3">0m3</option>
+                                <option value="Bl1">Bl1</option>
+                                <option value="Bl2">Bl2</option>
+                                <option value="Bl3">Bl3</option>
+                                <option value="Bl4">Bl4</option>
+                                <option value="Holywood">Holywood</option>
+                                <option value="Blanco Opaco">Blanco Opaco</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Tamaño</label>
+                            <select class="form-control" name="tamano" placeholder="Tamaño" autofocus required>
+                                <option value="8">8</option>
+                                <option value="10">10</option>
+                                <option value="12">12</option>
+                                <option value="14" selected>14</option>
+                                <option value="16">16</option>
+                                <option value="18">18</option>
+                                <option value="20">20</option>
+                                <option value="22">22</option>
+                                <option value="25">25</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Tipo de material</label>
+                            <select class="form-control" name="tipo_material" placeholder="Tipo de material" autofocus required>
+                                <option value="3DPRO">3DPRO</option>
+                                <option value="SAGEMAX">SAGEMAX</option>
+                                <option value="STC">STC</option>
+                                <option value="SHTC">SHTC</option>
+                                <option value="Cr-CB">Cr-C</option>
+                                <option value="Titan">Titan</option>
+                                <option value="PMMA">PMMA</option>
+                                <option value="SHOFU HC">SHOFU HC</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="display: none;">
+                            <select type="hidden" name="id_operario" id="id_operario" class="form-control" readonly>
+                                <!-- Itera sobre el array de operarios -->
+                                {{#each operarios}}
+                                    <option value="{{id_operario}}">{{fullname}} (ID: {{id_operario}})</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success btn-block">
+                                Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+const frutas = [
+    "Manzana", "Plátano", "Pera", "Naranja", "Uva", "Melón", "Sandía", "Fresa", "Piña", "Durazno",
+    "Mango", "Papaya", "Kiwi", "Cereza", "Ciruela", "Granada", "Frambuesa", "Mora", "Maracuyá", "Limón",
+    "Mandarina", "Aguacate", "Litchi", "Guayaba", "Durian", "Pitaya", "Carambola", "Pomelo", "Tamarindo",
+    "Mango de agua", "Chirimoya", "Zapote", "Coco", "Pasa", "Acelga", "Almendra", "Castaña", "Níspero", 
+    "Soursop", "Rambután", "Langsat", "Pitangueiras", "Mamey", "Berries", "Tamarillo", "Longan", "Feijoa"
+];
+
+const coloresAleatorios = [
+    "Rojo", "Azul", "Verde", "Amarillo", "Negro", "Blanco", "Rosa", "Morado", "Naranja", "Gris", "Turquesa", 
+    "Violeta", "Fucsia", "Marrón", "Beige", "Celeste", "Coral", "Lavanda", "Lila", "Aqua", "Índigo", "Oro", 
+    "Plata", "Bronce", "Verde oliva", "Verde lima", "Verde bosque", "Verde pasto", "Azul marino", "Azul claro", 
+    "Azul turquesa", "Amarillo pastel", "Naranja pastel", "Rosa pálido", "Púrpura", "Malva", "Menta", "Beis", 
+    "Café", "Rojo vino", "Lavanda", "Blanco nieve", "Gris perla", "Verde musgo", "Amarillo mostaza", "Lima", 
+    "Azul eléctrico", "Azul zafiro", "Champagne", "Topacio", "Cian", "Salmon", "Caramelo", "Rosado", "Pistacho", 
+    "Verde esmeralda", "Verde menta", "Naranja quemado", "Rosa palo", "Fucsia brillante", "Cobre", "Cian", 
+    "Amarillo canario", "Marfil", "Azul petróleo", "Vino tinto", "Terracota", "Rojo carmesí", "Vino Borgoña", 
+    "Cobalto", "Magenta", "Malva claro", "Garnet", "Ámbar", "Ártico", "Mauve", "Tangerine", "Fluorescente", 
+    "Lime Green", "Tierra", "Cielito", "Madera", "Petrolero", "Cereza brillante", "Siena quemada", "Almizcle"
+];
+
+// Función para generar un nombre aleatorio para el bloque
+function generarNombreBloque() {
+    const tipo_material = document.querySelector('[name="tipo_material"]').value;  // Tipo de material seleccionado
+    const color = document.querySelector('[name="color"]').value;  // Color VITA seleccionado
+    const tamano = document.querySelector('[name="tamano"]').value;  // Tamaño seleccionado
+
+    // Selección aleatoria de una fruta y un color
+    const frutaAleatoria = frutas[Math.floor(Math.random() * frutas.length)];
+    const colorAleatorio = coloresAleatorios[Math.floor(Math.random() * coloresAleatorios.length)];
+
+    // Generar el nombre del bloque en el formato: TipoMaterial-Fruta-Color-ColorVita-HTamaño
+    const nombreBloque = `${tipo_material}-${frutaAleatoria}-${colorAleatorio}-${color}-H${tamano}`;
+
+    // Colocar el nombre generado en el campo de texto
+    document.getElementById("nombre").value = nombreBloque;
+}
+
+// Llamar a la función cuando se cambian los valores del formulario
+document.addEventListener("DOMContentLoaded", function () {
+    // Generar el nombre automáticamente al cargar la página
+    generarNombreBloque();
+
+    // Establecer eventos para actualizar el nombre cuando se cambian los campos
+    const campos = document.querySelectorAll('[name="tipo_material"], [name="color"], [name="tamano"]');
+    campos.forEach(campo => {
+        campo.addEventListener("change", generarNombreBloque);
+    });
+});
+</script>

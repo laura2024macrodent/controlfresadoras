@@ -1,0 +1,70 @@
+<div class="container p-4">
+    <!-- Campo de búsqueda -->
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <input type="text" id="searchInput" class="form-control" placeholder="Buscar bloques..." />
+        </div>
+    </div>
+    <h1 style="text-align: center;">Historial de Cambios</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped table-secondary" style="table-layout: auto; text-align: justify;">
+                    {{#each historial}}
+                    <tr>
+                        <td colspan="3" class="table-primary">{{formatFecha fecha}}</td>
+                    </tr>
+                    <tbody>
+                        {{#each cambios}}
+                        <tr class="messageRow">
+                            <td class="hora-cambio text-nowrap">{{formatHora fecha}}</td>
+                            <td>|</td>
+                            <td>{{mensaje}}</td>
+                        </tr>
+                        {{/each}}
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Obtener el campo de búsqueda
+    const searchInput = document.getElementById('searchInput');
+
+    // Función para filtrar los mensajes
+    searchInput.addEventListener('input', function () {
+        const filter = searchInput.value.toLowerCase(); // Obtener el texto de búsqueda en minúsculas
+
+        // Obtener todas las filas con los mensajes
+        const rows = document.querySelectorAll('.messageRow');
+
+        rows.forEach(row => {
+            // Obtener el mensaje de la fila actual
+            const messageCell = row.querySelector('td:last-child');
+            const message = messageCell.textContent.toLowerCase(); // Convertir el mensaje a minúsculas
+
+            // Comprobar si el mensaje contiene el texto de búsqueda
+            if (message.includes(filter)) {
+                row.style.display = ''; // Mostrar la fila si coincide
+            } else {
+                row.style.display = 'none'; // Ocultar la fila si no coincide
+            }
+        });
+
+        // También mostrar/ocultar las filas de fecha si hay coincidencias
+        const dateRows = document.querySelectorAll('.date-row');
+        dateRows.forEach(dateRow => {
+            // Comprobar si alguna fila de cambios debajo de esta fecha contiene el filtro
+            const associatedRows = dateRow.nextElementSibling.querySelectorAll('.messageRow');
+            const hasMatch = Array.from(associatedRows).some(row => {
+                const messageCell = row.querySelector('td:last-child');
+                return messageCell.textContent.toLowerCase().includes(filter);
+            });
+
+            // Mostrar u ocultar la fila de la fecha según las coincidencias
+            dateRow.style.display = hasMatch ? '' : 'none';
+        });
+    });
+</script>
