@@ -14,8 +14,10 @@ const {database} = require('./keys');
 const app = express();
 require('./lib/passport');
 
+const {PORT} = require('./config');
+
 app.use(methodOverride('_method'));
-app.set('port', process.env.PORT || 4000);
+app.set('port', PORT);
 app.set('views', path.join(__dirname, 'views'))
 app.engine('.hbs', exphbs.engine({
     defaultLayout: 'main',
@@ -47,7 +49,7 @@ app.use((req, res, next) => {
     app.locals.user = req.user;
     next();
 });
- 
+
 app.use(require('./routes'));
 app.use(require('./routes/authentication'));
 app.use('/bloque', require('./routes/bloque'));
