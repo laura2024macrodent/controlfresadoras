@@ -43,9 +43,27 @@ router.post('/add', isLoggedIn, async(req, res) => {
             [id_bloque, 'agregar', mensaje, usuario.id_operario, usuario.fullname], (err) => {
                 if (err) throw err;
 
-                // Después de agregar al historial, redirigir al usuario
-                req.flash('success', 'Bloque Guardado Exitosamente');
-                res.redirect('/bloque');
+                // Descontar 1 unidad del producto en control_inventarios
+                pool.query('UPDATE control_inventarios.productos SET cantidad = cantidad - 1 WHERE codigo_barras = ? AND cantidad > 0',
+                    [codigo_barras], (err, updateResult) => {
+                        if (err) {
+                            console.error('Error al actualizar el inventario: ', err);
+                            req.flash('error', 'Error al actualizar el inventario.');
+                            return res.redirect('/bloque');
+                        }
+
+                        // Si no se actualizó el inventario, mostrar un mensaje de error
+                        if (updateResult.affectedRows === 0) {
+                            console.log('No se pudo descontar el inventario, código de barras no encontrado o sin suficiente cantidad.');
+                            req.flash('error', 'No hay suficiente cantidad en inventario para descontar.');
+                            return res.redirect('/bloque');
+                        }
+
+                        // Después de agregar al historial y actualizar el inventario, redirigir al usuario
+                        req.flash('success', 'Bloque Guardado Exitosamente y cantidad descontada del inventario');
+                        res.redirect('/bloque');
+                    }
+                );
             }
         );
     });
