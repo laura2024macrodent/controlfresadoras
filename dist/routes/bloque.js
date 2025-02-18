@@ -15,7 +15,7 @@ router.get('/add', isLoggedIn, async (req, res) => {
     }
 });
 
-router.post('/add', isLoggedIn, async(req, res) => {
+/* router.post('/add', isLoggedIn, async(req, res) => {
     const {nombre,codigo_barras,cantidad,color,tamano,tipo_material,id_operario} = req.body;
     const usuario = req.user;
     const newBloque = {
@@ -25,7 +25,7 @@ router.post('/add', isLoggedIn, async(req, res) => {
         color,
         tamano,
         tipo_material,
-        id_operario 
+        id_operario
     };
     // Insertar el nuevo bloque en la base de datos
     await pool.query('INSERT INTO bloque SET ?', [newBloque], async (err, results) => {
@@ -63,6 +63,41 @@ router.post('/add', isLoggedIn, async(req, res) => {
                         res.redirect('/bloque');
                     }
                 );
+            }
+        );
+    });
+}); */
+
+router.post('/add', isLoggedIn, async(req, res) => {
+    const {nombre,codigo_barras,cantidad,color,tamano,tipo_material,id_operario} = req.body;
+    const usuario = req.user;
+    const newBloque = {
+        nombre,
+        codigo_barras,
+        cantidad,
+        color,
+        tamano,
+        tipo_material,
+        id_operario
+    };
+    // Insertar el nuevo bloque en la base de datos
+    await pool.query('INSERT INTO bloque SET ?', [newBloque], async (err, results) => {
+        if (err) throw err;
+
+        // Obtener el id del nuevo bloque insertado
+        const id_bloque = results.insertId;
+
+        // Crear el mensaje de historial para el nuevo bloque
+        const mensaje = `${usuario.fullname} agregó el bloque ${nombre}`;
+
+        // Insertar el registro en el historial de bloques
+        await pool.query('INSERT INTO historial_bloques (id_bloque, accion, mensaje, id_operario, nombre_operario) VALUES (?, ?, ?, ?, ?)', 
+            [id_bloque, 'agregar', mensaje, usuario.id_operario, usuario.fullname], (err) => {
+                if (err) throw err;
+
+                // Después de agregar al historial, redirigir al usuario
+                req.flash('success', 'Bloque Guardado Exitosamente');
+                res.redirect('/bloque');
             }
         );
     });

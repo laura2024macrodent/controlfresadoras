@@ -12,6 +12,23 @@
                             <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre Bloque" readonly>
                         </div>
                         <div class="form-group">
+                            <label for="">Tipo de material</label>
+                            <select class="form-control" name="tipo_material" placeholder="Tipo de material" autofocus required>
+                                <option value="3DPRO">3DPRO</option>
+                                <option value="SAGEMAX">SAGEMAX</option>
+                                <option value="STC">STC</option>
+                                <option value="SHTC">SHTC</option>
+                                <option value="Cr-CB">Cr-C</option>
+                                <option value="Titan">Titan</option>
+                                <option value="PMMA">PMMA</option>
+                                <option value="SHOFU HC">SHOFU HC</option>
+                                <option value="PMMA ML">PMMA ML</option>
+                                <option value="HTW-OPACO">HTW OPACO</option>
+                                <option value="AIZIR">AIZIR</option>
+                                <option value="PEEK">PEEK</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="">Codigo de barras del Bloque</label>
                             <input type="text" class="form-control" id="codigo_bazrras" name="codigo_barras" placeholder="Codigo de Barras del Bloque">
                         </div>
@@ -62,19 +79,6 @@
                                 <option value="20">20</option>
                                 <option value="22">22</option>
                                 <option value="25">25</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Tipo de material</label>
-                            <select class="form-control" name="tipo_material" placeholder="Tipo de material" autofocus required>
-                                <option value="3DPRO">3DPRO</option>
-                                <option value="SAGEMAX">SAGEMAX</option>
-                                <option value="STC">STC</option>
-                                <option value="SHTC">SHTC</option>
-                                <option value="Cr-CB">Cr-C</option>
-                                <option value="Titan">Titan</option>
-                                <option value="PMMA">PMMA</option>
-                                <option value="SHOFU HC">SHOFU HC</option>
                             </select>
                         </div>
                         <div class="form-group" style="display: none;">
@@ -129,10 +133,25 @@ function generarNombreBloque() {
     const colorAleatorio = coloresAleatorios[Math.floor(Math.random() * coloresAleatorios.length)];
 
     // Generar el nombre del bloque en el formato: TipoMaterial-Fruta-Color-ColorVita-HTamaño
-    const nombreBloque = `${tipo_material}-${frutaAleatoria}-${colorAleatorio}-${color}-H${tamano}`;
+    let nombreBloque = `${tipo_material}-${frutaAleatoria}-${colorAleatorio}-${color}-H${tamano}`;
+
+    // Si el tipo de material es Titan o Cr-CB, no incluir color
+    if (tipo_material === 'Titan' || tipo_material === 'Cr-CB') {
+        nombreBloque = `${tipo_material}-${frutaAleatoria}-${colorAleatorio}-H${tamano}`;
+    } else {
+        nombreBloque = `${tipo_material}-${frutaAleatoria}-${colorAleatorio}-${color}-H${tamano}`;
+    }
 
     // Colocar el nombre generado en el campo de texto
     document.getElementById("nombre").value = nombreBloque;
+
+    // Ocultar o mostrar el campo de color dependiendo del tipo de material
+    const colorField = document.querySelector('[name="color"]').closest('.form-group');
+    if (tipo_material === 'Titan' || tipo_material === 'Cr-CB') {
+        colorField.style.display = 'none'; // Ocultar el campo de color
+    } else {
+        colorField.style.display = 'block'; // Mostrar el campo de color
+    }
 }
 
 // Llamar a la función cuando se cambian los valores del formulario
@@ -145,5 +164,28 @@ document.addEventListener("DOMContentLoaded", function () {
     campos.forEach(campo => {
         campo.addEventListener("change", generarNombreBloque);
     });
+
+// Manejar el envío del formulario
+const form = document.querySelector("form");
+form.addEventListener("submit", function (event) {
+    const tipo_material = document.querySelector('[name="tipo_material"]').value;
+    const colorField = document.querySelector('[name="color"]');
+
+    // Si el material es Titan o Cr-CB, establecer el valor del color a 'sin color'
+    if (tipo_material === 'Titan' || tipo_material === 'Cr-CB') {
+        colorField.value = 'sin color'; // Asignar 'sin color' si es Titan o Cr-CB
+    }
+
+    // Si el valor de color es null o vacío, asignar 'sin color'
+    if (!colorField.value) {
+        colorField.value = 'sin color';
+    }
+
+    // Verificar que el valor de color se cambió correctamente a 'sin color'
+    console.log('Valor de color antes de enviar:', colorField.value); // Para depuración, puedes verificar el valor aquí
+
+    // Aquí se puede hacer el envío de los datos a la base de datos, por ejemplo mediante fetch o AJAX
+});
+
 });
 </script>
