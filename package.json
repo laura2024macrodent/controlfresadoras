@@ -6,7 +6,7 @@
     "dev": "nodemon src/index.js",
     "lint": "eslint .",
     "start": "node src/index.js",
-    "build": "rimraf dist && mkdir dist && copyfiles -u 1 src/**/* dist"
+    "build": "npx rimraf dist && mkdir dist && copyfiles -u 1 src/**/* dist"
   },
   "keywords": [],
   "author": "",
