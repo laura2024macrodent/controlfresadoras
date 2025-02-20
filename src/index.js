@@ -8,7 +8,7 @@ const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const passport = require('passport');
 const helpers = require('./lib/handlebars'); 
-// mysql://root:XkARfnmSAEXGewKDrrIJzVOPvtYDbSKy@yamabiko.proxy.rlwy.net:13917/railway
+// mysql://root:tPXhhHueriLPurGxgNgESogbVTXySTOv@yamabiko.proxy.rlwy.net:50635/railway
 const {database} = require('./keys');
 
 const app = express();
