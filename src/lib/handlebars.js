@@ -19,9 +19,8 @@ helpers.formatFecha = (fecha) => {
 helpers.formatHora = (fecha) => {
     const date = new Date(fecha);
 
-    // Ajustar la hora de acuerdo con la zona horaria de Colombia (GMT-5)
-    const colombiaOffset = 5;  // Sumar 5 horas para Colombia
-    const localDate = new Date(date.getTime() + colombiaOffset * 60 * 60 * 1000);
+    
+    const localDate = new Date(date.getTime());
 
     return localDate.toLocaleTimeString('es-CO', {
         hour: '2-digit',
