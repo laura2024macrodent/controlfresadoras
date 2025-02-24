@@ -1,11 +1,11 @@
-const helpers = {};
+const helpers = {}
 
 helpers.formatFecha = (fecha) => {
     // Convertir la fecha de string ISO a objeto Date
     const date = new Date(fecha);
 
     // Ajustar manualmente la hora para la zona horaria de Colombia (GMT-5)
-    const colombiaOffset = 5;  // GMT-5 para Colombia
+    const colombiaOffset = 5;  // Sumar 5 horas para Colombia
     const localDate = new Date(date.getTime() + colombiaOffset * 60 * 60 * 1000);
 
     // Devolver la fecha en el formato deseado
@@ -19,7 +19,9 @@ helpers.formatFecha = (fecha) => {
 helpers.formatHora = (fecha) => {
     const date = new Date(fecha);
 
-    const localDate = new Date(date.getTime());
+    // Ajustar la hora de acuerdo con la zona horaria de Colombia (GMT-5)
+    const colombiaOffset = 5;  // Sumar 5 horas para Colombia
+    const localDate = new Date(date.getTime() + colombiaOffset * 60 * 60 * 1000);
 
     return localDate.toLocaleTimeString('es-CO', {
         hour: '2-digit',
