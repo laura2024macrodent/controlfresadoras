@@ -5,7 +5,7 @@ helpers.formatFecha = (fecha) => {
     const date = new Date(fecha);
 
     // Ajustar manualmente la hora para la zona horaria de Colombia (GMT-5)
-    const colombiaOffset = 5;  // Sumar 5 horas para Colombia
+    const colombiaOffset = 10;  // Sumar 5 horas para Colombia
     const localDate = new Date(date.getTime() + colombiaOffset * 60 * 60 * 1000);
 
     // Devolver la fecha en el formato deseado
