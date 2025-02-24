@@ -343,7 +343,7 @@ router.get('/historial', isLoggedIn, async (req, res) => {
 
             // Separar fecha y hora
             const fechaKey = fechaString.split('T')[0];  // 'yyyy-mm-dd'
-            const horaKey = fechaString.split('T')[1].split('.')[0];  // 'HH:mm:ss' -> 'HH:mm'
+            const horaKey = fechaString.split('T')[0].split('.')[0];  // 'HH:mm:ss' -> 'HH:mm'
 
             // Si no existe esa fecha en el acumulador, crearla
             if (!acc[fechaKey]) {
