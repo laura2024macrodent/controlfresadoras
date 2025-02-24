@@ -13,19 +13,21 @@ helpers.formatFecha = (fecha) => {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
+        timeZone: 'America/Bogota',
     });  // Ejemplo: 13 de noviembre de 2024
 };
 
 helpers.formatHora = (fecha) => {
     const date = new Date(fecha);
-    const colombiaOffset = -5;
-    const localDate = new Date(date.getTime() + colombiaOffset * 60 * 60 * 1000);
+
+    const localDate = new Date(date.getTime());
 
     return localDate.toLocaleTimeString('es-CO', {
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
-        hour12: true
+        hour12: true,
+        timeZone: 'America/Bogota',
     });
 };
 
