@@ -342,7 +342,7 @@ router.get('/historial', isLoggedIn, async (req, res) => {
             console.log("Fecha original en UTC:", fechaString);
 
             // Separar fecha y hora
-            const fechaKey = fechaString.split('T')[0];  // 'yyyy-mm-dd'
+            const fechaKey = new Date(fechaString).toISOString().split('T')[0];  // 'yyyy-mm-dd'
             const horaKey = fechaString.split('T')[0].split('.')[0];  // 'HH:mm:ss' -> 'HH:mm'
 
             // Si no existe esa fecha en el acumulador, crearla
