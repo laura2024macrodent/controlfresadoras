@@ -341,9 +341,15 @@ router.get('/historial', isLoggedIn, async (req, res) => {
             // Verificar cómo llega la fecha original
             console.log("Fecha original en UTC:", fechaString);
 
-            // Separar fecha y hora
-            const fechaKey = new Date(fechaString).toISOString().split('T')[0];  // 'yyyy-mm-dd'
-            const horaKey = fechaString.split('T')[0].split('.')[0];  // 'HH:mm:ss' -> 'HH:mm'
+            // Convertir la fecha a un objeto Date
+            const fechaUTC = new Date(fechaString);
+
+            // Ajustar la fecha a la zona horaria de Bogotá (UTC -5)
+            const fechaLocal = new Date(fechaUTC.getTime() - 5 * 60 * 60 * 1000);  // Restamos 5 horas para UTC-5
+
+            // Separar la fecha en 'yyyy-mm-dd' y la hora en 'HH:mm:ss'
+            const fechaKey = fechaLocal.toISOString().split('T')[0];  // 'yyyy-mm-dd'
+            const horaKey = fechaLocal.toISOString().split('T')[1].split('.')[0];  // 'HH:mm:ss'
 
             // Si no existe esa fecha en el acumulador, crearla
             if (!acc[fechaKey]) {
@@ -355,7 +361,7 @@ router.get('/historial', isLoggedIn, async (req, res) => {
                 hora: horaKey,
                 nombre_operario: item.nombre_operario,
                 mensaje: item.mensaje,
-                fecha: fechaString // mantén la fecha completa para referencia futura
+                fecha: fechaLocal.toISOString() // Mantén la fecha completa para referencia futura
             });
 
             return acc;
@@ -370,7 +376,7 @@ router.get('/historial', isLoggedIn, async (req, res) => {
         console.log(historial); // Verifica cómo se está agrupando
 
         console.log('Historial agrupado:', JSON.stringify(historial, null, 2));
-        
+
         // Pasar el historial agrupado a la vista
         res.render('bloque/historial', { historial: historial });
     });
