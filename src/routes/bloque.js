@@ -341,26 +341,9 @@ router.get('/historial', isLoggedIn, async (req, res) => {
             // Verificar cómo llega la fecha original
             console.log("Fecha original en UTC:", fechaString);
 
-            // Convertir la fecha UTC a la zona horaria de Colombia (GMT-5)
-            const date = new Date(fechaString);
-
-            // Utilizamos toLocaleString para ajustar la fecha a la zona horaria de Colombia
-            const options = {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false,
-                timeZone: 'America/Bogota',  // Especificar la zona horaria de Colombia
-            };
-
-            // Obtener la fecha y hora ajustadas a la zona horaria de Colombia
-            const localFechaString = date.toLocaleString('es-CO', options);
-
             // Separar fecha y hora
-            const [fechaKey, horaKey] = localFechaString.split(' ');
+            const fechaKey = fechaString.split('T')[0];  // 'yyyy-mm-dd'
+            const horaKey = fechaString.split('T')[1].split('.')[0];  // 'HH:mm:ss' -> 'HH:mm'
 
             // Si no existe esa fecha en el acumulador, crearla
             if (!acc[fechaKey]) {
@@ -372,7 +355,7 @@ router.get('/historial', isLoggedIn, async (req, res) => {
                 hora: horaKey,
                 nombre_operario: item.nombre_operario,
                 mensaje: item.mensaje,
-                fecha: localFechaString // mantén la fecha completa para referencia futura
+                fecha: fechaString // mantén la fecha completa para referencia futura
             });
 
             return acc;
@@ -387,7 +370,7 @@ router.get('/historial', isLoggedIn, async (req, res) => {
         console.log(historial); // Verifica cómo se está agrupando
 
         console.log('Historial agrupado:', JSON.stringify(historial, null, 2));
-
+        
         // Pasar el historial agrupado a la vista
         res.render('bloque/historial', { historial: historial });
     });
