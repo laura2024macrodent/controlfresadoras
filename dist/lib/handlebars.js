@@ -18,8 +18,8 @@ helpers.formatFecha = (fecha) => {
 
 helpers.formatHora = (fecha) => {
     const date = new Date(fecha);
-
-    const localDate = new Date(date.getTime());
+    const colombiaOffset = -5;
+    const localDate = new Date(date.getTime() + colombiaOffset * 60 * 60 * 1000);
 
     return localDate.toLocaleTimeString('es-CO', {
         hour: '2-digit',
