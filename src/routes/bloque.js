@@ -295,8 +295,8 @@ router.get('/descargar-excel', isLoggedIn, async (req, res) => {
                 color: row.color,
                 tamano: row.tamano,
                 tipo_material: row.tipo_material,
-                fecha_creacion: row.fecha_creacion ? row.fecha_creacion.toISOString().replace('T', ' /').split('.')[0] : '', // Formato de fecha
-                fecha_finalizacion: row.fecha_finalizacion ? row.fecha_finalizacion.toISOString().replace('T', ' /').split('.')[0] : '', // Formato de fecha
+                fecha_creacion: row.fecha_creacion ? moment(row.fecha_creacion).tz('America/Bogota').format('YYYY-MM-DD HH:mm:ss') : '', // Formato de fecha
+                fecha_finalizacion: row.fecha_finalizacion ? moment(row.fecha_finalizacion).tz('America/Bogota').format('YYYY-MM-DD HH:mm:ss') : '', // Formato de fecha
                 operario_fullname: row.operario_fullname,
             });
 
