@@ -13,16 +13,16 @@
                     {{#each historial}}
                     <tr>
                         <td colspan="3" class="table-primary">{{formatFecha fecha}}</td>
-                        {{#each cambios}}
                     </tr>
+                    {{#each cambios}}
                     <tbody>
                         <tr class="messageRow">
                             <td class="hora-cambio text-nowrap">{{formatHora fecha}}</td>
                             <td>|</td>
                             <td>{{mensaje}}</td>
-                            {{/each}}
                         </tr>
                     </tbody>
+                    {{/each}}
                     {{/each}}
                 </table>
             </div>
