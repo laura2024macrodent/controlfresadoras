@@ -2,7 +2,8 @@ const express = require('express');
 const ExcelJS = require('exceljs');
 const router = express.Router();
 const pool = require('../database');
-const {isLoggedIn} = require('../lib/auth'); 
+const {isLoggedIn} = require('../lib/auth');
+const moment = require('moment-timezone');
 
 router.get('/add', isLoggedIn, async (req, res) => {
     try {
@@ -123,7 +124,7 @@ router.post('/update', isLoggedIn, async (req, res) => {
         if(bloque){
             if(estado === '0'){
                 if (!bloque.fecha_finalizacion) {
-                    fechaFinalizacion = new Date();  // Fecha y hora actuales
+                    fechaFinalizacion = moment.tz('America/Bogota').format('YYYY-MM-DD HH:mm:ss');  // Fecha y hora actuales
                 }
                 else{
                     fechaFinalizacion = bloque.fecha_finalizacion;
