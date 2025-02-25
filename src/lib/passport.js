@@ -44,12 +44,17 @@ passport.use('local.signup', new LocalStrategy({
         return done(null, false, req.flash('message', 'Las contraseñas no coinciden.'));
     } 
 
+    // Determinar si el correo electrónico es de un admin (termina en @cfmacrodent.com)
+    const role = email.endsWith('@cfmacrodent.com') ? 'admin' : 'user'; // Asignamos 'admin' si termina en @cfmacrodent.com, de lo contrario 'user'
+
     const newUser = { 
         username,
         password,
         fullname,
-        email
+        email,
+        role
     };
+    
     newUser.password = await helpers.encryptPassword(password);
     const result = await pool.query('INSERT INTO operario SET ?', [newUser]);
     newUser.id_operario = result.insertId;
