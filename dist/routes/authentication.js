@@ -7,11 +7,11 @@ const Crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const helpers = require('../lib/helpers');
 
-router.get("/signup", isNotLoggedIn, (req, res) => {
+router.get("/signup", isLoggedIn, (req, res) => {
     res.render('auth/signup');
 });
 
-router.post("/signup", isNotLoggedIn, passport.authenticate('local.signup', {
+router.post("/signup", isLoggedIn, passport.authenticate('local.signup', {
     successRedirect: '/profile',
     failureRedirect: '/signup',
     failureFlash: true
