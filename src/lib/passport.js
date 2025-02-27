@@ -65,7 +65,8 @@ passport.serializeUser((user, done) => {
     done(null, user.id_operario);
 });
 
-passport.deserializeUser(async (id_operario, done) => {
-    const rows = await pool.query('SELECT * FROM operario WHERE id_operario = ?', [id_operario]);
-    done(null, rows[0]);
+passport.deserializeUser(function (id, done) {
+  User.findById(id, function (err, user) {  // Busca al usuario en la base de datos por su id
+    done(err, user);
+  });
 });
