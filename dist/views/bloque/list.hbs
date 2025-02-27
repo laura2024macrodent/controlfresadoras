@@ -32,6 +32,7 @@
                         <tr>
                             <td class="text-nowrap" style="white-space: normal;">{{this.nombre}}</td>
                             <td class="text-center">{{this.cantidad}}</td>
+                            <td class="text-center">{{this.codigo_barras}}</td>
                             <td class="text-center">
                                 <form action="/bloque/update" method="POST" id="estado-form-{{this.id_bloque}}">
                                     <input type="hidden" name="id_bloque" value="{{this.id_bloque}}">
