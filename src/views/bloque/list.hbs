@@ -16,6 +16,7 @@
                     <thead>
                         <tr>
                             <th>Nombre</th>
+                            <th>Codigo de Barras</th>
                             <th>Lote</th>
                             <th>Estado</th>
                             <th>Color</th>
@@ -31,6 +32,7 @@
                         {{#each bloque}}
                         <tr>
                             <td class="text-nowrap" style="white-space: normal;">{{this.nombre}}</td>
+                            <td class="text-center">{{this.codigo_barras}}</td>
                             <td class="text-center">{{this.cantidad}}</td>
                             <td class="text-center">
                                 <form action="/bloque/update" method="POST" id="estado-form-{{this.id_bloque}}">
