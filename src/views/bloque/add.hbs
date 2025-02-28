@@ -154,10 +154,6 @@
         // Colocar el nombre generado en el campo de texto
         document.getElementById("nombre").value = nombreBloque;
 
-        // Incrementar el número y guardarlo en localStorage para el siguiente uso
-        numeroIncremental++;
-        localStorage.setItem("numeroIncremental", numeroIncremental);
-
         // Ocultar o mostrar el campo de color dependiendo del tipo de material
         const colorField = document.querySelector('[name="color"]').closest('.form-group');
         if (tipo_material === 'Titan' || tipo_material === 'Cr-CB') {
@@ -183,6 +179,9 @@
         form.addEventListener("submit", function (event) {
             const tipo_material = document.querySelector('[name="tipo_material"]').value;
             const colorField = document.querySelector('[name="color"]');
+
+            numeroIncremental++;  // Aumentar solo al guardar
+            localStorage.setItem("numeroIncremental", numeroIncremental);
 
             // Si el material es Titan o Cr-CB, establecer el valor del color a 'sin color'
             if (tipo_material === 'Titan' || tipo_material === 'Cr-CB') {
