@@ -9,11 +9,13 @@
                     <form action="/bloque/add" method="post">
                         <div class="form-group">
                             <label for="">Nombre del Bloque</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre Bloque" readonly>
+                            <input type="text" class="form-control" id="nombre" name="nombre"
+                                placeholder="Nombre Bloque" readonly>
                         </div>
                         <div class="form-group">
                             <label for="">Tipo de material</label>
-                            <select class="form-control" name="tipo_material" placeholder="Tipo de material" autofocus required>
+                            <select class="form-control" name="tipo_material" placeholder="Tipo de material" autofocus
+                                required>
                                 <option value="3DPRO">3DPRO</option>
                                 <option value="SAGEMAX">SAGEMAX</option>
                                 <option value="STC">STC</option>
@@ -30,16 +32,19 @@
                         </div>
                         <div class="form-group">
                             <label for="">Codigo de barras del Bloque</label>
-                            <input type="text" class="form-control" id="codigo_bazrras" name="codigo_barras" placeholder="Codigo de Barras del Bloque">
+                            <input type="text" class="form-control" id="codigo_bazrras" name="codigo_barras"
+                                placeholder="Codigo de Barras del Bloque">
                         </div>
                         <div class="form-group">
                             <label for="">Lote</label>
-                            <input type="text" class="form-control" name="cantidad" placeholder="Lote" autofocus required>
+                            <input type="text" class="form-control" name="cantidad" placeholder="Lote" autofocus
+                                required>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="">Color (VITA Clásica):</label>
-                            <select class="form-control" name="color" placeholder="Color (VITA Clásica):" autofocus required>
+                            <select class="form-control" name="color" placeholder="Color (VITA Clásica):" autofocus
+                                required>
                                 <option value="A1">A1</option>
                                 <option value="A2" selected>A2</option>
                                 <option value="A3">A3</option>
@@ -85,7 +90,7 @@
                             <select type="hidden" name="id_operario" id="id_operario" class="form-control" readonly>
                                 <!-- Itera sobre el array de operarios -->
                                 {{#each operarios}}
-                                    <option value="{{id_operario}}">{{fullname}} (ID: {{id_operario}})</option>
+                                <option value="{{id_operario}}">{{fullname}} (ID: {{id_operario}})</option>
                                 {{/each}}
                             </select>
                         </div>
@@ -101,91 +106,97 @@
     </div>
 </div>
 <script>
-const frutas = [
-    "Manzana", "Plátano", "Pera", "Naranja", "Uva", "Melón", "Sandía", "Fresa", "Piña", "Durazno",
-    "Mango", "Papaya", "Kiwi", "Cereza", "Ciruela", "Granada", "Frambuesa", "Mora", "Maracuyá", "Limón",
-    "Mandarina", "Aguacate", "Litchi", "Guayaba", "Durian", "Pitaya", "Carambola", "Pomelo", "Tamarindo",
-    "Mango de agua", "Chirimoya", "Zapote", "Coco", "Pasa", "Acelga", "Almendra", "Castaña", "Níspero", 
-    "Soursop", "Rambután", "Langsat", "Pitangueiras", "Mamey", "Berries", "Tamarillo", "Longan", "Feijoa"
-];
 
-const coloresAleatorios = [
-    "Rojo", "Azul", "Verde", "Amarillo", "Negro", "Blanco", "Rosa", "Morado", "Naranja", "Gris", "Turquesa", 
-    "Violeta", "Fucsia", "Marrón", "Beige", "Celeste", "Coral", "Lavanda", "Lila", "Aqua", "Índigo", "Oro", 
-    "Plata", "Bronce", "Verde oliva", "Verde lima", "Verde bosque", "Verde pasto", "Azul marino", "Azul claro", 
-    "Azul turquesa", "Amarillo pastel", "Naranja pastel", "Rosa pálido", "Púrpura", "Malva", "Menta", "Beis", 
-    "Café", "Rojo vino", "Lavanda", "Blanco nieve", "Gris perla", "Verde musgo", "Amarillo mostaza", "Lima", 
-    "Azul eléctrico", "Azul zafiro", "Champagne", "Topacio", "Cian", "Salmon", "Caramelo", "Rosado", "Pistacho", 
-    "Verde esmeralda", "Verde menta", "Naranja quemado", "Rosa palo", "Fucsia brillante", "Cobre", "Cian", 
-    "Amarillo canario", "Marfil", "Azul petróleo", "Vino tinto", "Terracota", "Rojo carmesí", "Vino Borgoña", 
-    "Cobalto", "Magenta", "Malva claro", "Garnet", "Ámbar", "Ártico", "Mauve", "Tangerine", "Fluorescente", 
-    "Lime Green", "Tierra", "Cielito", "Madera", "Petrolero", "Cereza brillante", "Siena quemada", "Almizcle"
-];
+    // Obtener el último número autoincrementable desde localStorage o inicializarlo en 1
+    let numeroIncremental = localStorage.getItem("numeroIncremental") ? parseInt(localStorage.getItem("numeroIncremental")) : 1;
 
-// Función para generar un nombre aleatorio para el bloque
-function generarNombreBloque() {
-    const tipo_material = document.querySelector('[name="tipo_material"]').value;  // Tipo de material seleccionado
-    const color = document.querySelector('[name="color"]').value;  // Color VITA seleccionado
-    const tamano = document.querySelector('[name="tamano"]').value;  // Tamaño seleccionado
+    const frutas = [
+        "Manzana", "Plátano", "Pera", "Naranja", "Uva", "Melón", "Sandía", "Fresa", "Piña", "Durazno",
+        "Mango", "Papaya", "Kiwi", "Cereza", "Ciruela", "Granada", "Frambuesa", "Mora", "Maracuyá", "Limón",
+        "Mandarina", "Aguacate", "Litchi", "Guayaba", "Durian", "Pitaya", "Carambola", "Pomelo", "Tamarindo",
+        "Mango de agua", "Chirimoya", "Zapote", "Coco", "Pasa", "Acelga", "Almendra", "Castaña", "Níspero",
+        "Soursop", "Rambután", "Langsat", "Pitangueiras", "Mamey", "Berries", "Tamarillo", "Longan", "Feijoa"
+    ];
 
-    // Selección aleatoria de una fruta y un color
-    const frutaAleatoria = frutas[Math.floor(Math.random() * frutas.length)];
-    const colorAleatorio = coloresAleatorios[Math.floor(Math.random() * coloresAleatorios.length)];
+    const coloresAleatorios = [
+        "Rojo", "Azul", "Verde", "Amarillo", "Negro", "Blanco", "Rosa", "Morado", "Naranja", "Gris", "Turquesa",
+        "Violeta", "Fucsia", "Marrón", "Beige", "Celeste", "Coral", "Lavanda", "Lila", "Aqua", "Índigo", "Oro",
+        "Plata", "Bronce", "Verde oliva", "Verde lima", "Verde bosque", "Verde pasto", "Azul marino", "Azul claro",
+        "Azul turquesa", "Amarillo pastel", "Naranja pastel", "Rosa pálido", "Púrpura", "Malva", "Menta", "Beis",
+        "Café", "Rojo vino", "Lavanda", "Blanco nieve", "Gris perla", "Verde musgo", "Amarillo mostaza", "Lima",
+        "Azul eléctrico", "Azul zafiro", "Champagne", "Topacio", "Cian", "Salmon", "Caramelo", "Rosado", "Pistacho",
+        "Verde esmeralda", "Verde menta", "Naranja quemado", "Rosa palo", "Fucsia brillante", "Cobre", "Cian",
+        "Amarillo canario", "Marfil", "Azul petróleo", "Vino tinto", "Terracota", "Rojo carmesí", "Vino Borgoña",
+        "Cobalto", "Magenta", "Malva claro", "Garnet", "Ámbar", "Ártico", "Mauve", "Tangerine", "Fluorescente",
+        "Lime Green", "Tierra", "Cielito", "Madera", "Petrolero", "Cereza brillante", "Siena quemada", "Almizcle"
+    ];
 
-    // Generar el nombre del bloque en el formato: TipoMaterial-Fruta-Color-ColorVita-HTamaño
-    let nombreBloque = `${tipo_material}-${frutaAleatoria}-${colorAleatorio}-${color}-H${tamano}`;
+    // Función para generar un nombre aleatorio para el bloque
+    function generarNombreBloque() {
+        const tipo_material = document.querySelector('[name="tipo_material"]').value;  // Tipo de material seleccionado
+        const color = document.querySelector('[name="color"]').value;  // Color VITA seleccionado
+        const tamano = document.querySelector('[name="tamano"]').value;  // Tamaño seleccionado
 
-    // Si el tipo de material es Titan o Cr-CB, no incluir color
-    if (tipo_material === 'Titan' || tipo_material === 'Cr-CB') {
-        nombreBloque = `${tipo_material}-${frutaAleatoria}-${colorAleatorio}-H${tamano}`;
-    } else {
-        nombreBloque = `${tipo_material}-${frutaAleatoria}-${colorAleatorio}-${color}-H${tamano}`;
+        // Selección aleatoria de una fruta y un color
+        const frutaAleatoria = frutas[Math.floor(Math.random() * frutas.length)];
+        const colorAleatorio = coloresAleatorios[Math.floor(Math.random() * coloresAleatorios.length)];
+
+        // Generar el nombre del bloque en el formato: TipoMaterial-Fruta-Color-ColorVita-HTamaño
+        let nombreBloque = `${tipo_material}-${frutaAleatoria}-${colorAleatorio}${numeroIncremental}-${color}-H${tamano}`;
+
+        // Si el tipo de material es Titan o Cr-CB, no incluir color
+        if (tipo_material === 'Titan' || tipo_material === 'Cr-CB') {
+            nombreBloque = `${tipo_material}-${frutaAleatoria}-${colorAleatorio}${numeroIncremental}-H${tamano}`;
+        } else {
+            nombreBloque = `${tipo_material}-${frutaAleatoria}-${colorAleatorio}${numeroIncremental}-${color}-H${tamano}`;
+        }
+
+        // Colocar el nombre generado en el campo de texto
+        document.getElementById("nombre").value = nombreBloque;
+
+        // Incrementar el número y guardarlo en localStorage para el siguiente uso
+        numeroIncremental++;
+        localStorage.setItem("numeroIncremental", numeroIncremental);
+
+        // Ocultar o mostrar el campo de color dependiendo del tipo de material
+        const colorField = document.querySelector('[name="color"]').closest('.form-group');
+        if (tipo_material === 'Titan' || tipo_material === 'Cr-CB') {
+            colorField.style.display = 'none'; // Ocultar el campo de color
+        } else {
+            colorField.style.display = 'block'; // Mostrar el campo de color
+        }
     }
 
-    // Colocar el nombre generado en el campo de texto
-    document.getElementById("nombre").value = nombreBloque;
+    // Llamar a la función cuando se cambian los valores del formulario
+    document.addEventListener("DOMContentLoaded", function () {
+        // Generar el nombre automáticamente al cargar la página
+        generarNombreBloque();
 
-    // Ocultar o mostrar el campo de color dependiendo del tipo de material
-    const colorField = document.querySelector('[name="color"]').closest('.form-group');
-    if (tipo_material === 'Titan' || tipo_material === 'Cr-CB') {
-        colorField.style.display = 'none'; // Ocultar el campo de color
-    } else {
-        colorField.style.display = 'block'; // Mostrar el campo de color
-    }
-}
+        // Establecer eventos para actualizar el nombre cuando se cambian los campos
+        const campos = document.querySelectorAll('[name="tipo_material"], [name="color"], [name="tamano"]');
+        campos.forEach(campo => {
+            campo.addEventListener("change", generarNombreBloque);
+        });
 
-// Llamar a la función cuando se cambian los valores del formulario
-document.addEventListener("DOMContentLoaded", function () {
-    // Generar el nombre automáticamente al cargar la página
-    generarNombreBloque();
+        // Manejar el envío del formulario
+        const form = document.querySelector("form");
+        form.addEventListener("submit", function (event) {
+            const tipo_material = document.querySelector('[name="tipo_material"]').value;
+            const colorField = document.querySelector('[name="color"]');
 
-    // Establecer eventos para actualizar el nombre cuando se cambian los campos
-    const campos = document.querySelectorAll('[name="tipo_material"], [name="color"], [name="tamano"]');
-    campos.forEach(campo => {
-        campo.addEventListener("change", generarNombreBloque);
+            // Si el material es Titan o Cr-CB, establecer el valor del color a 'sin color'
+            if (tipo_material === 'Titan' || tipo_material === 'Cr-CB') {
+                colorField.value = 'sin color'; // Asignar 'sin color' si es Titan o Cr-CB
+            }
+
+            // Si el valor de color es null o vacío, asignar 'sin color'
+            if (!colorField.value) {
+                colorField.value = 'sin color';
+            }
+
+            // Verificar que el valor de color se cambió correctamente a 'sin color'
+            console.log('Valor de color antes de enviar:', colorField.value); // Para depuración, puedes verificar el valor aquí
+        });
+
     });
-
-// Manejar el envío del formulario
-const form = document.querySelector("form");
-form.addEventListener("submit", function (event) {
-    const tipo_material = document.querySelector('[name="tipo_material"]').value;
-    const colorField = document.querySelector('[name="color"]');
-
-    // Si el material es Titan o Cr-CB, establecer el valor del color a 'sin color'
-    if (tipo_material === 'Titan' || tipo_material === 'Cr-CB') {
-        colorField.value = 'sin color'; // Asignar 'sin color' si es Titan o Cr-CB
-    }
-
-    // Si el valor de color es null o vacío, asignar 'sin color'
-    if (!colorField.value) {
-        colorField.value = 'sin color';
-    }
-
-    // Verificar que el valor de color se cambió correctamente a 'sin color'
-    console.log('Valor de color antes de enviar:', colorField.value); // Para depuración, puedes verificar el valor aquí
-
-    // Aquí se puede hacer el envío de los datos a la base de datos, por ejemplo mediante fetch o AJAX
-});
-
-});
 </script>
