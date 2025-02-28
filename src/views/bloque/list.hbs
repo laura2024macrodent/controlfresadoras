@@ -6,9 +6,15 @@
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h1 class="mb-0">Bloques Existentes</h1>
                 <div class="mb-1">
-                    <a href="/bloque/descargar-excel" class="btn btn-success">Descargar Excel Con Datos</a><hr>
+                    <a href="/bloque/descargar-excel" class="btn btn-success">Descargar Excel Con Datos</a>
+                    <hr>
                     <a href="/bloque/add" class="btn btn-success">Agregar nuevo bloque</a>
                 </div>
+            </div>
+            <!-- Input de búsqueda -->
+            <div class="mb-3">
+                <input type="text" id="buscar" class="form-control" placeholder="Buscar por nombre..."
+                    onkeyup="filtrarTabla()">
             </div>
             <div class="table-responsive">
                 <table class="table table-striped table-secondary table-bordered table-sm"
@@ -28,9 +34,9 @@
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tablaBloques">
                         {{#each bloque}}
-                        <tr>
+                        <tr class="fila-bloque">
                             <td class="text-nowrap" style="white-space: normal;">{{this.nombre}}</td>
                             <td class="text-center">{{this.codigo_barras}}</td>
                             <td class="text-center">{{this.cantidad}}</td>
@@ -68,6 +74,10 @@
                             </td>
                         </tr>
                         {{/each}}
+                        <!-- Mensaje cuando no hay coincidencias -->
+                        <tr id="mensajeNoCoincidencias" style="display: none;">
+                            <td colspan="11" class="text-center text-danger">No existe ese Bloque</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -82,3 +92,29 @@
         {{/if}}
     </div>
 </div>
+<script>
+    function filtrarTabla() {
+        let input = document.getElementById("buscar");
+        let filtro = input.value.toLowerCase();
+        let filas = document.querySelectorAll(".fila-bloque");
+        let mensaje = document.getElementById("mensajeNoCoincidencias");
+        let coincidencias = 0;
+
+        filas.forEach(fila => {
+            let nombre = fila.getElementsByTagName("td")[0].textContent.toLowerCase();
+            if (nombre.includes(filtro)) {
+                fila.style.display = "";
+                coincidencias++;
+            } else {
+                fila.style.display = "none";
+            }
+        });
+
+        // Mostrar el mensaje solo si no hay coincidencias
+        if (coincidencias === 0) {
+            mensaje.style.display = "";
+        } else {
+            mensaje.style.display = "none";
+        }
+    }
+</script>
