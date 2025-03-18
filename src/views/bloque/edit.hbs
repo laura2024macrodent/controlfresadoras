@@ -13,9 +13,26 @@
                                 placeholder="Nombre Bloque" readonly>
                         </div>
                         <div class="form-group">
+                            <label for="">Tipo de material</label>
+                            <select class="form-control" name="tipo_material" placeholder="Tipo de material" autofocus>
+                                <option value="3DPRO" {{#if (eq bloque.tipo_material "3DPRO" )}}selected{{/if}}>3DPRO</option>
+                                <option value="SAGEMAX" {{#if (eq bloque.tipo_material "SAGEMAX" )}}selected{{/if}}>SAGEMAX</option>
+                                <option value="STC" {{#if (eq bloque.tipo_material "STC" )}}selected{{/if}}>STC</option>
+                                <option value="SHTC" {{#if (eq bloque.tipo_material "SHTC" )}}selected{{/if}}>SHTC</option>
+                                <option value="CR CB" {{#if (eq bloque.tipo_material "CR CB" )}}selected{{/if}}>CR CB</option>
+                                <option value="TITAN" {{#if (eq bloque.tipo_material "TITAN" )}}selected{{/if}}>TITAN</option>
+                                <option value="PMMA" {{#if (eq bloque.tipo_material "PMMA" )}}selected{{/if}}>PMMA</option>
+                                <option value="SHOFU HC" {{#if (eq bloque.tipo_material "SHOFU HC" )}}selected{{/if}}>SHOFU HC</option>
+                                <option value="PMMA ML" {{#if (eq bloque.tipo_material "PMMA ML" )}}selected{{/if}}>PMMA ML</option>
+                                <option value="HTW OPACO" {{#if (eq bloque.tipo_material "HTW OPACO" )}}selected{{/if}}>HTW OPACO</option>
+                                <option value="AIZIR" {{#if (eq bloque.tipo_material "AIZIR" )}}selected{{/if}}>AIZIR</option>
+                                <option value="PEEK" {{#if (eq bloque.tipo_material "PEEK" )}}selected{{/if}}>PEEK</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="">Codigo de Barras</label>
-                            <input type="text" value="{{bloque.codigo_barras}}" class="form-control" id="codigo_barras" name="codigo_barras"
-                                placeholder="Codigo de barras" readonly>
+                            <input type="text" value="{{bloque.codigo_barras}}" class="form-control" id="codigo_barras"
+                                name="codigo_barras" placeholder="Codigo de barras" readonly>
                         </div>
                         <div class="form-group">
                             <label for="">Lote</label>
@@ -42,17 +59,15 @@
                                 <option value="D2" {{#if (eq bloque.color "D2" )}}selected{{/if}}>D2</option>
                                 <option value="D3" {{#if (eq bloque.color "D3" )}}selected{{/if}}>D3</option>
                                 <option value="D4" {{#if (eq bloque.color "D4" )}}selected{{/if}}>D4</option>
-                                <option value="0m1" {{#if (eq bloque.color "0m1" )}}selected{{/if}}>0m1</option>
-                                <option value="0m2" {{#if (eq bloque.color "0m2" )}}selected{{/if}}>0m2</option>
-                                <option value="0m3" {{#if (eq bloque.color "0m3" )}}selected{{/if}}>0m3</option>
-                                <option value="Bl1" {{#if (eq bloque.color "Bl1" )}}selected{{/if}}>Bl1</option>
-                                <option value="Bl2" {{#if (eq bloque.color "Bl2" )}}selected{{/if}}>Bl2</option>
-                                <option value="Bl3" {{#if (eq bloque.color "Bl3" )}}selected{{/if}}>Bl3</option>
-                                <option value="Bl4" {{#if (eq bloque.color "Bl4" )}}selected{{/if}}>Bl4</option>
-                                <option value="Holywood" {{#if (eq bloque.color "Holywood" )}}selected{{/if}}>Holywood
-                                </option>
-                                <option value="Blanco Opaco" {{#if (eq bloque.color "Blanco Opaco" )}}selected{{/if}}>
-                                    Blanco Opaco</option>
+                                <option value="0M1" {{#if (eq bloque.color "0M1" )}}selected{{/if}}>0M1</option>
+                                <option value="0M2" {{#if (eq bloque.color "0M2" )}}selected{{/if}}>0M2</option>
+                                <option value="0M3" {{#if (eq bloque.color "0M3" )}}selected{{/if}}>0M3</option>
+                                <option value="BL1" {{#if (eq bloque.color "BL1" )}}selected{{/if}}>BL1</option>
+                                <option value="BL2" {{#if (eq bloque.color "BL2" )}}selected{{/if}}>BL2</option>
+                                <option value="BL3" {{#if (eq bloque.color "BL3" )}}selected{{/if}}>BL3</option>
+                                <option value="BL4" {{#if (eq bloque.color "BL4" )}}selected{{/if}}>BL4</option>
+                                <option value="WHITE" {{#if (eq bloque.color "WHITE" )}}selected{{/if}}>WHITE</option>
+                                <option value="BLANCO OPACO" {{#if (eq bloque.color "BLANCO OPACO" )}}selected{{/if}}>BLANCO OPACO</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -67,26 +82,6 @@
                                 <option value="20" {{#if (eq bloque.tamano 20)}}selected{{/if}}>20</option>
                                 <option value="22" {{#if (eq bloque.tamano 22)}}selected{{/if}}>22</option>
                                 <option value="25" {{#if (eq bloque.tamano 25)}}selected{{/if}}>25</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Tipo de material</label>
-                            <select class="form-control" name="tipo_material" placeholder="Tipo de material" autofocus>
-                                <option value="3DPRO" {{#if (eq bloque.tipo_material "3DPRO" )}}selected{{/if}}>3DPRO
-                                </option>
-                                <option value="SAGEMAX" {{#if (eq bloque.tipo_material "SAGEMAX" )}}selected{{/if}}>
-                                    SAGEMAX</option>
-                                <option value="STC" {{#if (eq bloque.tipo_material "STC" )}}selected{{/if}}>STC</option>
-                                <option value="SHTC" {{#if (eq bloque.tipo_material "SHTC" )}}selected{{/if}}>SHTC
-                                </option>
-                                <option value="Cr-CB" {{#if (eq bloque.tipo_material "Cr-CB" )}}selected{{/if}}>Cr-C
-                                </option>
-                                <option value="Titan" {{#if (eq bloque.tipo_material "Titan" )}}selected{{/if}}>Titan
-                                </option>
-                                <option value="PMMA" {{#if (eq bloque.tipo_material "PMMA" )}}selected{{/if}}>PMMA
-                                </option>
-                                <option value="SHOFU HC" {{#if (eq bloque.tipo_material "SHOFU HC" )}}selected{{/if}}>
-                                    SHOFU HC</option>
                             </select>
                         </div>
                         <div class="form-group" style="display: none;">
@@ -110,64 +105,98 @@
 </div>
 
 <script>
-// Listas de frutas y colores aleatorios
-const frutas = [
-    "Manzana", "Plátano", "Pera", "Naranja", "Uva", "Melón", "Sandía", "Fresa", "Piña", "Durazno",
-    "Mango", "Papaya", "Kiwi", "Cereza", "Ciruela", "Granada", "Frambuesa", "Mora", "Maracuyá", "Limón",
-    "Mandarina", "Aguacate", "Litchi", "Guayaba", "Durian", "Pitaya", "Carambola", "Pomelo", "Tamarindo",
-    "Mango de agua", "Chirimoya", "Zapote", "Coco", "Pasa", "Acelga", "Almendra", "Castaña", "Níspero", 
-    "Soursop", "Rambután", "Langsat", "Pitangueiras", "Mamey", "Berries", "Tamarillo", "Longan", "Feijoa"
-];
+    // Listas de frutas y colores aleatorios
+    const frutas = [
+        "MANZANA", "PLÁTANO", "PERA", "NARANJA", "UVA", "MELÓN", "SANDÍA", "FRESA", "PIÑA", "DURAZNO",
+        "MANGO", "PAPAYA", "KIWI", "CEREZA", "CIRUELA", "GRANADA", "FRAMBUESA", "MORA", "MARACUYÁ", "LIMÓN",
+        "MANDARINA", "AGUACATE", "LITCHI", "GUAYABA", "DURIAN", "PITAYA", "CARAMBOLA", "POMELO", "TAMARINDO",
+        "MANGO DE AGUA", "CHIRIMOYA", "ZAPOTE", "COCO", "PASA", "ACELGA", "ALMENDRA", "CASTAÑA", "NÍSPERO",
+        "SOURSOP", "RAMBUTÁN", "LANGSAT", "PITANGUEIRAS", "MAMEY", "BERRIES", "TAMARILLO", "LONGAN", "FEIJOA"
+    ];
 
-const coloresAleatorios = [
-    "Rojo", "Azul", "Verde", "Amarillo", "Negro", "Blanco", "Rosa", "Morado", "Naranja", "Gris", "Turquesa", 
-    "Violeta", "Fucsia", "Marrón", "Beige", "Celeste", "Coral", "Lavanda", "Lila", "Aqua", "Índigo", "Oro", 
-    "Plata", "Bronce", "Verde oliva", "Verde lima", "Verde bosque", "Verde pasto", "Azul marino", "Azul claro", 
-    "Azul turquesa", "Amarillo pastel", "Naranja pastel", "Rosa pálido", "Púrpura", "Malva", "Menta", "Beis", 
-    "Café", "Rojo vino", "Lavanda", "Blanco nieve", "Gris perla", "Verde musgo", "Amarillo mostaza", "Lima", 
-    "Azul eléctrico", "Azul zafiro", "Champagne", "Topacio", "Cian", "Salmon", "Caramelo", "Rosado", "Pistacho", 
-    "Verde esmeralda", "Verde menta", "Naranja quemado", "Rosa palo", "Fucsia brillante", "Cobre", "Cian", 
-    "Amarillo canario", "Marfil", "Azul petróleo", "Vino tinto", "Terracota", "Rojo carmesí", "Vino Borgoña", 
-    "Cobalto", "Magenta", "Malva claro", "Garnet", "Ámbar", "Ártico", "Mauve", "Tangerine", "Fluorescente", 
-    "Lime Green", "Tierra", "Cielito", "Madera", "Petrolero", "Cereza brillante", "Siena quemada", "Almizcle"
-];
+    const coloresAleatorios = [
+        "ROJO", "AZUL", "VERDE", "AMARILLO", "NEGRO", "BLANCO", "ROSA", "MORADO", "NARANJA", "GRIS", "TURQUESA",
+        "VIOLETA", "FUCSIA", "MARRÓN", "BEIGE", "CELESTE", "CORAL", "LAVANDA", "LILA", "AQUA", "ÍNDIGO", "ORO",
+        "PLATA", "BRONCE", "VERDE OLIVA", "VERDE LIMA", "VERDE BOSQUE", "VERDE PASTO", "AZUL MARINO", "AZUL CLARO",
+        "AZUL TURQUESA", "AMARILLO PASTEL", "NARANJA PASTEL", "ROSA PÁLIDO", "PÚRPURA", "MALVA", "MENTA", "BEIS",
+        "CAFÉ", "ROJO VINO", "LAVANDA", "BLANCO NIEVE", "GRIS PERLA", "VERDE MUSGO", "AMARILLO MOSTAZA", "LIMA",
+        "AZUL ELÉCTRICO", "AZUL ZAFIRO", "CHAMPAGNE", "TOPACIO", "CIAN", "SALMON", "CARAMELO", "ROSADO", "PISTACHO",
+        "VERDE ESMERALDA", "VERDE MENTA", "NARANJA QUEMADO", "ROSA PALO", "FUCSIA BRILLANTE", "COBRE", "ROJO",
+        "AMARILLO CANARIO", "MARFIL", "AZUL PETRÓLEO", "VINO TINTO", "TERRACOTA", "ROJO CARMESÍ", "VINO BORGOÑA",
+        "COBALTO", "MAGENTA", "MALVA CLARO", "GARNET", "ÁMBAR", "ÁRTICO", "MAUVE", "TANGERINE", "FLUORESCENTE",
+        "LIME GREEN", "TIERRA", "CIELITO", "MADERA", "PETROLERO", "CEREZA BRILLANTE", "SIENA QUEMADA", "ALMIZCLE"
+    ];
 
-// Función para generar un nombre para el bloque al editar
-function generarNombreBloqueEditar() {
-    // Obtener los valores actuales de la base de datos
-    const tipo_material = document.querySelector('[name="tipo_material"]').value;  // Tipo de material
-    const tamano = document.querySelector('[name="tamano"]').value;  // Tamaño
-    const color = document.querySelector('[name="color"]').value;  // Color VITA seleccionado
-    const colorSeleccionado = document.getElementById("color").value;
-    const nombreActual = document.getElementById("nombre").value;
+    // Guardar los valores iniciales al cargar la página
+    let valoresIniciales = {};
 
-    // Separar el nombre actual en sus partes
-    const partes = nombreActual.split("-");
+    // Función para guardar los valores iniciales
+    function guardarValoresIniciales() {
+        valoresIniciales.tipo_material = document.querySelector('[name="tipo_material"]').value;
+        valoresIniciales.tamano = document.querySelector('[name="tamano"]').value;
+        valoresIniciales.color = document.querySelector('[name="color"]').value;
+    }
 
-    // Si la fruta y el color están definidos en el nombre, mantenlos
-    const frutaGuardada = partes[1] || frutas[Math.floor(Math.random() * frutas.length)];
-    const colorGuardado = partes[2] || coloresAleatorios[Math.floor(Math.random() * coloresAleatorios.length)];
+    // Función para manejar la visibilidad del campo color
+    function manejarVisibilidadColor() {
+        const tipoMaterial = document.querySelector('[name="tipo_material"]').value;
+        const colorField = document.querySelector('[name="color"]').closest('.form-group');
 
-    // Si el color o la fruta han cambiado, selecciona una nueva de la lista
-    const frutaAleatoria = frutaGuardada || frutas[Math.floor(Math.random() * frutas.length)];
-    const colorAleatorio = colorGuardado || coloresAleatorios[Math.floor(Math.random() * coloresAleatorios.length)];
+        // Ocultar el campo color si el material es CR CB o TITAN
+        if (tipoMaterial === "CR CB" || tipoMaterial === "TITAN") {
+            colorField.style.display = 'none';
+        } else {
+            colorField.style.display = 'block';
+        }
+    }
 
-    // Generar el nuevo nombre con los valores modificados
-    const nuevoNombre = `${tipo_material}-${frutaAleatoria}-${colorAleatorio}-${color}-H${tamano}`;
+    // Función para generar un nombre para el bloque al editar
+    function generarNombreBloqueEditar() {
+        // Obtener los valores actuales de la base de datos
+        const tipo_material = document.querySelector('[name="tipo_material"]').value;
+        const tamano = document.querySelector('[name="tamano"]').value;
+        const color = document.querySelector('[name="color"]').value;
+        const nombreActual = document.getElementById("nombre").value;
 
-    // Colocar el nombre generado en el campo de texto
-    document.getElementById("nombre").value = nuevoNombre;
-}
+        // Obtener la fruta y color actual del nombre (para no cambiarlos cada vez)
+        const partes = nombreActual.split("-");
+        const frutaGuardada = partes[1] || frutas[Math.floor(Math.random() * frutas.length)];
+        const colorGuardado = partes[2] || coloresAleatorios[Math.floor(Math.random() * coloresAleatorios.length)];
 
-// Llamar a la función cuando se cargue la página
-document.addEventListener("DOMContentLoaded", function () {
-    // Llamar a la función de generación de nombre al cargar la página para editar
-    generarNombreBloqueEditar();
+        // Generar el nuevo nombre con los valores actuales
+        let nuevoNombre;
+        if (tipo_material === 'TITAN' || tipo_material === 'CR CB') {
+            nuevoNombre = `${tipo_material}-${frutaGuardada}-${colorGuardado}-H${tamano}`;
+        } else {
+            nuevoNombre = `${tipo_material}-${frutaGuardada}-${colorGuardado}-${color}-H${tamano}`;
+        }
 
-    // Establecer eventos para actualizar el nombre cuando se cambian los campos
-    const campos = document.querySelectorAll('[name="tipo_material"], [name="color"], [name="tamano"]');
-    campos.forEach(campo => {
-        campo.addEventListener("change", generarNombreBloqueEditar);
+        document.getElementById("nombre").value = nuevoNombre;
+    }
+
+    // Llamar a la función cuando se cargue la página
+    document.addEventListener("DOMContentLoaded", function () {
+        guardarValoresIniciales();
+        manejarVisibilidadColor();
+
+        // Establecer eventos para actualizar el nombre cuando se cambian los campos
+        const campos = document.querySelectorAll('[name="tipo_material"], [name="color"], [name="tamano"]');
+        campos.forEach(campo => {
+            campo.addEventListener("change", () => {
+                manejarVisibilidadColor();  // Ocultar o mostrar el color según el tipo de material
+                generarNombreBloqueEditar();  // Actualizar el nombre si se hacen cambios
+            });
+        });
     });
-});
+
+    // Manejar el envío del formulario para asignar null al color si es necesario
+    const form = document.querySelector('form');
+    form.addEventListener('submit', (e) => {
+        const tipoMaterial = document.querySelector('[name="tipo_material"]').value;
+        const colorField = document.querySelector('[name="color"]');
+
+        if (tipoMaterial === 'TITAN' || tipoMaterial === 'CR CB') {
+            colorField.value = '';  // Dejar vacío para que se guarde como NULL en la BD
+        }
+    });
 </script>

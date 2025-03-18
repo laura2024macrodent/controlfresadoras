@@ -20,19 +20,19 @@
                                 <option value="SAGEMAX">SAGEMAX</option>
                                 <option value="STC">STC</option>
                                 <option value="SHTC">SHTC</option>
-                                <option value="Cr-CB">Cr-C</option>
-                                <option value="Titan">Titan</option>
+                                <option value="CR CB">CR CB</option>
+                                <option value="TITAN">TITAN</option>
                                 <option value="PMMA">PMMA</option>
                                 <option value="SHOFU HC">SHOFU HC</option>
                                 <option value="PMMA ML">PMMA ML</option>
-                                <option value="HTW-OPACO">HTW OPACO</option>
+                                <option value="HTW OPACO">HTW OPACO</option>
                                 <option value="AIZIR">AIZIR</option>
                                 <option value="PEEK">PEEK</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="">Codigo de barras del Bloque</label>
-                            <input type="text" class="form-control" id="codigo_bazrras" name="codigo_barras"
+                            <input type="text" class="form-control" id="codigo_barras" name="codigo_barras"
                                 placeholder="Codigo de Barras del Bloque">
                         </div>
                         <div class="form-group">
@@ -61,15 +61,15 @@
                                 <option value="D2">D2</option>
                                 <option value="D3">D3</option>
                                 <option value="D4">D4</option>
-                                <option value="0m1">0m1</option>
-                                <option value="0m2">0m2</option>
-                                <option value="0m3">0m3</option>
-                                <option value="Bl1">Bl1</option>
-                                <option value="Bl2">Bl2</option>
-                                <option value="Bl3">Bl3</option>
-                                <option value="Bl4">Bl4</option>
-                                <option value="Holywood">Holywood</option>
-                                <option value="Blanco Opaco">Blanco Opaco</option>
+                                <option value="0M1">0M1</option>
+                                <option value="0M2">0M2</option>
+                                <option value="0M3">0M3</option>
+                                <option value="BL1">BL1</option>
+                                <option value="BL2">BL2</option>
+                                <option value="BL3">BL3</option>
+                                <option value="BL4">BL4</option>
+                                <option value="WHITE">WHITE</option>
+                                <option value="BLANCO OPACO">BLANCO OPACO</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -77,8 +77,8 @@
                             <select class="form-control" name="tamano" placeholder="Tamaño" autofocus required>
                                 <option value="8">8</option>
                                 <option value="10">10</option>
-                                <option value="12">12</option>
-                                <option value="14" selected>14</option>
+                                <option value="12" selected>12</option>
+                                <option value="14">14</option>
                                 <option value="16">16</option>
                                 <option value="18">18</option>
                                 <option value="20">20</option>
@@ -111,24 +111,24 @@
     let numeroIncremental = localStorage.getItem("numeroIncremental") ? parseInt(localStorage.getItem("numeroIncremental")) : 1;
 
     const frutas = [
-        "Manzana", "Plátano", "Pera", "Naranja", "Uva", "Melón", "Sandía", "Fresa", "Piña", "Durazno",
-        "Mango", "Papaya", "Kiwi", "Cereza", "Ciruela", "Granada", "Frambuesa", "Mora", "Maracuyá", "Limón",
-        "Mandarina", "Aguacate", "Litchi", "Guayaba", "Durian", "Pitaya", "Carambola", "Pomelo", "Tamarindo",
-        "Mango de agua", "Chirimoya", "Zapote", "Coco", "Pasa", "Acelga", "Almendra", "Castaña", "Níspero",
-        "Soursop", "Rambután", "Langsat", "Pitangueiras", "Mamey", "Berries", "Tamarillo", "Longan", "Feijoa"
+        "MANZANA", "PLÁTANO", "PERA", "NARANJA", "UVA", "MELÓN", "SANDÍA", "FRESA", "PIÑA", "DURAZNO",
+        "MANGO", "PAPAYA", "KIWI", "CEREZA", "CIRUELA", "GRANADA", "FRAMBUESA", "MORA", "MARACUYÁ", "LIMÓN",
+        "MANDARINA", "AGUACATE", "LITCHI", "GUAYABA", "DURIAN", "PITAYA", "CARAMBOLA", "POMELO", "TAMARINDO",
+        "MANGO DE AGUA", "CHIRIMOYA", "ZAPOTE", "COCO", "PASA", "ACELGA", "ALMENDRA", "CASTAÑA", "NÍSPERO",
+        "SOURSOP", "RAMBUTÁN", "LANGSAT", "PITANGUEIRAS", "MAMEY", "BERRIES", "TAMARILLO", "LONGAN", "FEIJOA"
     ];
 
     const coloresAleatorios = [
-        "Rojo", "Azul", "Verde", "Amarillo", "Negro", "Blanco", "Rosa", "Morado", "Naranja", "Gris", "Turquesa",
-        "Violeta", "Fucsia", "Marrón", "Beige", "Celeste", "Coral", "Lavanda", "Lila", "Aqua", "Índigo", "Oro",
-        "Plata", "Bronce", "Verde oliva", "Verde lima", "Verde bosque", "Verde pasto", "Azul marino", "Azul claro",
-        "Azul turquesa", "Amarillo pastel", "Naranja pastel", "Rosa pálido", "Púrpura", "Malva", "Menta", "Beis",
-        "Café", "Rojo vino", "Lavanda", "Blanco nieve", "Gris perla", "Verde musgo", "Amarillo mostaza", "Lima",
-        "Azul eléctrico", "Azul zafiro", "Champagne", "Topacio", "Cian", "Salmon", "Caramelo", "Rosado", "Pistacho",
-        "Verde esmeralda", "Verde menta", "Naranja quemado", "Rosa palo", "Fucsia brillante", "Cobre", "Cian",
-        "Amarillo canario", "Marfil", "Azul petróleo", "Vino tinto", "Terracota", "Rojo carmesí", "Vino Borgoña",
-        "Cobalto", "Magenta", "Malva claro", "Garnet", "Ámbar", "Ártico", "Mauve", "Tangerine", "Fluorescente",
-        "Lime Green", "Tierra", "Cielito", "Madera", "Petrolero", "Cereza brillante", "Siena quemada", "Almizcle"
+        "ROJO", "AZUL", "VERDE", "AMARILLO", "NEGRO", "BLANCO", "ROSA", "MORADO", "NARANJA", "GRIS", "TURQUESA",
+        "VIOLETA", "FUCSIA", "MARRÓN", "BEIGE", "CELESTE", "CORAL", "LAVANDA", "LILA", "AQUA", "ÍNDIGO", "ORO",
+        "PLATA", "BRONCE", "VERDE OLIVA", "VERDE LIMA", "VERDE BOSQUE", "VERDE PASTO", "AZUL MARINO", "AZUL CLARO",
+        "AZUL TURQUESA", "AMARILLO PASTEL", "NARANJA PASTEL", "ROSA PÁLIDO", "PÚRPURA", "MALVA", "MENTA", "BEIS",
+        "CAFÉ", "ROJO VINO", "LAVANDA", "BLANCO NIEVE", "GRIS PERLA", "VERDE MUSGO", "AMARILLO MOSTAZA", "LIMA",
+        "AZUL ELÉCTRICO", "AZUL ZAFIRO", "CHAMPAGNE", "TOPACIO", "CIAN", "SALMON", "CARAMELO", "ROSADO", "PISTACHO",
+        "VERDE ESMERALDA", "VERDE MENTA", "NARANJA QUEMADO", "ROSA PALO", "FUCSIA BRILLANTE", "COBRE", "ROJO",
+        "AMARILLO CANARIO", "MARFIL", "AZUL PETRÓLEO", "VINO TINTO", "TERRACOTA", "ROJO CARMESÍ", "VINO BORGOÑA",
+        "COBALTO", "MAGENTA", "MALVA CLARO", "GARNET", "ÁMBAR", "ÁRTICO", "MAUVE", "TANGERINE", "FLUORESCENTE",
+        "LIME GREEN", "TIERRA", "CIELITO", "MADERA", "PETROLERO", "CEREZA BRILLANTE", "SIENA QUEMADA", "ALMIZCLE"
     ];
 
     // Función para generar un nombre aleatorio para el bloque
@@ -144,8 +144,8 @@
         // Generar el nombre del bloque en el formato: TipoMaterial-Fruta-Color-ColorVita-HTamaño
         let nombreBloque = `${tipo_material}-${frutaAleatoria}-${colorAleatorio}${numeroIncremental}-${color}-H${tamano}`;
 
-        // Si el tipo de material es Titan o Cr-CB, no incluir color
-        if (tipo_material === 'Titan' || tipo_material === 'Cr-CB') {
+        // Si el tipo de material es TITAN o CR CB, no incluir color
+        if (tipo_material === 'TITAN' || tipo_material === 'CR CB') {
             nombreBloque = `${tipo_material}-${frutaAleatoria}-${colorAleatorio}${numeroIncremental}-H${tamano}`;
         } else {
             nombreBloque = `${tipo_material}-${frutaAleatoria}-${colorAleatorio}${numeroIncremental}-${color}-H${tamano}`;
@@ -156,7 +156,7 @@
 
         // Ocultar o mostrar el campo de color dependiendo del tipo de material
         const colorField = document.querySelector('[name="color"]').closest('.form-group');
-        if (tipo_material === 'Titan' || tipo_material === 'Cr-CB') {
+        if (tipo_material === 'TITAN' || tipo_material === 'CR CB') {
             colorField.style.display = 'none'; // Ocultar el campo de color
         } else {
             colorField.style.display = 'block'; // Mostrar el campo de color
@@ -183,9 +183,9 @@
             numeroIncremental++;  // Aumentar solo al guardar
             localStorage.setItem("numeroIncremental", numeroIncremental);
 
-            // Si el material es Titan o Cr-CB, establecer el valor del color a 'sin color'
-            if (tipo_material === 'Titan' || tipo_material === 'Cr-CB') {
-                colorField.value = 'sin color'; // Asignar 'sin color' si es Titan o Cr-CB
+            // Si el material es TITAN o CR CB, establecer el valor del color a 'sin color'
+            if (tipo_material === 'TITAN' || tipo_material === 'CR CB') {
+                colorField.value = 'sin color'; // Asignar 'sin color' si es TITAN o CR CB
             }
 
             // Si el valor de color es null o vacío, asignar 'sin color'
