@@ -31,6 +31,11 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="factor_contraccion">Factor de contracción</label>
+                            <input type="text" class="form-control" id="factor_contraccion" name="factor_contraccion"
+                                placeholder="Factor de contracción del Bloque">
+                        </div>
+                        <div class="form-group">
                             <label for="">Codigo de barras del Bloque</label>
                             <input type="text" class="form-control" id="codigo_barras" name="codigo_barras"
                                 placeholder="Codigo de Barras del Bloque">
@@ -108,27 +113,56 @@
 <script>
 
     // Obtener el último número autoincrementable desde localStorage o inicializarlo en 1
-    let numeroIncremental = localStorage.getItem("numeroIncremental") ? parseInt(localStorage.getItem("numeroIncremental")) : 1;
+    // let numeroIncremental = localStorage.getItem("numeroIncremental") ? parseInt(localStorage.getItem("numeroIncremental")) : 1;
 
     const frutas = [
-        "MANZANA", "PLÁTANO", "PERA", "NARANJA", "UVA", "MELÓN", "SANDÍA", "FRESA", "PIÑA", "DURAZNO",
-        "MANGO", "PAPAYA", "KIWI", "CEREZA", "CIRUELA", "GRANADA", "FRAMBUESA", "MORA", "MARACUYÁ", "LIMÓN",
-        "MANDARINA", "AGUACATE", "LITCHI", "GUAYABA", "DURIAN", "PITAYA", "CARAMBOLA", "POMELO", "TAMARINDO",
-        "MANGO DE AGUA", "CHIRIMOYA", "ZAPOTE", "COCO", "PASA", "ACELGA", "ALMENDRA", "CASTAÑA", "NÍSPERO",
-        "SOURSOP", "RAMBUTÁN", "LANGSAT", "PITANGUEIRAS", "MAMEY", "BERRIES", "TAMARILLO", "LONGAN", "FEIJOA"
+        "MANZANA", "PLATANO", "PERA", "NARANJA", "UVA", "MELON", "SANDIA", "FRESA", "PINA", "DURAZNO",
+        "MANGO", "PAPAYA", "KIWI", "CEREZA", "CIRUELA", "GRANADA", "MORA", "LIMON", "GUAYABA", "MARACUYA",
+        "MANDARINA", "AGUACATE", "MAMON", "POMELO", "TAMARINDO", "ZAPOTE", "COCO", "ALMENDRA", "CASTANA",
+        "NISPERO", "MAMEY", "TAMARILLO", "FEIJOA", "ANON", "ARANDANO", "CAIMITO", "JOCOTE", "LUCUMA",
+        "CHONTADURO", "BOROJO", "UCHUVA", "SAPOTE", "MARANON", "COROZO", "GROSELLA", "GUANABANA",
+        "GRANADILLA", "GUAMA", "CURUBA", "NANCE", "UVILLA", "HIGO", "DAMASCO", "ACEROLA", "CARAMBOLA",
+        "TUMBO", "PITAYA", "GUAYUSA", "AGUAYMANTO", "MOTILON", "NARANJILLA", "PAPAYUELA", "CAMU CAMU",
+        "GUARANA", "MAMONCILLO", "YACON", "LULO", "COPOAZU", "CIRIGUELO", "TUNA", "ACHOTILLO",
+        "GUAVIRA", "BACABA", "QUINOTO", "PEPINO DULCE", "ANACARDO", "JAMBOLAN", "HICACO", "MANGABA",
+        "CHIRIMOYA", "MAMEY ROJO", "PASSIFLORA", "MORICHE", "BIRIBA", "GUAIMARO", "CIRUELA AMARILLA",
+        "TOTAI", "YATAY", "SAPOTILLA", "GUACIO", "TAMARIN", "POMELO ROSADO", "AGUACATILLO", "GUAYURITA",
+        "CEREZA NEGRA", "CIRUELA VERDE", "MANGO DE AGUA", "GRANADILLO", "MELON PEPIÑO", "BOLDO", "CAMOTILLO",
+        "TAMICO", "JERGUILLO", "TUMBITA", "CAMBIURRITO", "GUAVITO", "JOCOTE NEGRO", "CIRUELILLO",
+        "AGUAIMANTO", "MOROCHILLO", "ARAZA", "CAFE", "TAYUYA", "MIRTO ROJO", "SAPUCAIA", "MIRTO NEGRO",
+        "TOMATE DE ARBOL", "LIMON MANDARINO", "GUABIRA", "CIRIGUELON", "MANGO BANILEJO", "GUAYABITA DEL PERU",
+        "JURUCU", "GUAVO", "GUAPURU", "PAJURE", "PISTACHO", "COCONA", "MARASMO", "SIRIGUELA", "CHORRITO",
+        "LIMONTA", "PANDANO", "PEQUI", "UBAJARA", "CHERRY", "AGUAJILLO", "MURTA", "BAGUA", "MELON AMARILLO",
+        "DURIAN", "FALSA GUAYABA", "GRAVIOLA", "NUTRIA", "GUABO", "JACARANDA", "GUAVILLA", "SAFARANA",
+        "TOMATE SILVESTRE", "CARAMBOLA PEQUENA", "POMELO DULCE", "CAJUILLO", "SANDIA AMARILLA"
     ];
 
     const coloresAleatorios = [
-        "ROJO", "AZUL", "VERDE", "AMARILLO", "NEGRO", "BLANCO", "ROSA", "MORADO", "NARANJA", "GRIS", "TURQUESA",
-        "VIOLETA", "FUCSIA", "MARRÓN", "BEIGE", "CELESTE", "CORAL", "LAVANDA", "LILA", "AQUA", "ÍNDIGO", "ORO",
-        "PLATA", "BRONCE", "VERDE OLIVA", "VERDE LIMA", "VERDE BOSQUE", "VERDE PASTO", "AZUL MARINO", "AZUL CLARO",
-        "AZUL TURQUESA", "AMARILLO PASTEL", "NARANJA PASTEL", "ROSA PÁLIDO", "PÚRPURA", "MALVA", "MENTA", "BEIS",
-        "CAFÉ", "ROJO VINO", "LAVANDA", "BLANCO NIEVE", "GRIS PERLA", "VERDE MUSGO", "AMARILLO MOSTAZA", "LIMA",
-        "AZUL ELÉCTRICO", "AZUL ZAFIRO", "CHAMPAGNE", "TOPACIO", "CIAN", "SALMON", "CARAMELO", "ROSADO", "PISTACHO",
-        "VERDE ESMERALDA", "VERDE MENTA", "NARANJA QUEMADO", "ROSA PALO", "FUCSIA BRILLANTE", "COBRE", "ROJO",
-        "AMARILLO CANARIO", "MARFIL", "AZUL PETRÓLEO", "VINO TINTO", "TERRACOTA", "ROJO CARMESÍ", "VINO BORGOÑA",
-        "COBALTO", "MAGENTA", "MALVA CLARO", "GARNET", "ÁMBAR", "ÁRTICO", "MAUVE", "TANGERINE", "FLUORESCENTE",
-        "LIME GREEN", "TIERRA", "CIELITO", "MADERA", "PETROLERO", "CEREZA BRILLANTE", "SIENA QUEMADA", "ALMIZCLE"
+        "ROJO", "AZUL", "VERDE", "AMARILLO", "NEGRO", "BLANCO", "ROSA", "MORADO", "NARANJA", "GRIS",
+        "TURQUESA", "VIOLETA", "FUCSIA", "MARRON", "BEIGE", "CELESTE", "CORAL", "LAVANDA", "LILA",
+        "AQUA", "INDIGO", "ORO", "PLATA", "BRONCE", "VERDE OLIVA", "VERDE LIMA", "VERDE BOSQUE",
+        "VERDE PASTO", "AZUL MARINO", "AZUL CLARO", "AZUL TURQUESA", "AMARILLO PASTEL", "NARANJA PASTEL",
+        "ROSA PALIDO", "PURPURA", "MENTA", "CAFE", "ROJO VINO", "GRIS PERLA", "VERDE MUSGO",
+        "AMARILLO MOSTAZA", "LIMA", "AZUL ELECTRICO", "CIAN", "SALMON", "CARAMELO", "ROSADO",
+        "VERDE ESMERALDA", "NARANJA QUEMADO", "ROSA PALO", "COBRE", "AMARILLO CANARIO", "MARFIL",
+        "AZUL PETROLEO", "VINO TINTO", "TERRACOTA", "ROJO CARMESI", "COBALTO", "MAGENTA", "AMBAR",
+        "TANGERINA", "TIERRA", "MADERA", "MOSTAZA", "AGUAMARINA", "GRIS HUMO",
+        "GRANATE", "NARANJA MANDARINA", "LADRILLO", "MORADO INTENSO",
+        "OLIVA CLARO", "CENIZA", "FUEGO", "CIELO", "AGAVE", "ARENA", "PIEL",
+        "LAVA", "OCRE", "CACAO", "MALVA", "CANELA", "COCOA",
+        "BARRO", "PASTEL", "VAINILLA", "VERDE HOJA", "AZUL CIELO", "VERDE AMAZONAS",
+        "MORADO BERENJENA", "ROSA CHICLE", "PISTACHO", "TABACO", "AZAFRAN",
+        "GRIS AZULADO", "PERLA", "PALO ROSA", "MORADO OSCURO", "VERDE JUNGLE", "GRIS CLARO",
+        "NIEVE", "BRONCEADO", "CHICLE", "PLOMO", "NUBE", "ESMERALDA",
+        "AMATISTA", "GRAFITO", "CENIZA OSCURA", "TORMENTA", "ANTRACITA", "HUMO AZUL",
+        "ZAFIRO", "LAPISLAZULI", "ALUMINIO", "GRIS CARBON", "BERMEJO", "MANGO MADURO",
+        "JADE", "TURMALINA", "CARMESI", "ROSADO POLVO", "GRIS RATÓN", "TURQUESA OSCURO",
+        "ROJO FERRARI", "VERDE PRIMAVERA", "CIRUELA", "OPALO", "VERDE LIMÓN", "PIZARRA",
+        "MOSTAZA OSCURO", "LADRILLO SUAVE", "AZUL ARÁNDANO", "LILA OSCURO", "PLATA VIEJA", "MORADO MEDIO",
+        "VERDE FLUORESCENTE", "AMARILLO FLUORESCENTE", "ROJO OSCURO", "VERDE HIERBA", "AZUL COBALTO",
+        "ROSADO NEÓN", "GRIS ACERO", "NARANJA NEÓN", "LILA PASTEL", "VERDE BOSCOSO",
+        "ROSA PASTEL", "VIOLETA OSCURO", "TERRACOTA CLARO", "DORADO OSCURO", "TURQUESA CLARO",
+        "VERDE OLIVA OSCURO", "CIAN OSCURO", "AZUL CENIZA", "MORADO NEÓN", "ROJO GRANADA"
     ];
 
     // Función para generar un nombre aleatorio para el bloque
@@ -142,13 +176,13 @@
         const colorAleatorio = coloresAleatorios[Math.floor(Math.random() * coloresAleatorios.length)];
 
         // Generar el nombre del bloque en el formato: TipoMaterial-Fruta-Color-ColorVita-HTamaño
-        let nombreBloque = `${tipo_material}-${frutaAleatoria}-${colorAleatorio}${numeroIncremental}-${color}-H${tamano}`;
+        let nombreBloque = `${tipo_material}-${frutaAleatoria}-${colorAleatorio}-${color}-H${tamano}`;
 
         // Si el tipo de material es TITAN o CR CB, no incluir color
         if (tipo_material === 'TITAN' || tipo_material === 'CR CB') {
-            nombreBloque = `${tipo_material}-${frutaAleatoria}-${colorAleatorio}${numeroIncremental}-H${tamano}`;
+            nombreBloque = `${tipo_material}-${frutaAleatoria}-${colorAleatorio}-H${tamano}`;
         } else {
-            nombreBloque = `${tipo_material}-${frutaAleatoria}-${colorAleatorio}${numeroIncremental}-${color}-H${tamano}`;
+            nombreBloque = `${tipo_material}-${frutaAleatoria}-${colorAleatorio}-${color}-H${tamano}`;
         }
 
         // Colocar el nombre generado en el campo de texto
@@ -180,8 +214,8 @@
             const tipo_material = document.querySelector('[name="tipo_material"]').value;
             const colorField = document.querySelector('[name="color"]');
 
-            numeroIncremental++;  // Aumentar solo al guardar
-            localStorage.setItem("numeroIncremental", numeroIncremental);
+            //numeroIncremental++;  // Aumentar solo al guardar
+            //localStorage.setItem("numeroIncremental", numeroIncremental);
 
             // Si el material es TITAN o CR CB, establecer el valor del color a 'sin color'
             if (tipo_material === 'TITAN' || tipo_material === 'CR CB') {
@@ -192,6 +226,9 @@
             if (!colorField.value) {
                 colorField.value = 'sin color';
             }
+
+            // const factorContraccion = document.getElementById("factor_contraccion").value;
+            // alert("Factor de contracción: " + factorContraccion);
 
             // Verificar que el valor de color se cambió correctamente a 'sin color'
             console.log('Valor de color antes de enviar:', colorField.value); // Para depuración, puedes verificar el valor aquí

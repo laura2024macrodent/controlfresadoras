@@ -22,14 +22,15 @@
                     <thead>
                         <tr>
                             <th>Nombre</th>
+                            <th>&nbsp;Factor&nbsp;de&nbsp;contracción&nbsp;</th>
                             <th>Codigo de Barras</th>
                             <th>Lote</th>
                             <th>Estado</th>
                             <th>Color</th>
                             <th>Tamaño</th>
                             <th>Material</th>
-                            <th>Fecha de Creación</th>
-                            <th>Fecha de Finalización</th>
+                            <th>Fecha&nbsp;de&nbsp;Creación</th>
+                            <th>Fecha&nbsp;de&nbsp;Finalización</th>
                             <th>Operario</th>
                             <th>Acciones</th>
                         </tr>
@@ -38,6 +39,7 @@
                         {{#each bloque}}
                         <tr class="fila-bloque">
                             <td class="text-nowrap" style="white-space: normal;">{{this.nombre}}</td>
+                            <td class="text-center">{{this.factor_contraccion}}</td>
                             <td class="text-center">{{this.codigo_barras}}</td>
                             <td class="text-center">{{this.cantidad}}</td>
                             <td class="text-center">

@@ -70,10 +70,11 @@ router.get('/add', isLoggedIn, async (req, res) => {
 }); */
 
 router.post('/add', isLoggedIn, async(req, res) => {
-    const {nombre,codigo_barras,cantidad,color,tamano,tipo_material,id_operario} = req.body;
+    const {nombre,factor_contraccion,codigo_barras,cantidad,color,tamano,tipo_material,id_operario} = req.body;
     const usuario = req.user;
     const newBloque = {
         nombre,
+        factor_contraccion,
         codigo_barras,
         cantidad,
         color,
@@ -179,10 +180,11 @@ router.get('/edit/:id_bloque', isLoggedIn, async (req, res) => {
 
 router.post('/edit/:id_bloque', isLoggedIn, async (req, res) => {
     const {id_bloque} = req.params;
-    const {nombre,codigo_barras,cantidad,color,tamano,tipo_material,id_operario} = req.body;
+    const {nombre,factor_contraccion,codigo_barras,cantidad,color,tamano,tipo_material,id_operario} = req.body;
     const usuario = req.user;
     const newBloque = {
         nombre,
+        factor_contraccion,
         codigo_barras,
         cantidad,
         color, 
@@ -249,6 +251,7 @@ router.get('/descargar-excel', isLoggedIn, async (req, res) => {
         worksheet.columns = [
             { header: 'ID', key: 'id_bloque', width: 5 },
             { header: 'Nombre', key: 'nombre', width: 40 },
+            { header: 'Factor de Contracción', key: 'factor_contraccion', width: 10 },
             { header: 'Codigo de Barras', key: 'codigo_barras', width: 20 },
             { header: 'Lote', key: 'cantidad', width: 10 },
             { header: 'Estado', key: 'estado', width: 10 },
@@ -289,6 +292,7 @@ router.get('/descargar-excel', isLoggedIn, async (req, res) => {
             worksheet.addRow({
                 id_bloque: row.id_bloque,
                 nombre: row.nombre,
+                factor_contraccion: row.factor_contraccion,
                 codigo_barras: row.codigo_barras,
                 cantidad: row.cantidad,
                 estado: estadoTexto,  // Mostrar texto amigable en lugar de 1 o 0
