@@ -32,7 +32,7 @@
                         <div class="form-group">
                             <label for="">Factor de contracción</label>
                             <input type="text" value="{{bloque.factor_contraccion}}" class="form-control" id="factor_contraccion"
-                                name="factor_contraccion" placeholder="Factor de contracción" readonly>
+                                name="factor_contraccion" placeholder="Factor de contracción">
                         </div>
                         <div class="form-group">
                             <label for="">Codigo de Barras</label>
@@ -142,18 +142,27 @@
         valoresIniciales.color = document.querySelector('[name="color"]').value;
     }
 
-    // Función para manejar la visibilidad del campo color
-    function manejarVisibilidadColor() {
-        const tipoMaterial = document.querySelector('[name="tipo_material"]').value;
-        const colorField = document.querySelector('[name="color"]').closest('.form-group');
+    // Función para manejar la visibilidad de los campos color y factor de contracción
+function manejarVisibilidadCampos() {
+    const tipoMaterial = document.querySelector('[name="tipo_material"]').value;
+    const colorField = document.querySelector('[name="color"]').closest('.form-group');
+    const factorContraccionField = document.querySelector('[name="factor_contraccion"]').closest('.form-group');
 
-        // Ocultar el campo color si el material es CR CB o TITAN
-        if (tipoMaterial === "CR CB" || tipoMaterial === "TITAN") {
-            colorField.style.display = 'none';
-        } else {
-            colorField.style.display = 'block';
-        }
+    // Ocultar el campo color si el material es CR CB o TITAN
+    if (tipoMaterial === "CR CB" || tipoMaterial === "TITAN") {
+        colorField.style.display = 'none';
+    } else {
+        colorField.style.display = 'block';
     }
+
+    // Ocultar el campo factor de contracción si el material no es de los especificados
+    const materialesConFactor = ["3D", "SAGEMAX", "STC", "SHTC", "HTW OPACO", "AIZIR"];
+    if (materialesConFactor.includes(tipoMaterial)) {
+        factorContraccionField.style.display = 'block';
+    } else {
+        factorContraccionField.style.display = 'none';
+    }
+}
 
     // Función para generar un nombre para el bloque al editar
     function generarNombreBloqueEditar() {
@@ -182,13 +191,13 @@
     // Llamar a la función cuando se cargue la página
     document.addEventListener("DOMContentLoaded", function () {
         guardarValoresIniciales();
-        manejarVisibilidadColor();
+        manejarVisibilidadCampos();
 
         // Establecer eventos para actualizar el nombre cuando se cambian los campos
         const campos = document.querySelectorAll('[name="tipo_material"], [name="color"], [name="tamano"]');
         campos.forEach(campo => {
             campo.addEventListener("change", () => {
-                manejarVisibilidadColor();  // Ocultar o mostrar el color según el tipo de material
+                manejarVisibilidadCampos();  // Ocultar o mostrar el color según el tipo de material
                 generarNombreBloqueEditar();  // Actualizar el nombre si se hacen cambios
             });
         });

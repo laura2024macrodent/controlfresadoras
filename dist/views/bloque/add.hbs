@@ -190,10 +190,43 @@
 
         // Ocultar o mostrar el campo de color dependiendo del tipo de material
         const colorField = document.querySelector('[name="color"]').closest('.form-group');
+        const colorInput = document.querySelector('[name="color"]');
+
+        // Verificar si el input hidden ya existe
+        let hiddenInput = document.querySelector('[name="color_hidden"]');
+
         if (tipo_material === 'TITAN' || tipo_material === 'CR CB') {
             colorField.style.display = 'none'; // Ocultar el campo de color
+            colorInput.removeAttribute('required');
+            colorInput.value = "-"; // Asignar "-"
+
+            // Si no existe el input hidden, crearlo
+            if (!hiddenInput) {
+                hiddenInput = document.createElement("input");
+                hiddenInput.type = "hidden";
+                hiddenInput.name = "color";
+                hiddenInput.value = "-";
+                colorInput.parentNode.appendChild(hiddenInput);
+            }
         } else {
             colorField.style.display = 'block'; // Mostrar el campo de color
+
+            // Si hay un input hidden, eliminarlo
+            if (hiddenInput) {
+                hiddenInput.remove();
+            }
+        }
+
+        // Ocultar o mostrar el campo de factor de contracción dependiendo del tipo de material
+        const factorContraccionField = document.querySelector('[name="factor_contraccion"]').closest('.form-group');
+        const factorContraccionInput = document.querySelector('[name="factor_contraccion"]');
+
+        if (["3D", "SAGEMAX", "STC", "SHTC", "HTW OPACO", "AIZIR"].includes(tipo_material)) {
+            factorContraccionField.style.display = 'block'; // Mostrar el campo
+            factorContraccionInput.value = ""; // Limpiar el valor si se muestra
+        } else {
+            factorContraccionField.style.display = 'none'; // Ocultar el campo
+            factorContraccionInput.value = "-"; // Asignar "-" cuando se oculta
         }
     }
 
