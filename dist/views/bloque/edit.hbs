@@ -210,7 +210,15 @@ function manejarVisibilidadCampos() {
         const colorField = document.querySelector('[name="color"]');
 
         if (tipoMaterial === 'TITAN' || tipoMaterial === 'CR CB') {
-            colorField.value = '';  // Dejar vacío para que se guarde como NULL en la BD
+            colorField.value = '-'; // Asigna un valor alternativo en lugar de NULL
+        }
+
+        // Lista de materiales que requieren factor de contracción
+        const materialesConFactor = ["3D", "SAGEMAX", "STC", "SHTC", "HTW OPACO", "AIZIR"];
+
+        // Asignar "-" al factor de contracción si el material NO requiere este campo
+        if (!materialesConFactor.includes(tipoMaterial)) {
+            factorContraccionField.value = '-';
         }
     });
 </script>

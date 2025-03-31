@@ -182,12 +182,15 @@ router.post('/edit/:id_bloque', isLoggedIn, async (req, res) => {
     const {id_bloque} = req.params;
     const {nombre,factor_contraccion,codigo_barras,cantidad,color,tamano,tipo_material,id_operario} = req.body;
     const usuario = req.user;
+
+    // Validación para evitar que 'color' sea NULL
+    const colorFinal = color ? color : '-'; // Asigna '-' si color está vacío o es null
     const newBloque = {
         nombre,
         factor_contraccion,
         codigo_barras,
         cantidad,
-        color, 
+        color: colorFinal, 
         tamano,
         tipo_material,
         id_operario 
