@@ -188,33 +188,13 @@
         // Colocar el nombre generado en el campo de texto
         document.getElementById("nombre").value = nombreBloque;
 
-        // Ocultar o mostrar el campo de color dependiendo del tipo de material
+        // Mostrar u ocultar el campo de color dependiendo del tipo de material
         const colorField = document.querySelector('[name="color"]').closest('.form-group');
-        const colorInput = document.querySelector('[name="color"]');
-
-        // Verificar si el input hidden ya existe
-        let hiddenInput = document.querySelector('[name="color_hidden"]');
 
         if (tipo_material === 'TITAN' || tipo_material === 'CR CB') {
-            colorField.style.display = 'none'; // Ocultar el campo de color
-            colorInput.removeAttribute('required');
-            colorInput.value = "-"; // Asignar "-"
-
-            // Si no existe el input hidden, crearlo
-            if (!hiddenInput) {
-                hiddenInput = document.createElement("input");
-                hiddenInput.type = "hidden";
-                hiddenInput.name = "color";
-                hiddenInput.value = "-";
-                colorInput.parentNode.appendChild(hiddenInput);
-            }
+            colorField.style.display = 'none';
         } else {
-            colorField.style.display = 'block'; // Mostrar el campo de color
-
-            // Si hay un input hidden, eliminarlo
-            if (hiddenInput) {
-                hiddenInput.remove();
-            }
+            colorField.style.display = 'block';
         }
 
         // Ocultar o mostrar el campo de factor de contracción dependiendo del tipo de material

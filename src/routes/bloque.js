@@ -2,14 +2,14 @@ const express = require('express');
 const ExcelJS = require('exceljs');
 const router = express.Router();
 const pool = require('../database');
-const {isLoggedIn} = require('../lib/auth');
+const { isLoggedIn } = require('../lib/auth');
 const moment = require('moment-timezone');
 
 router.get('/add', isLoggedIn, async (req, res) => {
     try {
         const operarioId = req.user.id_operario;
         const operarios = await pool.query('SELECT id_operario, fullname FROM operario WHERE id_operario = ?', [operarioId]);
-        res.render('bloque/add', {operarios});
+        res.render('bloque/add', { operarios });
     } catch (err) {
         console.error(err);
         res.status(500).send('Error al obtener los operarios');
@@ -69,19 +69,24 @@ router.get('/add', isLoggedIn, async (req, res) => {
     });
 }); */
 
-router.post('/add', isLoggedIn, async(req, res) => {
-    const {nombre,factor_contraccion,codigo_barras,cantidad,color,tamano,tipo_material,id_operario} = req.body;
+router.post('/add', isLoggedIn, async (req, res) => {
+    const { nombre, factor_contraccion, codigo_barras, cantidad, color, tamano, tipo_material, id_operario } = req.body;
     const usuario = req.user;
+
+    // Aseguramos que 'color' nunca sea NULL
+    const colorValue = color ? color : '-'; // Si 'color' está vacío o es NULL, asignamos '-'
+
     const newBloque = {
         nombre,
         factor_contraccion,
         codigo_barras,
         cantidad,
-        color,
+        color: colorValue, // Usamos el valor de 'color' que ya está asegurado
         tamano,
         tipo_material,
         id_operario
     };
+
     // Insertar el nuevo bloque en la base de datos
     await pool.query('INSERT INTO bloque SET ?', [newBloque], async (err, results) => {
         if (err) throw err;
@@ -93,7 +98,7 @@ router.post('/add', isLoggedIn, async(req, res) => {
         const mensaje = `${usuario.fullname} agregó el bloque ${nombre}`;
 
         // Insertar el registro en el historial de bloques
-        await pool.query('INSERT INTO historial_bloques (id_bloque, accion, mensaje, id_operario, nombre_operario) VALUES (?, ?, ?, ?, ?)', 
+        await pool.query('INSERT INTO historial_bloques (id_bloque, accion, mensaje, id_operario, nombre_operario) VALUES (?, ?, ?, ?, ?)',
             [id_bloque, 'agregar', mensaje, usuario.id_operario, usuario.fullname], (err) => {
                 if (err) throw err;
 
@@ -105,10 +110,10 @@ router.post('/add', isLoggedIn, async(req, res) => {
     });
 });
 
-router.get('/', isLoggedIn, async(req, res) => {
+router.get('/', isLoggedIn, async (req, res) => {
     const bloque = await pool.query('SELECT b.*, o.fullname AS operario_fullname FROM bloque b LEFT JOIN operario o ON b.id_operario = o.id_operario ORDER BY fecha_creacion DESC;');
     console.log(bloque);
-    res.render('bloque/list', {bloque});
+    res.render('bloque/list', { bloque });
 });
 
 // Ruta para actualizar el estado de un bloque
@@ -121,17 +126,17 @@ router.post('/update', isLoggedIn, async (req, res) => {
     try {
         // Obtenemos la fecha de finalización actual del bloque
         const [bloque] = await pool.query('SELECT fecha_finalizacion FROM bloque WHERE id_bloque = ?', [id_bloque]);
-        
-        if(bloque){
-            if(estado === '0'){
+
+        if (bloque) {
+            if (estado === '0') {
                 if (!bloque.fecha_finalizacion) {
                     fechaFinalizacion = moment.tz('America/Bogota').format('YYYY-MM-DD HH:mm:ss');  // Fecha y hora actuales
                 }
-                else{
+                else {
                     fechaFinalizacion = bloque.fecha_finalizacion;
                 }
             }
-            else if (estado === '1'){
+            else if (estado === '1') {
                 fechaFinalizacion = bloque.fecha_finalizacion;  // mantenemos la fecha de finalización existente
             }
         }
@@ -146,13 +151,13 @@ router.post('/update', isLoggedIn, async (req, res) => {
 });
 
 router.get('/delete/:id_bloque', isLoggedIn, async (req, res) => {
-    const {id_bloque} = req.params;
+    const { id_bloque } = req.params;
     const usuario = req.user;
     // Obtener el bloque antes de eliminarlo
     await pool.query('SELECT * FROM bloque WHERE id_bloque = ?', [id_bloque], async (err, results) => {
         if (err) throw err;
         const bloque = results[0];
- 
+
         // Crear el mensaje de historial
         const mensaje = `${usuario.fullname} eliminó el bloque ${bloque.nombre}`;
 
@@ -171,16 +176,16 @@ router.get('/delete/:id_bloque', isLoggedIn, async (req, res) => {
 });
 
 router.get('/edit/:id_bloque', isLoggedIn, async (req, res) => {
-    const {id_bloque} = req.params;
+    const { id_bloque } = req.params;
     const bloque = await pool.query('SELECT * FROM bloque WHERE id_bloque = ?', [id_bloque]);
     console.log(bloque[0]);
     const operarios = await pool.query('SELECT o.id_operario, o.fullname FROM operario o JOIN bloque b ON o.id_operario = b.id_operario WHERE b.id_bloque = ?', [id_bloque])
-    res.render('bloque/edit', {bloque: bloque[0], operarios: operarios});
+    res.render('bloque/edit', { bloque: bloque[0], operarios: operarios });
 });
 
 router.post('/edit/:id_bloque', isLoggedIn, async (req, res) => {
-    const {id_bloque} = req.params;
-    const {nombre,factor_contraccion,codigo_barras,cantidad,color,tamano,tipo_material,id_operario} = req.body;
+    const { id_bloque } = req.params;
+    const { nombre, factor_contraccion, codigo_barras, cantidad, color, tamano, tipo_material, id_operario } = req.body;
     const usuario = req.user;
 
     // Validación para evitar que 'color' sea NULL
@@ -190,10 +195,10 @@ router.post('/edit/:id_bloque', isLoggedIn, async (req, res) => {
         factor_contraccion,
         codigo_barras,
         cantidad,
-        color: colorFinal, 
+        color: colorFinal,
         tamano,
         tipo_material,
-        id_operario 
+        id_operario
     };
     await pool.query('SELECT * FROM bloque WHERE id_bloque = ?', [id_bloque], async (err, results) => {
         if (err) throw err;
@@ -203,7 +208,7 @@ router.post('/edit/:id_bloque', isLoggedIn, async (req, res) => {
         let mensaje = `${usuario.fullname} editó el bloque ${bloque.nombre}`;
         let cambiosDetectados = false;
 
-       if (tamano && tamano != bloque.tamano) {
+        if (tamano && tamano != bloque.tamano) {
             mensaje += `- cambiando el tamaño de "${bloque.tamano}" a "${tamano}"`;
             cambiosDetectados = true;
         }
@@ -223,7 +228,7 @@ router.post('/edit/:id_bloque', isLoggedIn, async (req, res) => {
             mensaje += `\n`;
             mensaje += ` - se cambio su nombre a  "${newBloque.nombre}"`;
             // Si hubo cambios, se inserta el mensaje en el historial
-            await pool.query('INSERT INTO historial_bloques (id_bloque, accion, mensaje, id_operario, nombre_operario) VALUES (?, ?, ?, ?, ?)', 
+            await pool.query('INSERT INTO historial_bloques (id_bloque, accion, mensaje, id_operario, nombre_operario) VALUES (?, ?, ?, ?, ?)',
                 [id_bloque, 'editar', mensaje, usuario.id_operario, usuario.fullname], async (err) => {
                     if (err) throw err;
 
@@ -231,14 +236,14 @@ router.post('/edit/:id_bloque', isLoggedIn, async (req, res) => {
                     await pool.query('UPDATE bloque SET ? WHERE id_bloque =?', [newBloque, id_bloque]);
                     req.flash('success', 'Bloque Actualizado Exitosamente');
                     res.redirect('/bloque');
-                 });
+                });
         } else {
             // Si no hubo cambios, solo se actualiza el bloque sin registrar historial
             req.flash('success', 'No se realizaron cambios en el bloque');
             res.redirect('/bloque');
         }
     });
-}); 
+});
 
 // Ruta para generar el archivo Excel
 router.get('/descargar-excel', isLoggedIn, async (req, res) => {
@@ -269,9 +274,9 @@ router.get('/descargar-excel', isLoggedIn, async (req, res) => {
         // Estilo de las celdas del encabezado
         worksheet.getRow(1).font = { bold: true, size: 12 }; // Negrita y tamaño de fuente para el encabezado
         worksheet.getRow(1).alignment = { vertical: 'middle', horizontal: 'center' };  // Centrado
-        worksheet.getRow(1).fill = { 
-            type: 'pattern', 
-            pattern: 'solid', 
+        worksheet.getRow(1).fill = {
+            type: 'pattern',
+            pattern: 'solid',
             fgColor: { argb: 'FF4F81BD' } // Color de fondo del encabezado (azul)
         };
 
@@ -378,7 +383,7 @@ router.get('/historial', isLoggedIn, async (req, res) => {
         console.log(historial); // Verifica cómo se está agrupando
 
         console.log('Historial agrupado:', JSON.stringify(historial, null, 2));
-        
+
         // Pasar el historial agrupado a la vista
         res.render('bloque/historial', { historial: historial });
     });
