@@ -93,14 +93,14 @@
                             </select>
                         </div>
                         <!-- Muestra de ubicación -->
-                        <div class="form-group">
+                        {{!-- <div class="form-group">
                             <label for="ubicacion_mensaje">Ubicación Obligatoria del Bloque:</label>
                             <div id="ubicacion_mensaje" class="alert alert-info">Selecciona tipo y tamaño para sugerir
                                 ubicación.</div>
-                        </div>
+                        </div> --}}
 
                         <!-- Oculto que se envía al backend -->
-                        <input type="hidden" name="ubicacion" id="ubicacion">
+                        {{!-- <input type="hidden" name="ubicacion" id="ubicacion">
                         <div class="form-group" style="display: none;">
                             <select type="hidden" name="id_operario" id="id_operario" class="form-control" readonly>
                                 <!-- Itera sobre el array de operarios -->
@@ -108,7 +108,7 @@
                                 <option value="{{id_operario}}">{{fullname}} (ID: {{id_operario}})</option>
                                 {{/each}}
                             </select>
-                        </div>
+                        </div> --}}
                         <div class="form-group">
                             <button class="btn btn-success btn-block">
                                 Guardar
@@ -121,44 +121,6 @@
     </div>
 </div>
 <script>
-
-    const tipoSelect = document.querySelector('select[name="tipo_material"]');
-    const tamanoSelect = document.querySelector('select[name="tamano"]');
-    const ubicacionMensaje = document.getElementById('ubicacion_mensaje');
-    const ubicacionInput = document.getElementById('ubicacion');
-
-    async function solicitarUbicacion() {
-        const tipo = tipoSelect.value;
-        const tamano = tamanoSelect.value;
-
-        try {
-            const response = await fetch('/bloque/location', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ tipo_material: tipo, tamano: tamano })
-            });
-
-            const data = await response.json();
-
-            if (data.success) {
-                const { cajon, columna, fila } = data.ubicacion;
-                ubicacionMensaje.textContent = `Cajón ${cajon}, Columna ${columna}, Fila ${fila}`;
-                ubicacionInput.value = `${cajon},${columna},${fila}`;
-            } else {
-                ubicacionMensaje.textContent = `⚠️ ${data.message}`;
-                ubicacionInput.value = "";
-            }
-        } catch (error) {
-            ubicacionMensaje.textContent = "⚠️ Error al obtener ubicación.";
-            ubicacionInput.value = "";
-        }
-    }
-
-    tipoSelect.addEventListener('change', solicitarUbicacion);
-    tamanoSelect.addEventListener('change', solicitarUbicacion);
-    document.addEventListener('DOMContentLoaded', solicitarUbicacion);
 
     // Obtener el último número autoincrementable desde localStorage o inicializarlo en 1
     // let numeroIncremental = localStorage.getItem("numeroIncremental") ? parseInt(localStorage.getItem("numeroIncremental")) : 1;

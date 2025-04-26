@@ -44,14 +44,14 @@ router.post('/add', isLoggedIn, async (req, res) => {
         const id_bloque = results.insertId;
 
         // Obtener la ubicación disponible para este material y altura
-        const ubicacion = await obtenerUbicacionDisponible(tipo_material, tamano);
+        // const ubicacion = await obtenerUbicacionDisponible(tipo_material, tamano);
 
         // Insertar la ubicación en la tabla 'ubicacion_bloque'
-        await pool.query('INSERT INTO ubicacion_bloque (id_bloque, cajon, fila, columna, id_operario) VALUES (?, ?, ?, ?, ?)',
-            [id_bloque, ubicacion.cajon, ubicacion.fila, ubicacion.columna, id_operario]);
+        // await pool.query('INSERT INTO ubicacion_bloque (id_bloque, cajon, fila, columna, id_operario) VALUES (?, ?, ?, ?, ?)',
+            // [id_bloque, ubicacion.cajon, ubicacion.fila, ubicacion.columna, id_operario]);
 
         // Crear el mensaje de historial para el nuevo bloque
-        const mensaje = `${usuario.fullname} agregó el bloque ${nombre}`;
+        // const mensaje = `${usuario.fullname} agregó el bloque ${nombre}`;
 
         // Insertar el registro en el historial de bloques
         await pool.query('INSERT INTO historial_bloques (id_bloque, accion, mensaje, id_operario, nombre_operario) VALUES (?, ?, ?, ?, ?)',
