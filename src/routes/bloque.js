@@ -58,7 +58,8 @@ router.post('/add', isLoggedIn, async (req, res) => {
             [id_bloque, 'agregar', mensaje, usuario.id_operario, usuario.fullname]);
 
         // Después de agregar al historial, redirigir al usuario
-        req.flash('success', `Bloque Guardado Exitosamente en Cajón ${ubicacion.cajon}, Columna ${ubicacion.columna}, Fila ${ubicacion.fila}`);
+        // req.flash('success', `Bloque Guardado Exitosamente en Cajón ${ubicacion.cajon}, Columna ${ubicacion.columna}, Fila ${ubicacion.fila}`);
+        req.flash('success', `Bloque Guardado Exitosamente`);
         res.redirect('/bloque');
     } catch (err) {
         console.error(err);
