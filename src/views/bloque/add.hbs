@@ -20,6 +20,7 @@
                                 <option value="SAGEMAX">SAGEMAX</option>
                                 <option value="STC">STC</option>
                                 <option value="SHTC">SHTC</option>
+                                <option value="SHTC">SHTM</option>
                                 <option value="CR CB">CR CB</option>
                                 <option value="TITAN">TITAN</option>
                                 <option value="PMMA">PMMA</option>
@@ -91,6 +92,15 @@
                                 <option value="25">25</option>
                             </select>
                         </div>
+                        <!-- Muestra de ubicación -->
+                        <div class="form-group">
+                            <label for="ubicacion_mensaje">Ubicación Obligatoria del Bloque:</label>
+                            <div id="ubicacion_mensaje" class="alert alert-info">Selecciona tipo y tamaño para sugerir
+                                ubicación.</div>
+                        </div>
+
+                        <!-- Oculto que se envía al backend -->
+                        <input type="hidden" name="ubicacion" id="ubicacion">
                         <div class="form-group" style="display: none;">
                             <select type="hidden" name="id_operario" id="id_operario" class="form-control" readonly>
                                 <!-- Itera sobre el array de operarios -->
@@ -111,6 +121,44 @@
     </div>
 </div>
 <script>
+
+    const tipoSelect = document.querySelector('select[name="tipo_material"]');
+    const tamanoSelect = document.querySelector('select[name="tamano"]');
+    const ubicacionMensaje = document.getElementById('ubicacion_mensaje');
+    const ubicacionInput = document.getElementById('ubicacion');
+
+    async function solicitarUbicacion() {
+        const tipo = tipoSelect.value;
+        const tamano = tamanoSelect.value;
+
+        try {
+            const response = await fetch('/bloque/location', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ tipo_material: tipo, tamano: tamano })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                const { cajon, columna, fila } = data.ubicacion;
+                ubicacionMensaje.textContent = `Cajón ${cajon}, Columna ${columna}, Fila ${fila}`;
+                ubicacionInput.value = `${cajon},${columna},${fila}`;
+            } else {
+                ubicacionMensaje.textContent = `⚠️ ${data.message}`;
+                ubicacionInput.value = "";
+            }
+        } catch (error) {
+            ubicacionMensaje.textContent = "⚠️ Error al obtener ubicación.";
+            ubicacionInput.value = "";
+        }
+    }
+
+    tipoSelect.addEventListener('change', solicitarUbicacion);
+    tamanoSelect.addEventListener('change', solicitarUbicacion);
+    document.addEventListener('DOMContentLoaded', solicitarUbicacion);
 
     // Obtener el último número autoincrementable desde localStorage o inicializarlo en 1
     // let numeroIncremental = localStorage.getItem("numeroIncremental") ? parseInt(localStorage.getItem("numeroIncremental")) : 1;
@@ -201,7 +249,7 @@
         const factorContraccionField = document.querySelector('[name="factor_contraccion"]').closest('.form-group');
         const factorContraccionInput = document.querySelector('[name="factor_contraccion"]');
 
-        if (["3D", "SAGEMAX", "STC", "SHTC", "HTW OPACO", "AIZIR"].includes(tipo_material)) {
+        if (["3D", "SAGEMAX", "STC", "SHTC", "SHTM", "HTW OPACO", "AIZIR"].includes(tipo_material)) {
             factorContraccionField.style.display = 'block'; // Mostrar el campo
             factorContraccionInput.value = ""; // Limpiar el valor si se muestra
         } else {
