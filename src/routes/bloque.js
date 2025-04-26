@@ -51,7 +51,7 @@ router.post('/add', isLoggedIn, async (req, res) => {
             // [id_bloque, ubicacion.cajon, ubicacion.fila, ubicacion.columna, id_operario]);
 
         // Crear el mensaje de historial para el nuevo bloque
-        // const mensaje = `${usuario.fullname} agregó el bloque ${nombre}`;
+        const mensaje = `${usuario.fullname} agregó el bloque ${nombre}`;
 
         // Insertar el registro en el historial de bloques
         await pool.query('INSERT INTO historial_bloques (id_bloque, accion, mensaje, id_operario, nombre_operario) VALUES (?, ?, ?, ?, ?)',
