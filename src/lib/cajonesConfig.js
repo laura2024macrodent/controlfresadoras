@@ -13,7 +13,7 @@ module.exports = {
     "SAGEMAX": [8],
     "STC": [9],
     "SHTC": [10],
-    "SHTC": [11],
+    "SHTM": [11],
     "CR CB": [12],
     "TITAN": [13],
     "PMMA": [14],
