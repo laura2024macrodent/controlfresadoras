@@ -13,12 +13,13 @@ module.exports = {
     "SAGEMAX": [8],
     "STC": [9],
     "SHTC": [10],
-    "CR CB": [11],
-    "TITAN": [12],
-    "PMMA": [13],
-    "SHOFU HC": [14],
-    "PMMA ML": [15],
-    "HTW OPACO": [16],
-    "AIZIR": [17],
-    "PEEK": [18]
+    "SHTC": [11],
+    "CR CB": [12],
+    "TITAN": [13],
+    "PMMA": [14],
+    "SHOFU HC": [15],
+    "PMMA ML": [16],
+    "HTW OPACO": [17],
+    "AIZIR": [18],
+    "PEEK": [19]
 };

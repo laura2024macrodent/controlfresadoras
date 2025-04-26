@@ -186,7 +186,7 @@ function manejarVisibilidadCampos() {
     }
 
     // Ocultar el campo factor de contracción si el material no es de los especificados
-    const materialesConFactor = ["3D", "SAGEMAX", "STC", "SHTC", "HTW OPACO", "AIZIR"];
+    const materialesConFactor = ["3D", "SAGEMAX", "STC", "SHTC", "SHTM", "HTW OPACO", "AIZIR"];
     if (materialesConFactor.includes(tipoMaterial)) {
         factorContraccionField.style.display = 'block';
     } else {
@@ -244,7 +244,7 @@ function manejarVisibilidadCampos() {
         }
 
         // Lista de materiales que requieren factor de contracción
-        const materialesConFactor = ["3D", "SAGEMAX", "STC", "SHTC", "HTW OPACO", "AIZIR"];
+        const materialesConFactor = ["3D", "SAGEMAX", "STC", "SHTC", "SHTM", "HTW OPACO", "AIZIR"];
 
         // Asignar "-" al factor de contracción si el material NO requiere este campo
         if (!materialesConFactor.includes(tipoMaterial)) {
