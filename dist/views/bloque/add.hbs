@@ -16,18 +16,19 @@
                             <label for="">Tipo de material</label>
                             <select class="form-control" name="tipo_material" placeholder="Tipo de material" autofocus
                                 required>
-                                <option value="3D">3D</option>
-                                <option value="SAGEMAX">SAGEMAX</option>
-                                <option value="STC">STC</option>
-                                <option value="SHTC">SHTC</option>
-                                <option value="CR CB">CR CB</option>
-                                <option value="TITAN">TITAN</option>
-                                <option value="PMMA">PMMA</option>
-                                <option value="SHOFU HC">SHOFU HC</option>
-                                <option value="PMMA ML">PMMA ML</option>
-                                <option value="HTW OPACO">HTW OPACO</option>
-                                <option value="AIZIR">AIZIR</option>
-                                <option value="PEEK">PEEK</option>
+                                <option value="3d">3d</option>
+                                <option value="Sagemax">Sagemax</option>
+                                <option value="Stc">Stc</option>
+                                <option value="Shtc">Shtc</option>
+                                <option value="Shtm">Shtm</option>
+                                <option value="CrCo">CrCo</option>
+                                <option value="Titan">Titan</option>
+                                <option value="Pmma">Pmma</option>
+                                <option value="ShofuHc">ShofuHc</option>
+                                <option value="PmmaMl">PmmaMl</option>
+                                <option value="HtwOpaco">HtwOpaco</option>
+                                <option value="Aizir">Aizir</option>
+                                <option value="Peek">Peek</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -73,8 +74,8 @@
                                 <option value="BL2">BL2</option>
                                 <option value="BL3">BL3</option>
                                 <option value="BL4">BL4</option>
-                                <option value="WHITE">WHITE</option>
-                                <option value="BLANCO OPACO">BLANCO OPACO</option>
+                                <option value="White">White</option>
+                                <option value="BlancoOpaco">BlancoOpaco</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -91,6 +92,15 @@
                                 <option value="25">25</option>
                             </select>
                         </div>
+                        <!-- Muestra de ubicación -->
+                        {{!-- <div class="form-group">
+                            <label for="ubicacion_mensaje">Ubicación Obligatoria del Bloque:</label>
+                            <div id="ubicacion_mensaje" class="alert alert-info">Selecciona tipo y tamaño para sugerir
+                                ubicación.</div>
+                        </div> --}}
+
+                        <!-- Oculto que se envía al backend -->
+                        <!--<input type="hidden" name="ubicacion" id="ubicacion"> -->
                         <div class="form-group" style="display: none;">
                             <select type="hidden" name="id_operario" id="id_operario" class="form-control" readonly>
                                 <!-- Itera sobre el array de operarios -->
@@ -116,53 +126,53 @@
     // let numeroIncremental = localStorage.getItem("numeroIncremental") ? parseInt(localStorage.getItem("numeroIncremental")) : 1;
 
     const frutas = [
-        "MANZANA", "PLATANO", "PERA", "NARANJA", "UVA", "MELON", "SANDIA", "FRESA", "PINA", "DURAZNO",
-        "MANGO", "PAPAYA", "KIWI", "CEREZA", "CIRUELA", "GRANADA", "MORA", "LIMON", "GUAYABA", "MARACUYA",
-        "MANDARINA", "AGUACATE", "MAMON", "POMELO", "TAMARINDO", "ZAPOTE", "COCO", "ALMENDRA", "CASTANA",
-        "NISPERO", "MAMEY", "TAMARILLO", "FEIJOA", "ANON", "ARANDANO", "CAIMITO", "JOCOTE", "LUCUMA",
-        "CHONTADURO", "BOROJO", "UCHUVA", "SAPOTE", "MARANON", "COROZO", "GROSELLA", "GUANABANA",
-        "GRANADILLA", "GUAMA", "CURUBA", "NANCE", "UVILLA", "HIGO", "DAMASCO", "ACEROLA", "CARAMBOLA",
-        "TUMBO", "PITAYA", "GUAYUSA", "AGUAYMANTO", "MOTILON", "NARANJILLA", "PAPAYUELA", "CAMU CAMU",
-        "GUARANA", "MAMONCILLO", "YACON", "LULO", "COPOAZU", "CIRIGUELO", "TUNA", "ACHOTILLO",
-        "GUAVIRA", "BACABA", "QUINOTO", "PEPINO DULCE", "ANACARDO", "JAMBOLAN", "HICACO", "MANGABA",
-        "CHIRIMOYA", "MAMEY ROJO", "PASSIFLORA", "MORICHE", "BIRIBA", "GUAIMARO", "CIRUELA AMARILLA",
-        "TOTAI", "YATAY", "SAPOTILLA", "GUACIO", "TAMARIN", "POMELO ROSADO", "AGUACATILLO", "GUAYURITA",
-        "CEREZA NEGRA", "CIRUELA VERDE", "MANGO DE AGUA", "GRANADILLO", "MELON PEPIÑO", "BOLDO", "CAMOTILLO",
-        "TAMICO", "JERGUILLO", "TUMBITA", "CAMBIURRITO", "GUAVITO", "JOCOTE NEGRO", "CIRUELILLO",
-        "AGUAIMANTO", "MOROCHILLO", "ARAZA", "CAFE", "TAYUYA", "MIRTO ROJO", "SAPUCAIA", "MIRTO NEGRO",
-        "TOMATE DE ARBOL", "LIMON MANDARINO", "GUABIRA", "CIRIGUELON", "MANGO BANILEJO", "GUAYABITA DEL PERU",
-        "JURUCU", "GUAVO", "GUAPURU", "PAJURE", "PISTACHO", "COCONA", "MARASMO", "SIRIGUELA", "CHORRITO",
-        "LIMONTA", "PANDANO", "PEQUI", "UBAJARA", "CHERRY", "AGUAJILLO", "MURTA", "BAGUA", "MELON AMARILLO",
-        "DURIAN", "FALSA GUAYABA", "GRAVIOLA", "NUTRIA", "GUABO", "JACARANDA", "GUAVILLA", "SAFARANA",
-        "TOMATE SILVESTRE", "CARAMBOLA PEQUENA", "POMELO DULCE", "CAJUILLO", "SANDIA AMARILLA"
+        "Manzana", "Platano", "Pera", "Naranja", "Uva", "Melon", "Sandia", "Fresa", "Pina", "Durazno",
+        "Mango", "Papaya", "Kiwi", "Cereza", "Ciruela", "Granada", "Mora", "Limon", "Guayaba", "Maracuya",
+        "Mandarina", "Aguacate", "Mamon", "Pomelo", "Tamarindo", "Zapote", "Coco", "Almendra", "Castana",
+        "Nispero", "Mamey", "Tamarillo", "Feijoa", "Anon", "Arandano", "Caimito", "Jocote", "Lucuma",
+        "Chontaduro", "Borojo", "Uchuva", "Sapote", "Maranon", "Corozo", "Grosella", "Guanabana",
+        "Granadilla", "Guama", "Curuba", "Nance", "Uvilla", "Higo", "Damasco", "Acerola", "Carambola",
+        "Tumbo", "Pitaya", "Guayusa", "Aguaymanto", "Motilon", "Naranjilla", "Papayuela", "CamuCamu",
+        "Guarana", "Mamoncillo", "Yacon", "Lulo", "Copoazu", "Ciriguelo", "Tuna", "Achotillo",
+        "Guavira", "Bacaba", "Quinoto", "PepinoDulce", "Anacardo", "Jambolan", "Hicaco", "Mangaba",
+        "Chirimoya", "MameyRojo", "Passiflora", "Moriche", "Biriba", "Guaimaro", "CiruelaAmarilla",
+        "Totai", "Yatay", "Sapotilla", "Guacio", "Tamarin", "PomeloRosado", "Aguacatillo", "Guayurita",
+        "CerezaNegra", "CiruelaVerde", "MangoDeAgua", "Granadillo", "MelonPepino", "Boldo", "Camotillo",
+        "Tamico", "Jerguillo", "Tumbita", "Cambiurrito", "Guavito", "JocoteNegro", "Ciruelillo",
+        "Aguaimanto", "Morochillo", "Araza", "Cafe", "Tayuya", "MirtoRojo", "Sapucaia", "MirtoNegro",
+        "TomateDeArbol", "LimonMandarino", "Guabira", "Ciriguelon", "MangoBanilejo", "GuayabitaDelPeru",
+        "Jurucu", "Guavo", "Guapuru", "Pajure", "Pistacho", "Cocona", "Marasmo", "Siriguela", "Chorrito",
+        "Limonta", "Pandano", "Pequi", "Ubajara", "Cherry", "Aguajillo", "Murta", "Bagua", "MelonAmarillo",
+        "Durian", "FalsaGuayaba", "Graviola", "Nutria", "Guabo", "Jacaranda", "Guavilla", "Safarana",
+        "TomateSilvestre", "CarambolaPequena", "PomeloDulce", "Cajuillo", "SandiaAmarilla"
     ];
 
     const coloresAleatorios = [
-        "ROJO", "AZUL", "VERDE", "AMARILLO", "NEGRO", "BLANCO", "ROSA", "MORADO", "NARANJA", "GRIS",
-        "TURQUESA", "VIOLETA", "FUCSIA", "MARRON", "BEIGE", "CELESTE", "CORAL", "LAVANDA", "LILA",
-        "AQUA", "INDIGO", "ORO", "PLATA", "BRONCE", "VERDE OLIVA", "VERDE LIMA", "VERDE BOSQUE",
-        "VERDE PASTO", "AZUL MARINO", "AZUL CLARO", "AZUL TURQUESA", "AMARILLO PASTEL", "NARANJA PASTEL",
-        "ROSA PALIDO", "PURPURA", "MENTA", "CAFE", "ROJO VINO", "GRIS PERLA", "VERDE MUSGO",
-        "AMARILLO MOSTAZA", "LIMA", "AZUL ELECTRICO", "CIAN", "SALMON", "CARAMELO", "ROSADO",
-        "VERDE ESMERALDA", "NARANJA QUEMADO", "ROSA PALO", "COBRE", "AMARILLO CANARIO", "MARFIL",
-        "AZUL PETROLEO", "VINO TINTO", "TERRACOTA", "ROJO CARMESI", "COBALTO", "MAGENTA", "AMBAR",
-        "TANGERINA", "TIERRA", "MADERA", "MOSTAZA", "AGUAMARINA", "GRIS HUMO",
-        "GRANATE", "NARANJA MANDARINA", "LADRILLO", "MORADO INTENSO",
-        "OLIVA CLARO", "CENIZA", "FUEGO", "CIELO", "AGAVE", "ARENA", "PIEL",
-        "LAVA", "OCRE", "CACAO", "MALVA", "CANELA", "COCOA",
-        "BARRO", "PASTEL", "VAINILLA", "VERDE HOJA", "AZUL CIELO", "VERDE AMAZONAS",
-        "MORADO BERENJENA", "ROSA CHICLE", "PISTACHO", "TABACO", "AZAFRAN",
-        "GRIS AZULADO", "PERLA", "PALO ROSA", "MORADO OSCURO", "VERDE JUNGLE", "GRIS CLARO",
-        "NIEVE", "BRONCEADO", "CHICLE", "PLOMO", "NUBE", "ESMERALDA",
-        "AMATISTA", "GRAFITO", "CENIZA OSCURA", "TORMENTA", "ANTRACITA", "HUMO AZUL",
-        "ZAFIRO", "LAPISLAZULI", "ALUMINIO", "GRIS CARBON", "BERMEJO", "MANGO MADURO",
-        "JADE", "TURMALINA", "CARMESI", "ROSADO POLVO", "GRIS RATÓN", "TURQUESA OSCURO",
-        "ROJO FERRARI", "VERDE PRIMAVERA", "CIRUELA", "OPALO", "VERDE LIMÓN", "PIZARRA",
-        "MOSTAZA OSCURO", "LADRILLO SUAVE", "AZUL ARÁNDANO", "LILA OSCURO", "PLATA VIEJA", "MORADO MEDIO",
-        "VERDE FLUORESCENTE", "AMARILLO FLUORESCENTE", "ROJO OSCURO", "VERDE HIERBA", "AZUL COBALTO",
-        "ROSADO NEÓN", "GRIS ACERO", "NARANJA NEÓN", "LILA PASTEL", "VERDE BOSCOSO",
-        "ROSA PASTEL", "VIOLETA OSCURO", "TERRACOTA CLARO", "DORADO OSCURO", "TURQUESA CLARO",
-        "VERDE OLIVA OSCURO", "CIAN OSCURO", "AZUL CENIZA", "MORADO NEÓN", "ROJO GRANADA"
+        "Rojo", "Azul", "Verde", "Amarillo", "Negro", "Blanco", "Rosa", "Morado", "Naranja", "Gris",
+        "Turquesa", "Violeta", "Fucsia", "Marron", "Beige", "Celeste", "Coral", "Lavanda", "Lila",
+        "Aqua", "Indigo", "Oro", "Plata", "Bronce", "VerdeOliva", "VerdeLima", "VerdeBosque",
+        "VerdePasto", "AzulMarino", "AzulClaro", "AzulTurquesa", "AmarilloPastel", "NaranjaPastel",
+        "RosaPalido", "Purpura", "Menta", "Cafe", "RojoVino", "GrisPerla", "VerdeMusgo",
+        "AmarilloMostaza", "Lima", "AzulElectrico", "Cian", "Salmon", "Caramelo", "Rosado",
+        "VerdeEsmeralda", "NaranjaQuemado", "RosaPalo", "Cobre", "AmarilloCanario", "Marfil",
+        "AzulPetroleo", "VinoTinto", "Terracota", "RojoCarmesi", "Cobalto", "Magenta", "Ambar",
+        "Tangerina", "Tierra", "Madera", "Mostaza", "Aguamarina", "GrisHumo",
+        "Granate", "NaranjaMandarina", "Ladrillo", "MoradoIntenso",
+        "OlivaClaro", "Ceniza", "Fuego", "Cielo", "Agave", "Arena", "Piel",
+        "Lava", "Ocre", "Cacao", "Malva", "Canela", "Cocoa",
+        "Barro", "Pastel", "Vainilla", "VerdeHoja", "AzulCielo", "VerdeAmazonas",
+        "MoradoBerenjena", "RosaChicle", "Pistacho", "Tabaco", "Azafran",
+        "GrisAzulado", "Perla", "PaloRosa", "MoradoOscuro", "VerdeJungle", "GrisClaro",
+        "Nieve", "Bronceado", "Chicle", "Plomo", "Nube", "Esmeralda",
+        "Amatista", "Grafito", "CenizaOscura", "Tormenta", "Antracita", "HumoAzul",
+        "Zafiro", "Lapislazuli", "Aluminio", "GrisCarbon", "Bermejo", "MangoMaduro",
+        "Jade", "Turmalina", "Carmesi", "RosadoPolvo", "GrisRaton", "TurquesaOscuro",
+        "RojoFerrari", "VerdePrimavera", "Ciruela", "Opalo", "VerdeLimon", "Pizarra",
+        "MostazaOscuro", "LadrilloSuave", "AzulArandano", "LilaOscuro", "PlataVieja", "MoradoMedio",
+        "VerdeFluorescente", "AmarilloFluorescente", "RojoOscuro", "VerdeHierba", "AzulCobalto",
+        "RosadoNeon", "GrisAcero", "NaranjaNeon", "LilaPastel", "VerdeBoscoso",
+        "RosaPastel", "VioletaOscuro", "TerracotaClaro", "DoradoOscuro", "TurquesaClaro",
+        "VerdeOlivaOscuro", "CianOscuro", "AzulCeniza", "MoradoNeon", "RojoGranada"
     ];
 
     // Función para generar un nombre aleatorio para el bloque
@@ -176,13 +186,13 @@
         const colorAleatorio = coloresAleatorios[Math.floor(Math.random() * coloresAleatorios.length)];
 
         // Generar el nombre del bloque en el formato: TipoMaterial-Fruta-Color-ColorVita-HTamaño
-        let nombreBloque = `${tipo_material}-${frutaAleatoria}-${colorAleatorio}-${color}-H${tamano}`;
+        // let nombreBloque = `${tipo_material}${frutaAleatoria}${colorAleatorio}${color}H${tamano}`;
 
-        // Si el tipo de material es TITAN o CR CB, no incluir color
-        if (tipo_material === 'TITAN' || tipo_material === 'CR CB') {
-            nombreBloque = `${tipo_material}-${frutaAleatoria}-${colorAleatorio}-H${tamano}`;
+        // Si el tipo de material es TITAN o CR CO, no incluir color
+        if (tipo_material === 'Titan' || tipo_material === 'CrCo') {
+            nombreBloque = `${tipo_material}${frutaAleatoria}${colorAleatorio}H${tamano}`;
         } else {
-            nombreBloque = `${tipo_material}-${frutaAleatoria}-${colorAleatorio}-${color}-H${tamano}`;
+            nombreBloque = `${tipo_material}${frutaAleatoria}${colorAleatorio}${color}H${tamano}`;
         }
 
         // Colocar el nombre generado en el campo de texto
@@ -191,7 +201,7 @@
         // Mostrar u ocultar el campo de color dependiendo del tipo de material
         const colorField = document.querySelector('[name="color"]').closest('.form-group');
 
-        if (tipo_material === 'TITAN' || tipo_material === 'CR CB') {
+        if (tipo_material === 'Titan' || tipo_material === 'CrCo') {
             colorField.style.display = 'none';
         } else {
             colorField.style.display = 'block';
@@ -201,9 +211,8 @@
         const factorContraccionField = document.querySelector('[name="factor_contraccion"]').closest('.form-group');
         const factorContraccionInput = document.querySelector('[name="factor_contraccion"]');
 
-        if (["3D", "SAGEMAX", "STC", "SHTC", "HTW OPACO", "AIZIR"].includes(tipo_material)) {
+        if (["3d", "Sagemax", "Stc", "Shtc", "Shtm", "HtwOpaco", "Aizir"].includes(tipo_material)) {
             factorContraccionField.style.display = 'block'; // Mostrar el campo
-            factorContraccionInput.value = ""; // Limpiar el valor si se muestra
         } else {
             factorContraccionField.style.display = 'none'; // Ocultar el campo
             factorContraccionInput.value = "-"; // Asignar "-" cuando se oculta
@@ -230,9 +239,9 @@
             //numeroIncremental++;  // Aumentar solo al guardar
             //localStorage.setItem("numeroIncremental", numeroIncremental);
 
-            // Si el material es TITAN o CR CB, establecer el valor del color a 'sin color'
-            if (tipo_material === 'TITAN' || tipo_material === 'CR CB') {
-                colorField.value = 'sin color'; // Asignar 'sin color' si es TITAN o CR CB
+            // Si el material es Titan o CrCo, establecer el valor del color a 'sin color'
+            if (tipo_material === 'Titan' || tipo_material === 'CrCo') {
+                colorField.value = 'sin color'; // Asignar 'sin color' si es Titan o CrCo
             }
 
             // Si el valor de color es null o vacío, asignar 'sin color'
@@ -245,6 +254,7 @@
 
             // Verificar que el valor de color se cambió correctamente a 'sin color'
             console.log('Valor de color antes de enviar:', colorField.value); // Para depuración, puedes verificar el valor aquí
+            e.preventDefault();
         });
 
     });

@@ -5,16 +5,59 @@
         <div class="col-md-12">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h1 class="mb-0">Bloques Existentes</h1>
-                <div class="mb-1">
-                    <a href="/bloque/descargar-excel" class="btn btn-success">Descargar Excel Con Datos</a>
-                    <hr>
-                    <a href="/bloque/add" class="btn btn-success">Agregar nuevo bloque</a>
-                </div>
+            </div>
+            <div class="mb-2">
+                <button class="btn btn-dark btn-sm" onclick="toggleFiltros()">
+                    <i class="fa-solid fa-filter"></i><i class="bi bi-funnel"></i> Ver filtros
+                </button>
+                <button id="btnBorrarFiltros" class="btn btn-secondary btn-sm" onclick="borrarFiltros()" disabled>
+                    <i class="fas fa-trash-alt"></i>&nbsp;Borrar filtros
+                </button>
+                <a href="/bloque/descargar-excel" class="btn btn-success btn-sm">
+                    Descargar Excel Con Datos
+                </a>
+                <a href="/bloque/add" class="btn btn-success btn-sm">
+                    Agregar nuevo bloque
+                </a>
             </div>
             <!-- Input de búsqueda -->
-            <div class="mb-3">
-                <input type="text" id="buscar" class="form-control" placeholder="Buscar por nombre..."
-                    onkeyup="filtrarTabla()">
+            <div id="contenedorFiltros" class="row mb-3" style="display: none;">
+                <div class="col-md-3 mb-2">
+                    <input onkeyup="filtrarTabla(); verificarFiltros()" type="text" id="filtroNombre"
+                        class="form-control form-control-sm" placeholder="Filtrar por nombre de bloque">
+                </div>
+                <div class="col-md-3 mb-2">
+                    <input onkeyup="filtrarTabla(); verificarFiltros()" type="text" id="filtroFactorC"
+                        class="form-control form-control-sm" placeholder="Filtrar por Factor de Contracción">
+                </div>
+                <div class="col-md-3 mb-2">
+                    <input onkeyup="filtrarTabla(); verificarFiltros()" type="text" id="filtroCodigoB"
+                        class="form-control form-control-sm" placeholder="Filtrar por codigo de barras">
+                </div>
+                <div class="col-md-3 mb-2">
+                    <input onkeyup="filtrarTabla(); verificarFiltros()" type="text" id="filtroLote"
+                        class="form-control form-control-sm" placeholder="Filtrar por Lote">
+                </div>
+                <div class="col-md-3 mb-2">
+                    <select onchange="filtrarTabla(); verificarFiltros()" id="filtroEstado"
+                        class="form-control form-control-sm">
+                        <option value="">Filtrar por Estado</option>
+                        <option value="En uso">En uso</option>
+                        <option value="Finalizado">Finalizado</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <input onkeyup="filtrarTabla(); verificarFiltros()" type="text" id="filtroColor"
+                        class="form-control form-control-sm" placeholder="Filtrar por Color">
+                </div>
+                <div class="col-md-3 mb-2">
+                    <input onkeyup="filtrarTabla(); verificarFiltros()" type="text" id="filtroTamano"
+                        class="form-control form-control-sm" placeholder="Filtrar por Tamaño">
+                </div>
+                <div class="col-md-3 mb-2">
+                    <input onkeyup="filtrarTabla(); verificarFiltros()" type="text" id="filtroMaterial"
+                        class="form-control form-control-sm" placeholder="Filtrar por Material">
+                </div>
             </div>
             <div class="table-responsive">
                 <table class="table table-striped table-secondary table-bordered table-sm"
@@ -45,12 +88,10 @@
                             <td class="text-center">
                                 <form action="/bloque/update" method="POST" id="estado-form-{{this.id_bloque}}">
                                     <input type="hidden" name="id_bloque" value="{{this.id_bloque}}">
-                                    <select name="estado"
-                                        class="form-control form-control-sm {{#if this.estado}}bg-success{{else}}bg-danger{{/if}}"
-                                        onchange="this.form.submit()">
-                                        <!-- Si el estado es 1 (En uso), seleccionamos la opción correspondiente -->
+                                    <select name="estado" class="form-control form-control-sm 
+                                        {{#if this.estado}}bg-success text-white{{else}}bg-danger text-white{{/if}}"
+                                        {{#unless this.estado}}disabled{{/unless}} onchange="this.form.submit()">
                                         <option value="1" {{#if this.estado}}selected{{/if}}>En uso</option>
-                                        <!-- Si el estado es 0 (Finalizado), seleccionamos la opción correspondiente -->
                                         <option value="0" {{#unless this.estado}}selected{{/unless}}>Finalizado</option>
                                     </select>
                                 </form>
@@ -68,11 +109,21 @@
 
                             <td>{{this.operario_fullname}}</td>
                             <td>
+                                {{#if this.estado}}
+                                <!-- Botones activos -->
                                 <a class="btn btn-warning btn-sm" href="/bloque/edit/{{this.id_bloque}}"><i
                                         class="fas fa-edit"></i></a>
                                 <hr>
                                 <a class="btn btn-danger btn-sm" href="/bloque/delete/{{this.id_bloque}}"><i
                                         class="fas fa-trash-alt"></i></a>
+                                {{else}}
+                                <!-- Botones deshabilitados en estado Finalizado -->
+                                <button class="btn btn-secondary btn-sm" disabled title="Bloque finalizado"><i
+                                        class="fas fa-edit"></i></button>
+                                <hr>
+                                <button class="btn btn-secondary btn-sm" disabled title="Bloque finalizado"><i
+                                        class="fas fa-trash-alt"></i></button>
+                                {{/if}}
                             </td>
                         </tr>
                         {{/each}}
@@ -95,28 +146,85 @@
     </div>
 </div>
 <script>
+    function verificarFiltros() {
+        const filtros = [
+            "filtroNombre",
+            "filtroFactorC",
+            "filtroCodigoB",
+            "filtroLote",
+            "filtroEstado",
+            "filtroColor",
+            "filtroTamano",
+            "filtroMaterial"
+        ];
+        const boton = document.getElementById("btnBorrarFiltros");
+        const hayTexto = filtros.some(id => document.getElementById(id).value.trim() !== "");
+
+        if (hayTexto) {
+            boton.disabled = false;
+            boton.classList.remove("btn-secondary");
+            boton.classList.add("btn-danger");
+        } else {
+            boton.disabled = true;
+            boton.classList.remove("btn-danger");
+            boton.classList.add("btn-secondary");
+        }
+    }
+    function toggleFiltros() {
+        const contenedor = document.getElementById("contenedorFiltros");
+        contenedor.style.display = contenedor.style.display === "none" ? "flex" : "none";
+    }
     function filtrarTabla() {
-        let input = document.getElementById("buscar");
-        let filtro = input.value.toLowerCase();
-        let filas = document.querySelectorAll(".fila-bloque");
-        let mensaje = document.getElementById("mensajeNoCoincidencias");
+        const filtroNombre = document.getElementById("filtroNombre").value.toLowerCase();
+        const filtroFactorC = document.getElementById("filtroFactorC").value.toLowerCase();
+        const filtroCodigoB = document.getElementById("filtroCodigoB").value.toLowerCase();
+        const filtroLote = document.getElementById("filtroLote").value.toLowerCase();
+        const filtroEstado = document.getElementById("filtroEstado").value;
+        const filtroColor = document.getElementById("filtroColor").value.toLowerCase();
+        const filtroTamano = document.getElementById("filtroTamano").value.toLowerCase();
+        const filtroMaterial = document.getElementById("filtroMaterial").value.toLowerCase();
+        const filas = document.querySelectorAll(".fila-bloque");
+        const mensaje = document.getElementById("mensajeNoCoincidencias");
         let coincidencias = 0;
 
         filas.forEach(fila => {
-            let nombre = fila.getElementsByTagName("td")[0].textContent.toLowerCase();
-            if (nombre.includes(filtro)) {
-                fila.style.display = "";
-                coincidencias++;
-            } else {
-                fila.style.display = "none";
-            }
+            const nombre = fila.cells[0].textContent.toLowerCase();
+            const factorc = fila.cells[1].textContent.toLowerCase();
+            const codigob = fila.cells[2].textContent.toLowerCase();
+            const lote = fila.cells[3].textContent.toLowerCase();
+            const selectEstado = fila.cells[4].querySelector('select');
+            const estado = selectEstado ? selectEstado.options[selectEstado.selectedIndex].text : "";
+            const color = fila.cells[5].textContent.toLowerCase();
+            const tamano = fila.cells[6].textContent.toLowerCase();
+            const material = fila.cells[7].textContent.toLowerCase();
+
+            const coincide =
+                nombre.includes(filtroNombre) &&
+                factorc.includes(filtroFactorC) &&
+                codigob.includes(filtroCodigoB) &&
+                lote.includes(filtroLote) &&
+                (filtroEstado === "" || estado === filtroEstado) &&
+                color.includes(filtroColor) &&
+                tamano.includes(filtroTamano) &&
+                material.includes(filtroMaterial);
+
+            fila.style.display = coincide ? "" : "none";
+            if (coincide) coincidencias++;
         });
 
-        // Mostrar el mensaje solo si no hay coincidencias
-        if (coincidencias === 0) {
-            mensaje.style.display = "";
-        } else {
-            mensaje.style.display = "none";
-        }
+        mensaje.style.display = coincidencias === 0 ? "" : "none";
+    }
+    function borrarFiltros() {
+        document.getElementById("filtroNombre").value = "";
+        document.getElementById("filtroFactorC").value = "";
+        document.getElementById("filtroCodigoB").value = "";
+        document.getElementById("filtroLote").value = "";
+        document.getElementById("filtroEstado").value = "";
+        document.getElementById("filtroColor").value = "";
+        document.getElementById("filtroTamano").value = "";
+        document.getElementById("filtroMaterial").value = "";
+
+        filtrarTabla(); // Vuelve a mostrar todo
+        verificarFiltros(); // Para deshabilitar el botón
     }
 </script>

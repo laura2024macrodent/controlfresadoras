@@ -4,6 +4,7 @@ const router = express.Router();
 const pool = require('../database');
 const { isLoggedIn } = require('../lib/auth');
 const moment = require('moment-timezone');
+const { obtenerUbicacionDisponible } = require('../lib/ubicacionService');
 
 router.get('/add', isLoggedIn, async (req, res) => {
     try {
@@ -16,69 +17,17 @@ router.get('/add', isLoggedIn, async (req, res) => {
     }
 });
 
-/* router.post('/add', isLoggedIn, async(req, res) => {
-    const {nombre,codigo_barras,cantidad,color,tamano,tipo_material,id_operario} = req.body;
-    const usuario = req.user;
-    const newBloque = {
-        nombre,
-        codigo_barras,
-        cantidad,
-        color,
-        tamano,
-        tipo_material,
-        id_operario
-    };
-    // Insertar el nuevo bloque en la base de datos
-    await pool.query('INSERT INTO bloque SET ?', [newBloque], async (err, results) => {
-        if (err) throw err;
-
-        // Obtener el id del nuevo bloque insertado
-        const id_bloque = results.insertId;
-
-        // Crear el mensaje de historial para el nuevo bloque
-        const mensaje = `${usuario.fullname} agregó el bloque ${nombre}`;
-
-        // Insertar el registro en el historial de bloques
-        await pool.query('INSERT INTO historial_bloques (id_bloque, accion, mensaje, id_operario, nombre_operario) VALUES (?, ?, ?, ?, ?)', 
-            [id_bloque, 'agregar', mensaje, usuario.id_operario, usuario.fullname], (err) => {
-                if (err) throw err;
-
-                // Descontar 1 unidad del producto en control_inventarios
-                pool.query('UPDATE control_inventarios.productos SET cantidad = cantidad - 1 WHERE codigo_barras = ? AND cantidad > 0',
-                    [codigo_barras], (err, updateResult) => {
-                        if (err) {
-                            console.error('Error al actualizar el inventario: ', err);
-                            req.flash('error', 'Error al actualizar el inventario.');
-                            return res.redirect('/bloque');
-                        }
-
-                        // Si no se actualizó el inventario, mostrar un mensaje de error
-                        if (updateResult.affectedRows === 0) {
-                            console.log('No se pudo descontar el inventario, código de barras no encontrado o sin suficiente cantidad.');
-                            req.flash('error', 'No hay suficiente cantidad en inventario para descontar.');
-                            return res.redirect('/bloque');
-                        }
-
-                        // Después de agregar al historial y actualizar el inventario, redirigir al usuario
-                        req.flash('success', 'Bloque Guardado Exitosamente y cantidad descontada del inventario');
-                        res.redirect('/bloque');
-                    }
-                );
-            }
-        );
-    });
-}); */
-
 router.post('/add', isLoggedIn, async (req, res) => {
     const { nombre, factor_contraccion, codigo_barras, cantidad, color, tamano, tipo_material, id_operario } = req.body;
     const usuario = req.user;
 
     // Aseguramos que 'color' nunca sea NULL
+    const FactorFinal = (!factor_contraccion || factor_contraccion.trim() === "") ? '-' : factor_contraccion.trim();
     const colorValue = color ? color : '-'; // Si 'color' está vacío o es NULL, asignamos '-'
 
     const newBloque = {
         nombre,
-        factor_contraccion,
+        factor_contraccion: FactorFinal,
         codigo_barras,
         cantidad,
         color: colorValue, // Usamos el valor de 'color' que ya está asegurado
@@ -87,27 +36,36 @@ router.post('/add', isLoggedIn, async (req, res) => {
         id_operario
     };
 
-    // Insertar el nuevo bloque en la base de datos
-    await pool.query('INSERT INTO bloque SET ?', [newBloque], async (err, results) => {
-        if (err) throw err;
+    try {
+        // Insertar el nuevo bloque en la base de datos
+        const results = await pool.query('INSERT INTO bloque SET ?', [newBloque]);
 
         // Obtener el id del nuevo bloque insertado
         const id_bloque = results.insertId;
+
+        // Obtener la ubicación disponible para este material y altura
+        // const ubicacion = await obtenerUbicacionDisponible(tipo_material, tamano);
+
+        // Insertar la ubicación en la tabla 'ubicacion_bloque'
+        // await pool.query('INSERT INTO ubicacion_bloque (id_bloque, cajon, fila, columna, id_operario) VALUES (?, ?, ?, ?, ?)',
+            // [id_bloque, ubicacion.cajon, ubicacion.fila, ubicacion.columna, id_operario]);
 
         // Crear el mensaje de historial para el nuevo bloque
         const mensaje = `${usuario.fullname} agregó el bloque ${nombre}`;
 
         // Insertar el registro en el historial de bloques
         await pool.query('INSERT INTO historial_bloques (id_bloque, accion, mensaje, id_operario, nombre_operario) VALUES (?, ?, ?, ?, ?)',
-            [id_bloque, 'agregar', mensaje, usuario.id_operario, usuario.fullname], (err) => {
-                if (err) throw err;
+            [id_bloque, 'agregar', mensaje, usuario.id_operario, usuario.fullname]);
 
-                // Después de agregar al historial, redirigir al usuario
-                req.flash('success', 'Bloque Guardado Exitosamente');
-                res.redirect('/bloque');
-            }
-        );
-    });
+        // Después de agregar al historial, redirigir al usuario
+        // req.flash('success', `Bloque Guardado Exitosamente en Cajón ${ubicacion.cajon}, Columna ${ubicacion.columna}, Fila ${ubicacion.fila}`);
+        req.flash('success', `Bloque Guardado Exitosamente`);
+        res.redirect('/bloque');
+    } catch (err) {
+        console.error(err);
+        req.flash('message', 'Error al guardar el bloque: ' + err.message);
+        res.redirect('/bloque');
+    }
 });
 
 router.get('/', isLoggedIn, async (req, res) => {
@@ -131,6 +89,8 @@ router.post('/update', isLoggedIn, async (req, res) => {
             if (estado === '0') {
                 if (!bloque.fecha_finalizacion) {
                     fechaFinalizacion = moment.tz('America/Bogota').format('YYYY-MM-DD HH:mm:ss');  // Fecha y hora actuales
+                    // Eliminar ubicación del bloque
+                    await pool.query('DELETE FROM ubicacion_bloque WHERE id_bloque = ?', [id_bloque]);
                 }
                 else {
                     fechaFinalizacion = bloque.fecha_finalizacion;
@@ -189,10 +149,11 @@ router.post('/edit/:id_bloque', isLoggedIn, async (req, res) => {
     const usuario = req.user;
 
     // Validación para evitar que 'color' sea NULL
+    const FactorFinal = (!factor_contraccion || factor_contraccion.trim() === "") ? '-' : factor_contraccion.trim();
     const colorFinal = color ? color : '-'; // Asigna '-' si color está vacío o es null
     const newBloque = {
         nombre,
-        factor_contraccion,
+        factor_contraccion: FactorFinal,
         codigo_barras,
         cantidad,
         color: colorFinal,
@@ -389,4 +350,34 @@ router.get('/historial', isLoggedIn, async (req, res) => {
     });
 });
 
+router.get('/location', isLoggedIn, async (req, res) => {
+        const ubicaciones = await pool.query(`
+            SELECT 
+                u.*, 
+                b.nombre, 
+                b.tipo_material, 
+                b.color, 
+                b.tamano, 
+                b.estado,
+                o.fullname AS operario_fullname
+            FROM ubicacion_bloque u
+            LEFT JOIN bloque b ON u.id_bloque = b.id_bloque
+            LEFT JOIN operario o ON u.id_operario = o.id_operario
+            WHERE u.activo = 1
+            ORDER BY u.fecha_movimiento DESC
+        `);
+        res.render('bloque/location', { ubicaciones });
+});
+
+// Ruta para obtener ubicación libre
+router.post('/location', async (req, res) => {
+    const { tipo_material, tamano } = req.body;
+
+    try {
+        const ubicacion = await obtenerUbicacionDisponible(tipo_material, tamano);
+        res.json({ success: true, ubicacion });
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message });
+    }
+});
 module.exports = router;

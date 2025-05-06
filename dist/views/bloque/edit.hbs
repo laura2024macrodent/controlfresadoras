@@ -15,18 +15,19 @@
                         <div class="form-group">
                             <label for="">Tipo de material</label>
                             <select class="form-control" name="tipo_material" placeholder="Tipo de material" autofocus>
-                                <option value="3D" {{#if (eq bloque.tipo_material "3D" )}}selected{{/if}}>3D</option>
-                                <option value="SAGEMAX" {{#if (eq bloque.tipo_material "SAGEMAX" )}}selected{{/if}}>SAGEMAX</option>
-                                <option value="STC" {{#if (eq bloque.tipo_material "STC" )}}selected{{/if}}>STC</option>
-                                <option value="SHTC" {{#if (eq bloque.tipo_material "SHTC" )}}selected{{/if}}>SHTC</option>
-                                <option value="CR CB" {{#if (eq bloque.tipo_material "CR CB" )}}selected{{/if}}>CR CB</option>
-                                <option value="TITAN" {{#if (eq bloque.tipo_material "TITAN" )}}selected{{/if}}>TITAN</option>
-                                <option value="PMMA" {{#if (eq bloque.tipo_material "PMMA" )}}selected{{/if}}>PMMA</option>
-                                <option value="SHOFU HC" {{#if (eq bloque.tipo_material "SHOFU HC" )}}selected{{/if}}>SHOFU HC</option>
-                                <option value="PMMA ML" {{#if (eq bloque.tipo_material "PMMA ML" )}}selected{{/if}}>PMMA ML</option>
-                                <option value="HTW OPACO" {{#if (eq bloque.tipo_material "HTW OPACO" )}}selected{{/if}}>HTW OPACO</option>
-                                <option value="AIZIR" {{#if (eq bloque.tipo_material "AIZIR" )}}selected{{/if}}>AIZIR</option>
-                                <option value="PEEK" {{#if (eq bloque.tipo_material "PEEK" )}}selected{{/if}}>PEEK</option>
+                                <option value="3d" {{#if (eq bloque.tipo_material "3d" )}}selected{{/if}}>3d</option>
+                                <option value="Sagemax" {{#if (eq bloque.tipo_material "Sagemax" )}}selected{{/if}}>Sagemax</option>
+                                <option value="Stc" {{#if (eq bloque.tipo_material "Stc" )}}selected{{/if}}>Stc</option>
+                                <option value="Shtc" {{#if (eq bloque.tipo_material "Shtc" )}}selected{{/if}}>Shtc</option>
+                                <option value="Shtm" {{#if (eq bloque.tipo_material "Shtm" )}}selected{{/if}}>Shtm</option>
+                                <option value="CrCo" {{#if (eq bloque.tipo_material "CrCo" )}}selected{{/if}}>CrCo</option>
+                                <option value="Titan" {{#if (eq bloque.tipo_material "Titan" )}}selected{{/if}}>Titan</option>
+                                <option value="Pmma" {{#if (eq bloque.tipo_material "Pmma" )}}selected{{/if}}>Pmma</option>
+                                <option value="ShofuHc" {{#if (eq bloque.tipo_material "ShofuHc" )}}selected{{/if}}>ShofuHc</option>
+                                <option value="PmmaMl" {{#if (eq bloque.tipo_material "PmmaMl" )}}selected{{/if}}>PMMA ML</option>
+                                <option value="HtwOpaco" {{#if (eq bloque.tipo_material "HtwOpaco" )}}selected{{/if}}>HtwOpaco</option>
+                                <option value="Aizir" {{#if (eq bloque.tipo_material "Aizir" )}}selected{{/if}}>Aizir</option>
+                                <option value="Peek" {{#if (eq bloque.tipo_material "Peek" )}}selected{{/if}}>Peek</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -71,8 +72,8 @@
                                 <option value="BL2" {{#if (eq bloque.color "BL2" )}}selected{{/if}}>BL2</option>
                                 <option value="BL3" {{#if (eq bloque.color "BL3" )}}selected{{/if}}>BL3</option>
                                 <option value="BL4" {{#if (eq bloque.color "BL4" )}}selected{{/if}}>BL4</option>
-                                <option value="WHITE" {{#if (eq bloque.color "WHITE" )}}selected{{/if}}>WHITE</option>
-                                <option value="BLANCO OPACO" {{#if (eq bloque.color "BLANCO OPACO" )}}selected{{/if}}>BLANCO OPACO</option>
+                                <option value="White" {{#if (eq bloque.color "White" )}}selected{{/if}}>White</option>
+                                <option value="BlancoOpaco" {{#if (eq bloque.color "BlancoOpaco" )}}selected{{/if}}>BlancoOpaco</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -112,24 +113,53 @@
 <script>
     // Listas de frutas y colores aleatorios
     const frutas = [
-        "MANZANA", "PLÁTANO", "PERA", "NARANJA", "UVA", "MELÓN", "SANDÍA", "FRESA", "PIÑA", "DURAZNO",
-        "MANGO", "PAPAYA", "KIWI", "CEREZA", "CIRUELA", "GRANADA", "FRAMBUESA", "MORA", "MARACUYÁ", "LIMÓN",
-        "MANDARINA", "AGUACATE", "LITCHI", "GUAYABA", "DURIAN", "PITAYA", "CARAMBOLA", "POMELO", "TAMARINDO",
-        "MANGO DE AGUA", "CHIRIMOYA", "ZAPOTE", "COCO", "PASA", "ACELGA", "ALMENDRA", "CASTAÑA", "NÍSPERO",
-        "SOURSOP", "RAMBUTÁN", "LANGSAT", "PITANGUEIRAS", "MAMEY", "BERRIES", "TAMARILLO", "LONGAN", "FEIJOA"
+        "Manzana", "Platano", "Pera", "Naranja", "Uva", "Melon", "Sandia", "Fresa", "Pina", "Durazno",
+        "Mango", "Papaya", "Kiwi", "Cereza", "Ciruela", "Granada", "Mora", "Limon", "Guayaba", "Maracuya",
+        "Mandarina", "Aguacate", "Mamon", "Pomelo", "Tamarindo", "Zapote", "Coco", "Almendra", "Castana",
+        "Nispero", "Mamey", "Tamarillo", "Feijoa", "Anon", "Arandano", "Caimito", "Jocote", "Lucuma",
+        "Chontaduro", "Borojo", "Uchuva", "Sapote", "Maranon", "Corozo", "Grosella", "Guanabana",
+        "Granadilla", "Guama", "Curuba", "Nance", "Uvilla", "Higo", "Damasco", "Acerola", "Carambola",
+        "Tumbo", "Pitaya", "Guayusa", "Aguaymanto", "Motilon", "Naranjilla", "Papayuela", "CamuCamu",
+        "Guarana", "Mamoncillo", "Yacon", "Lulo", "Copoazu", "Ciriguelo", "Tuna", "Achotillo",
+        "Guavira", "Bacaba", "Quinoto", "PepinoDulce", "Anacardo", "Jambolan", "Hicaco", "Mangaba",
+        "Chirimoya", "MameyRojo", "Passiflora", "Moriche", "Biriba", "Guaimaro", "CiruelaAmarilla",
+        "Totai", "Yatay", "Sapotilla", "Guacio", "Tamarin", "PomeloRosado", "Aguacatillo", "Guayurita",
+        "CerezaNegra", "CiruelaVerde", "MangoDeAgua", "Granadillo", "MelonPepino", "Boldo", "Camotillo",
+        "Tamico", "Jerguillo", "Tumbita", "Cambiurrito", "Guavito", "JocoteNegro", "Ciruelillo",
+        "Aguaimanto", "Morochillo", "Araza", "Cafe", "Tayuya", "MirtoRojo", "Sapucaia", "MirtoNegro",
+        "TomateDeArbol", "LimonMandarino", "Guabira", "Ciriguelon", "MangoBanilejo", "GuayabitaDelPeru",
+        "Jurucu", "Guavo", "Guapuru", "Pajure", "Pistacho", "Cocona", "Marasmo", "Siriguela", "Chorrito",
+        "Limonta", "Pandano", "Pequi", "Ubajara", "Cherry", "Aguajillo", "Murta", "Bagua", "MelonAmarillo",
+        "Durian", "FalsaGuayaba", "Graviola", "Nutria", "Guabo", "Jacaranda", "Guavilla", "Safarana",
+        "TomateSilvestre", "CarambolaPequena", "PomeloDulce", "Cajuillo", "SandiaAmarilla"
     ];
 
     const coloresAleatorios = [
-        "ROJO", "AZUL", "VERDE", "AMARILLO", "NEGRO", "BLANCO", "ROSA", "MORADO", "NARANJA", "GRIS", "TURQUESA",
-        "VIOLETA", "FUCSIA", "MARRÓN", "BEIGE", "CELESTE", "CORAL", "LAVANDA", "LILA", "AQUA", "ÍNDIGO", "ORO",
-        "PLATA", "BRONCE", "VERDE OLIVA", "VERDE LIMA", "VERDE BOSQUE", "VERDE PASTO", "AZUL MARINO", "AZUL CLARO",
-        "AZUL TURQUESA", "AMARILLO PASTEL", "NARANJA PASTEL", "ROSA PÁLIDO", "PÚRPURA", "MALVA", "MENTA", "BEIS",
-        "CAFÉ", "ROJO VINO", "LAVANDA", "BLANCO NIEVE", "GRIS PERLA", "VERDE MUSGO", "AMARILLO MOSTAZA", "LIMA",
-        "AZUL ELÉCTRICO", "AZUL ZAFIRO", "CHAMPAGNE", "TOPACIO", "CIAN", "SALMON", "CARAMELO", "ROSADO", "PISTACHO",
-        "VERDE ESMERALDA", "VERDE MENTA", "NARANJA QUEMADO", "ROSA PALO", "FUCSIA BRILLANTE", "COBRE", "ROJO",
-        "AMARILLO CANARIO", "MARFIL", "AZUL PETRÓLEO", "VINO TINTO", "TERRACOTA", "ROJO CARMESÍ", "VINO BORGOÑA",
-        "COBALTO", "MAGENTA", "MALVA CLARO", "GARNET", "ÁMBAR", "ÁRTICO", "MAUVE", "TANGERINE", "FLUORESCENTE",
-        "LIME GREEN", "TIERRA", "CIELITO", "MADERA", "PETROLERO", "CEREZA BRILLANTE", "SIENA QUEMADA", "ALMIZCLE"
+        "Rojo", "Azul", "Verde", "Amarillo", "Negro", "Blanco", "Rosa", "Morado", "Naranja", "Gris",
+        "Turquesa", "Violeta", "Fucsia", "Marron", "Beige", "Celeste", "Coral", "Lavanda", "Lila",
+        "Aqua", "Indigo", "Oro", "Plata", "Bronce", "VerdeOliva", "VerdeLima", "VerdeBosque",
+        "VerdePasto", "AzulMarino", "AzulClaro", "AzulTurquesa", "AmarilloPastel", "NaranjaPastel",
+        "RosaPalido", "Purpura", "Menta", "Cafe", "RojoVino", "GrisPerla", "VerdeMusgo",
+        "AmarilloMostaza", "Lima", "AzulElectrico", "Cian", "Salmon", "Caramelo", "Rosado",
+        "VerdeEsmeralda", "NaranjaQuemado", "RosaPalo", "Cobre", "AmarilloCanario", "Marfil",
+        "AzulPetroleo", "VinoTinto", "Terracota", "RojoCarmesi", "Cobalto", "Magenta", "Ambar",
+        "Tangerina", "Tierra", "Madera", "Mostaza", "Aguamarina", "GrisHumo",
+        "Granate", "NaranjaMandarina", "Ladrillo", "MoradoIntenso",
+        "OlivaClaro", "Ceniza", "Fuego", "Cielo", "Agave", "Arena", "Piel",
+        "Lava", "Ocre", "Cacao", "Malva", "Canela", "Cocoa",
+        "Barro", "Pastel", "Vainilla", "VerdeHoja", "AzulCielo", "VerdeAmazonas",
+        "MoradoBerenjena", "RosaChicle", "Pistacho", "Tabaco", "Azafran",
+        "GrisAzulado", "Perla", "PaloRosa", "MoradoOscuro", "VerdeJungle", "GrisClaro",
+        "Nieve", "Bronceado", "Chicle", "Plomo", "Nube", "Esmeralda",
+        "Amatista", "Grafito", "CenizaOscura", "Tormenta", "Antracita", "HumoAzul",
+        "Zafiro", "Lapislazuli", "Aluminio", "GrisCarbon", "Bermejo", "MangoMaduro",
+        "Jade", "Turmalina", "Carmesi", "RosadoPolvo", "GrisRaton", "TurquesaOscuro",
+        "RojoFerrari", "VerdePrimavera", "Ciruela", "Opalo", "VerdeLimon", "Pizarra",
+        "MostazaOscuro", "LadrilloSuave", "AzulArandano", "LilaOscuro", "PlataVieja", "MoradoMedio",
+        "VerdeFluorescente", "AmarilloFluorescente", "RojoOscuro", "VerdeHierba", "AzulCobalto",
+        "RosadoNeon", "GrisAcero", "NaranjaNeon", "LilaPastel", "VerdeBoscoso",
+        "RosaPastel", "VioletaOscuro", "TerracotaClaro", "DoradoOscuro", "TurquesaClaro",
+        "VerdeOlivaOscuro", "CianOscuro", "AzulCeniza", "MoradoNeon", "RojoGranada"
     ];
 
     // Guardar los valores iniciales al cargar la página
@@ -149,14 +179,14 @@ function manejarVisibilidadCampos() {
     const factorContraccionField = document.querySelector('[name="factor_contraccion"]').closest('.form-group');
 
     // Ocultar el campo color si el material es CR CB o TITAN
-    if (tipoMaterial === "CR CB" || tipoMaterial === "TITAN") {
+    if (tipoMaterial === "CrCo" || tipoMaterial === "Titan") {
         colorField.style.display = 'none';
     } else {
         colorField.style.display = 'block';
     }
 
     // Ocultar el campo factor de contracción si el material no es de los especificados
-    const materialesConFactor = ["3D", "SAGEMAX", "STC", "SHTC", "HTW OPACO", "AIZIR"];
+    const materialesConFactor = ["3d", "Sagemax", "Stc", "Shtc", "Shtm", "HtwOpaco", "Aizir"];
     if (materialesConFactor.includes(tipoMaterial)) {
         factorContraccionField.style.display = 'block';
     } else {
@@ -179,10 +209,10 @@ function manejarVisibilidadCampos() {
 
         // Generar el nuevo nombre con los valores actuales
         let nuevoNombre;
-        if (tipo_material === 'TITAN' || tipo_material === 'CR CB') {
-            nuevoNombre = `${tipo_material}-${frutaGuardada}-${colorGuardado}-H${tamano}`;
+        if (tipo_material === 'Titan' || tipo_material === 'CrCo') {
+            nuevoNombre = `${tipo_material}${frutaGuardada}${colorGuardado}H${tamano}`;
         } else {
-            nuevoNombre = `${tipo_material}-${frutaGuardada}-${colorGuardado}-${color}-H${tamano}`;
+            nuevoNombre = `${tipo_material}${frutaGuardada}${colorGuardado}${color}H${tamano}`;
         }
 
         document.getElementById("nombre").value = nuevoNombre;
@@ -209,12 +239,12 @@ function manejarVisibilidadCampos() {
         const tipoMaterial = document.querySelector('[name="tipo_material"]').value;
         const colorField = document.querySelector('[name="color"]');
 
-        if (tipoMaterial === 'TITAN' || tipoMaterial === 'CR CB') {
+        if (tipoMaterial === 'Titan' || tipoMaterial === 'CrCo') {
             colorField.value = '-'; // Asigna un valor alternativo en lugar de NULL
         }
 
         // Lista de materiales que requieren factor de contracción
-        const materialesConFactor = ["3D", "SAGEMAX", "STC", "SHTC", "HTW OPACO", "AIZIR"];
+        const materialesConFactor = ["3d", "Sagemax", "Stc", "Shtc", "Shtm", "HtwOpaco", "Aizir"];
 
         // Asignar "-" al factor de contracción si el material NO requiere este campo
         if (!materialesConFactor.includes(tipoMaterial)) {
