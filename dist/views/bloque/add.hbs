@@ -189,7 +189,7 @@
         // let nombreBloque = `${tipo_material}${frutaAleatoria}${colorAleatorio}${color}H${tamano}`;
 
         // Si el tipo de material es TITAN o CR CO, no incluir color
-        if (tipo_material === 'Titan' || tipo_material === 'CrCo') {
+        if (tipo_material === 'Titan' || tipo_material === 'CrCo' || tipo_material === 'Peek') {
             nombreBloque = `${tipo_material}${frutaAleatoria}${colorAleatorio}H${tamano}`;
         } else {
             nombreBloque = `${tipo_material}${frutaAleatoria}${colorAleatorio}${color}H${tamano}`;
@@ -201,7 +201,7 @@
         // Mostrar u ocultar el campo de color dependiendo del tipo de material
         const colorField = document.querySelector('[name="color"]').closest('.form-group');
 
-        if (tipo_material === 'Titan' || tipo_material === 'CrCo') {
+        if (tipo_material === 'Titan' || tipo_material === 'CrCo' || tipo_material === 'Peek') {
             colorField.style.display = 'none';
         } else {
             colorField.style.display = 'block';
@@ -240,7 +240,7 @@
             //localStorage.setItem("numeroIncremental", numeroIncremental);
 
             // Si el material es Titan o CrCo, establecer el valor del color a 'sin color'
-            if (tipo_material === 'Titan' || tipo_material === 'CrCo') {
+            if (tipo_material === 'Titan' || tipo_material === 'CrCo' || tipo_material === 'Peek') {
                 colorField.value = 'sin color'; // Asignar 'sin color' si es Titan o CrCo
             }
 

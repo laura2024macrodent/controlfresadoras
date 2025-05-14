@@ -179,7 +179,7 @@ function manejarVisibilidadCampos() {
     const factorContraccionField = document.querySelector('[name="factor_contraccion"]').closest('.form-group');
 
     // Ocultar el campo color si el material es CR CB o TITAN
-    if (tipoMaterial === "CrCo" || tipoMaterial === "Titan") {
+    if (tipoMaterial === "CrCo" || tipoMaterial === "Titan" || tipoMaterial === 'Peek') {
         colorField.style.display = 'none';
     } else {
         colorField.style.display = 'block';
@@ -209,7 +209,7 @@ function manejarVisibilidadCampos() {
 
         // Generar el nuevo nombre con los valores actuales
         let nuevoNombre;
-        if (tipo_material === 'Titan' || tipo_material === 'CrCo') {
+        if (tipo_material === 'Titan' || tipo_material === 'CrCo' || tipo_material === 'Peek') {
             nuevoNombre = `${tipo_material}${frutaGuardada}${colorGuardado}H${tamano}`;
         } else {
             nuevoNombre = `${tipo_material}${frutaGuardada}${colorGuardado}${color}H${tamano}`;
@@ -239,7 +239,7 @@ function manejarVisibilidadCampos() {
         const tipoMaterial = document.querySelector('[name="tipo_material"]').value;
         const colorField = document.querySelector('[name="color"]');
 
-        if (tipoMaterial === 'Titan' || tipoMaterial === 'CrCo') {
+        if (tipoMaterial === 'Titan' || tipoMaterial === 'CrCo' || tipoMaterial === 'Peek') {
             colorField.value = '-'; // Asigna un valor alternativo en lugar de NULL
         }
 
