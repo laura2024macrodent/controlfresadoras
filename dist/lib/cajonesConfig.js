@@ -21,5 +21,6 @@ module.exports = {
     "PmmaMl": [16],
     "HtwOpaco": [17],
     "Aizir": [18],
-    "Peek": [19]
+    "Peek": [19],
+    "Wax": [20]
 };
