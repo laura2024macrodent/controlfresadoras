@@ -39,6 +39,8 @@
                                 </option>
                                 <option value="Peek" {{#if (eq bloque.tipo_material "Peek" )}}selected{{/if}}>Peek
                                 </option>
+                                <option value="Wax" {{#if (eq bloque.tipo_material "Wax" )}}selected{{/if}}>Wax
+                                </option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -191,7 +193,7 @@
         const factorContraccionField = document.querySelector('[name="factor_contraccion"]').closest('.form-group');
 
         // Ocultar el campo color si el material es CR CB o TITAN
-        if (tipoMaterial === "CrCo" || tipoMaterial === "Titan" || tipoMaterial === 'Peek') {
+        if (tipoMaterial === "CrCo" || tipoMaterial === "Titan" || tipoMaterial === 'Peek' || tipoMaterial === 'Wax') {
             colorField.style.display = 'none';
         } else {
             colorField.style.display = 'block';
@@ -229,8 +231,8 @@
             colorBloque = match[4] || colorBloque;
         }
 
-        // Usar color solo si el tipo_material no es CrCo, Titan o Peek
-        if (["CrCo", "Titan", "Peek"].includes(tipo_material)) {
+        // Usar color solo si el tipo_material no es CrCo, Titan, Peek o Wax
+        if (["CrCo", "Titan", "Peek", "Wax"].includes(tipo_material)) {
             nuevoNombre = `${tipo_material}${fruta}${colorGuardado}H${tamano}`;
         } else {
             nuevoNombre = `${tipo_material}${fruta}${colorGuardado}${color}H${tamano}`;
@@ -260,7 +262,7 @@
         const tipoMaterial = document.querySelector('[name="tipo_material"]').value;
         const colorField = document.querySelector('[name="color"]');
 
-        if (tipoMaterial === 'Titan' || tipoMaterial === 'CrCo' || tipoMaterial === 'Peek') {
+        if (tipoMaterial === 'Titan' || tipoMaterial === 'CrCo' || tipoMaterial === 'Peek' || tipoMaterial === 'Wax') {
             colorField.value = '-'; // Asigna un valor alternativo en lugar de NULL
         }
 
