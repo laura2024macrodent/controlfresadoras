@@ -41,6 +41,8 @@
                                 </option>
                                 <option value="Wax" {{#if (eq bloque.tipo_material "Wax" )}}selected{{/if}}>Wax
                                 </option>
+                                <option value="Vezneer" {{#if (eq bloque.tipo_material "Vezneer" )}}selected{{/if}}>Vezneer
+                                </option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -200,7 +202,7 @@
         }
 
         // Ocultar el campo factor de contracción si el material no es de los especificados
-        const materialesConFactor = ["3d", "Sagemax", "Stc", "Shtc", "Shtm", "HtwOpaco", "Aizir"];
+        const materialesConFactor = ["3d", "Sagemax", "Stc", "Shtc", "Shtm", "HtwOpaco", "Aizir", "Vezneer"];
         if (materialesConFactor.includes(tipoMaterial)) {
             factorContraccionField.style.display = 'block';
         } else {
@@ -267,7 +269,7 @@
         }
 
         // Lista de materiales que requieren factor de contracción
-        const materialesConFactor = ["3d", "Sagemax", "Stc", "Shtc", "Shtm", "HtwOpaco", "Aizir"];
+        const materialesConFactor = ["3d", "Sagemax", "Stc", "Shtc", "Shtm", "HtwOpaco", "Aizir", "Vezneer"];
 
         // Asignar "-" al factor de contracción si el material NO requiere este campo
         if (!materialesConFactor.includes(tipoMaterial)) {

@@ -22,5 +22,6 @@ module.exports = {
     "HtwOpaco": [17],
     "Aizir": [18],
     "Peek": [19],
-    "Wax": [20]
+    "Wax": [20],
+    "Vezneer": [21]
 };

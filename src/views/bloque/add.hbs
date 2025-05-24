@@ -30,6 +30,7 @@
                                 <option value="Aizir">Aizir</option>
                                 <option value="Peek">Peek</option>
                                 <option value="Wax">Wax</option>
+                                <option value="Vezneer">Vezneer</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -212,7 +213,7 @@
         const factorContraccionField = document.querySelector('[name="factor_contraccion"]').closest('.form-group');
         const factorContraccionInput = document.querySelector('[name="factor_contraccion"]');
 
-        if (["3d", "Sagemax", "Stc", "Shtc", "Shtm", "HtwOpaco", "Aizir"].includes(tipo_material)) {
+        if (["3d", "Sagemax", "Stc", "Shtc", "Shtm", "HtwOpaco", "Aizir", "Vezneer"].includes(tipo_material)) {
             factorContraccionField.style.display = 'block'; // Mostrar el campo
         } else {
             factorContraccionField.style.display = 'none'; // Ocultar el campo
