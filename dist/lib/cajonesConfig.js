@@ -1,5 +1,5 @@
 module.exports = {
-    "3d": {
+    "3D": {
         "8": [1],
         "10": [1],
         "12": [2, 3],   // Usa el cajón 2 y 3
@@ -10,18 +10,18 @@ module.exports = {
         "22": [7],
         "25": [7]
     },
-    "Sagemax": [8],
-    "Stc": [9],
-    "Shtc": [10],
-    "Shtm": [11],
-    "CrCo": [12],
-    "Titan": [13],
-    "Pmma": [14],
-    "ShofuHc": [15],
-    "PmmaMl": [16],
-    "HtwOpaco": [17],
-    "Aizir": [18],
-    "Peek": [19],
-    "Wax": [20],
-    "Vezneer": [21]
+    "SAGEMAX": [8],
+    "STC": [9],
+    "SHTC": [10],
+    "SHTM": [11],
+    "CRCO": [12],
+    "TITAN": [13],
+    "PMMA": [14],
+    "SHOFUHC": [15],
+    "PMMAML": [16],
+    "HTMOPACO": [17],
+    "AIZIR": [18],
+    "PEEK": [19],
+    "WAX": [20],
+    "VEZNEER": [21]
 };

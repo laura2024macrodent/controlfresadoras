@@ -7,7 +7,7 @@ const MAX_COLUMNAS = 3;
 async function obtenerUbicacionDisponible(material, altura) {
     let cajonesAsignados = [];
 
-    if (material === "3d") {
+    if (material === "3D") {
         const cajon = cajonesConfig[material][altura];
         if (!cajon) throw new Error(`No hay cajón asignado para 3d altura ${altura}`);
         cajonesAsignados = cajon;  // Para 3D altura puede haber múltiples cajones
