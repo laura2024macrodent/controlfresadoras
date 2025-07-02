@@ -33,8 +33,8 @@
                                     SHOFUHC</option>
                                 <option value="PMMAML" {{#if (eq bloque.tipo_material "PMMAML" )}}selected{{/if}}>PMMA
                                     ML</option>
-                                <option value="HTWOPACO" {{#if (eq bloque.tipo_material "HTWOPACO" )}}selected{{/if}}>
-                                    HTWOPACO</option>
+                                <option value="HTW" {{#if (eq bloque.tipo_material "HTW" )}}selected{{/if}}>
+                                    HTW</option>
                                 <option value="AIZIR" {{#if (eq bloque.tipo_material "AIZIR" )}}selected{{/if}}>AIZIR
                                 </option>
                                 <option value="PEEK" {{#if (eq bloque.tipo_material "PEEK" )}}selected{{/if}}>PEEK
@@ -152,7 +152,7 @@
     ];
 
     const coloresAleatorios = [
-        "ROJO", "AZUL", "VERDE", "AMARILLO", "NEGRO", "BLANCO", "ROSA", "MORADO", "NARANJA", "GRIS",
+        "ROJO", "AZUL", "VERDE", "AMARILLO", "NEGRO", "ROJIZO", "ROSA", "MORADO", "NARANJA", "GRIS",
         "TURQUESA", "VIOLETA", "FUCSIA", "MARRON", "BEIGE", "CELESTE", "CORAL", "LAVANDA", "LILA",
         "AQUA", "INDIGO", "ORO", "PLATA", "BRONCE", "VERDEOLIVA", "VERDELIMA", "VERDEBOSQUE",
         "VERDEPASTO", "AZULMARINO", "AZULCLARO", "AZULTURQUESA", "AMARILLOPASTEL", "NARANJAPASTEL",
@@ -203,7 +203,7 @@
         }
 
         // Ocultar el campo factor de contracción si el material no es de los especificados
-        const materialesConFactor = ["3D", "SAGEMAX", "STC", "SHTC", "SHTM", "HTWOPACO", "AIZIR", "VEZNEER"];
+        const materialesConFactor = ["3D", "SAGEMAX", "STC", "SHTC", "SHTM", "HTW", "AIZIR", "VEZNEER"];
         if (materialesConFactor.includes(tipoMaterial)) {
             factorContraccionField.style.display = 'block';
         } else {
@@ -269,7 +269,7 @@
         }
 
         // Lista de materiales que requieren factor de contracción
-        const materialesConFactor = ["3D", "SAGEMAX", "STC", "SHTC", "SHTM", "HTWOPACO", "AIZIR", "VEZNEER"];
+        const materialesConFactor = ["3D", "SAGEMAX", "STC", "SHTC", "SHTM", "HTW", "AIZIR", "VEZNEER"];
 
         // Asignar "-" al factor de contracción si el material NO requiere este campo
         if (!materialesConFactor.includes(tipoMaterial)) {

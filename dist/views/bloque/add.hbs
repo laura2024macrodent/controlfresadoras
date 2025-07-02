@@ -26,7 +26,7 @@
                                 <option value="PMMA">PMMA</option>
                                 <option value="SHOFUHC">SHOFUHC</option>
                                 <option value="PMMAML">PMMAML</option>
-                                <option value="HTWOPACO">HTWOPACO</option>
+                                <option value="HTW">HTW</option>
                                 <option value="AIZIR">AIZIR</option>
                                 <option value="PEEK">PEEK</option>
                                 <option value="WAX">WAX</option>
@@ -213,7 +213,7 @@
         const factorContraccionField = document.querySelector('[name="factor_contraccion"]').closest('.form-group');
         const factorContraccionInput = document.querySelector('[name="factor_contraccion"]');
 
-        if (["3D", "SAGEMAX", "STC", "SHTC", "SHTM", "HTWOPACO", "AIZIR", "VEZNEER"].includes(tipo_material)) {
+        if (["3D", "SAGEMAX", "STC", "SHTC", "SHTM", "HTW", "AIZIR", "VEZNEER"].includes(tipo_material)) {
             factorContraccionField.style.display = 'block'; // Mostrar el campo
         } else {
             factorContraccionField.style.display = 'none'; // Ocultar el campo
