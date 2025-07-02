@@ -42,3 +42,15 @@ body::before {
     margin: 0;
     padding: 0;
 }
+
+.custom-padding {
+    padding-inline: 8% !important;
+    padding-block: 2% !important;
+
+}
+
+.table td,
+.table th {
+  text-align: center;      /* Centro horizontal */
+  vertical-align: middle;  /* Centro vertical */
+}

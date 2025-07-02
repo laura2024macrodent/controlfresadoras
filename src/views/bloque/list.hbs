@@ -1,4 +1,4 @@
-<div class="container p-4 mt-2">
+<div class="container-fluid custom-padding">
     <div class="row">
         {{#if bloque.length}}
         <!-- Botón para Descargar Excel y agregar dato -->
@@ -126,14 +126,14 @@
                                 <!-- Botones activos -->
                                 <a class="btn btn-warning btn-sm" href="/bloque/edit/{{this.id_bloque}}"><i
                                         class="fas fa-edit"></i></a>
-                                <hr>
+                                <span style="border-left: 1px solid #ccc; height: 20px; display: inline-block; margin: 0 8px;"></span>
                                 <a class="btn btn-danger btn-sm" href="/bloque/delete/{{this.id_bloque}}"><i
                                         class="fas fa-trash-alt"></i></a>
                                 {{else}}
                                 <!-- Botones deshabilitados en estado Finalizado -->
                                 <button class="btn btn-secondary btn-sm" disabled title="Bloque finalizado"><i
                                         class="fas fa-edit"></i></button>
-                                <hr>
+                                <span style="border-left: 1px solid #ccc; height: 20px; display: inline-block; margin: 0 8px;"></span>
                                 <button class="btn btn-secondary btn-sm" disabled title="Bloque finalizado"><i
                                         class="fas fa-trash-alt"></i></button>
                                 {{/if}}
