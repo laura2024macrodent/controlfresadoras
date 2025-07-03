@@ -19,7 +19,7 @@ module.exports = {
     "PMMA": [14],
     "SHOFUHC": [15],
     "PMMAML": [16],
-    "HTMOPACO": [17],
+    "HTW": [17],
     "AIZIR": [18],
     "PEEK": [19],
     "WAX": [20],
