@@ -94,11 +94,11 @@
                     <tbody id="tablaBloques">
                         {{#each bloque}}
                         <tr class="fila-bloque">
-                            <td class="text-nowrap" style="white-space: normal;">{{this.nombre}}</td>
-                            <td class="text-center">{{this.factor_contraccion}}</td>
-                            <td class="text-center">{{this.codigo_barras}}</td>
-                            <td class="text-center">{{this.cantidad}}</td>
-                            <td class="text-center">
+                            <td class="text-nowrap" style="white-space: normal; text-align: center; vertical-align: middle;">{{this.nombre}}</td>
+                            <td class="text-center" style="white-space: normal; text-align: center; vertical-align: middle;">{{this.factor_contraccion}}</td>
+                            <td class="text-center" style="white-space: normal; text-align: center; vertical-align: middle;">{{this.codigo_barras}}</td>
+                            <td class="text-center" style="white-space: normal; text-align: center; vertical-align: middle;">{{this.cantidad}}</td>
+                            <td class="text-center" style="white-space: normal; text-align: center; vertical-align: middle;">
                                 <form action="/bloque/update" method="POST" id="estado-form-{{this.id_bloque}}">
                                     <input type="hidden" name="id_bloque" value="{{this.id_bloque}}">
                                     <select name="estado" class="form-control form-control-sm 
@@ -109,19 +109,19 @@
                                     </select>
                                 </form>
                             </td>
-                            <td>{{this.color}}</td>
-                            <td>{{this.tamano}}</td>
-                            <td>{{this.tipo_material}}</td>
-                            <td>{{formatFecha this.fecha_creacion}} / {{formatHora this.fecha_creacion}}</td>
-                            <td>{{#if this.fecha_finalizacion}}
+                            <td style="white-space: normal; text-align: center; vertical-align: middle;">{{this.color}}</td>
+                            <td style="white-space: normal; text-align: center; vertical-align: middle;">{{this.tamano}}</td>
+                            <td style="white-space: normal; text-align: center; vertical-align: middle;">{{this.tipo_material}}</td>
+                            <td style="white-space: normal; text-align: center; vertical-align: middle;">{{formatFecha this.fecha_creacion}} / {{formatHora this.fecha_creacion}}</td>
+                            <td style="white-space: normal; text-align: center; vertical-align: middle;">{{#if this.fecha_finalizacion}}
                                 {{formatFecha this.fecha_finalizacion}} / {{formatHora this.fecha_finalizacion}}
                                 {{else}}
                                 <span class="text-muted">...</span> <!-- O deja vacío si prefieres -->
                                 {{/if}}
                             </td>
 
-                            <td>{{this.operario_fullname}}</td>
-                            <td>
+                            <td style="white-space: normal; text-align: center; vertical-align: middle;">{{this.operario_fullname}}</td>
+                            <td style="white-space: normal; text-align: center; vertical-align: middle;">
                                 {{#if this.estado}}
                                 <!-- Botones activos -->
                                 <a class="btn btn-warning btn-sm" href="/bloque/edit/{{this.id_bloque}}"><i

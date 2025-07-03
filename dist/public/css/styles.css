@@ -49,12 +49,6 @@ body::before {
 
 }
 
-.table td,
-.table th {
-  text-align: center;      /* Centro horizontal */
-  vertical-align: middle;  /* Centro vertical */
-}
-
 /* numeros de cantidad de paginas */
 .pagination {
   flex-wrap: wrap;
