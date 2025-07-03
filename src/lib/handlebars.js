@@ -11,6 +11,7 @@ helpers.formatFecha = (fecha) => {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
+        timeZone: 'America/Bogota'
     });  // Ejemplo: 13 de noviembre de 2024
 };
 
@@ -23,7 +24,8 @@ helpers.formatHora = (fecha) => {
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
-        hour12: true
+        hour12: true,
+        timeZone: 'America/Bogota'
     });
 };
 
