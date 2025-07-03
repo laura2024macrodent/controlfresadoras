@@ -22,7 +22,7 @@ async function obtenerUbicacionDisponible(material, altura) {
         for (let columna = 1; columna <= MAX_COLUMNAS; columna++) {
             for (let fila = 1; fila <= MAX_FILAS; fila++) {
                 console.log(`Revisando: Cajón ${cajon}, Fila ${fila}, Columna ${columna}`);  // Log para cada ubicación
-                const [resultados] = await pool.query(`
+                const resultados = await pool.query(`
                     SELECT id_ubicacion FROM ubicacion_bloque
                     WHERE cajon = ? AND fila = ? AND columna = ?
                 `, [cajon, fila, columna]);
