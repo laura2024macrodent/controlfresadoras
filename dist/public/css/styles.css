@@ -54,3 +54,10 @@ body::before {
   text-align: center;      /* Centro horizontal */
   vertical-align: middle;  /* Centro vertical */
 }
+
+/* numeros de cantidad de paginas */
+.pagination {
+  flex-wrap: wrap;
+  justify-content: center; /* opcional: centra las filas */
+  gap: 4px; /* separa un poco los botones */
+}
