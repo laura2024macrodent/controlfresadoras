@@ -61,7 +61,7 @@
                             <input type="text" value="{{bloque.cantidad}}" class="form-control" name="cantidad"
                                 placeholder="Lote" readonly>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="color-vita-group">
                             <label for="">Color (VITA Clásica):</label>
                             <select class="form-control" id="color" name="color" placeholder="Color (VITA Clásica):"
                                 autofocus>
@@ -91,6 +91,17 @@
                                 <option value="WHITE" {{#if (eq bloque.color "WHITE" )}}selected{{/if}}>WHITE</option>
                                 <option value="BLANCOOPACO" {{#if (eq bloque.color "BLANCOOPACO" )}}selected{{/if}}>
                                     BLANCOOPACO</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="color-peek-group">
+                            <label for="">Color PEEK:</label>
+                            <select class="form-control" name="color_peek" placeholder="Color PEEK">
+                                <option value="WHITE" {{#if (eq bloque.color "WHITE" )}}selected{{/if}}>WHITE</option>
+                                <option value="PINK" {{#if (eq bloque.color "PINK" )}}selected{{/if}}>PINK</option>
+                                <option value="YELLOW" {{#if (eq bloque.color "YELLOW" )}}selected{{/if}}>YELLOW
+                                </option>
+                                <option value="NATURALBEIGE" {{#if (eq bloque.color "NATURALBEIGE" )}}selected{{/if}}>
+                                    NATURALBEIGE</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -192,14 +203,20 @@
     // Función para manejar la visibilidad de los campos color y factor de contracción
     function manejarVisibilidadCampos() {
         const tipoMaterial = document.querySelector('[name="tipo_material"]').value;
-        const colorField = document.querySelector('[name="color"]').closest('.form-group');
+        const colorVitaGroup = document.getElementById("color-vita-group");
+        const colorPeekGroup = document.getElementById("color-peek-group");
         const factorContraccionField = document.querySelector('[name="factor_contraccion"]').closest('.form-group');
 
-        // Ocultar el campo color si el material es CR CB o TITAN
-        if (tipoMaterial === "CRCO" || tipoMaterial === "TITAN" || tipoMaterial === 'PEEK' || tipoMaterial === 'WAX') {
-            colorField.style.display = 'none';
+        // Mostrar/Ocultar select de color VITA y color PEEK según material
+        if (tipoMaterial === "PEEK") {
+            colorVitaGroup.style.display = "none";
+            colorPeekGroup.style.display = "block";
+        } else if (tipoMaterial === "CRCO" || tipoMaterial === "TITAN" || tipoMaterial === 'WAX') {
+            colorVitaGroup.style.display = "none";
+            colorPeekGroup.style.display = "none";
         } else {
-            colorField.style.display = 'block';
+            colorVitaGroup.style.display = "block";
+            colorPeekGroup.style.display = "none";
         }
 
         // Ocultar el campo factor de contracción si el material no es de los especificados
@@ -216,7 +233,12 @@
         // Obtener los valores del formulario
         const tipo_material = document.querySelector('[name="tipo_material"]').value.toUpperCase();
         const tamano = document.querySelector('[name="tamano"]').value.toUpperCase();
-        const color = document.querySelector('[name="color"]').value.toUpperCase();
+        let color = '';
+        if (tipo_material === "PEEK") {
+            color = document.querySelector('[name="color_peek"]').value.toUpperCase();
+        } else {
+            color = document.querySelector('[name="color"]').value.toUpperCase();
+        }
         const nombreInput = document.getElementById("nombre");
         const nombreActual = nombreInput.value.trim();
 
@@ -227,14 +249,13 @@
         // Extraer partes existentes
         const fruta = partes[1] || "";
         const colorAleatorio = partes[2] || "";
-        const colorVita = partes.length === 5 ? partes[3] : ""; // si hay color vita
         const altura = partes[partes.length - 1] || "";
 
         // Construir nuevo nombre
         let nuevoNombre = "";
 
-        // Usar color solo si el tipo_material no es CrCo, Titan, Peek o Wax
-        if (["CRCO", "TITAN", "PEEK", "WAX"].includes(tipo_material)) {
+        // Usar color solo si el tipo_material no es CrCo, Titan o Wax
+        if (["CRCO", "TITAN", "WAX"].includes(tipo_material)) {
             nuevoNombre = `${tipo_material} ${fruta} ${colorAleatorio} H${tamano}`;
         } else {
             nuevoNombre = `${tipo_material} ${fruta} ${colorAleatorio} ${color} H${tamano}`;
@@ -255,6 +276,7 @@
         });
 
         document.querySelector('[name="color"]').addEventListener("input", generarNombreBloqueEditar);
+        document.querySelector('[name="color_peek"]').addEventListener("input", generarNombreBloqueEditar);
         document.querySelector('[name="tamano"]').addEventListener("input", generarNombreBloqueEditar);
     });
 
@@ -263,9 +285,15 @@
     form.addEventListener('submit', (e) => {
         const tipoMaterial = document.querySelector('[name="tipo_material"]').value;
         const colorField = document.querySelector('[name="color"]');
+        const colorPeekField = document.querySelector('[name="color_peek"]');
+        const factorContraccionField = document.querySelector('[name="factor_contraccion"]');
 
-        if (tipoMaterial === 'TITAN' || tipoMaterial === 'CRCO' || tipoMaterial === 'PEEK' || tipoMaterial === 'WAX') {
-            colorField.value = '-'; // Asigna un valor alternativo en lugar de NULL
+        if (tipoMaterial === 'TITAN' || tipoMaterial === 'CRCO' || tipoMaterial === 'WAX') {
+            colorField.value = '-';
+        }
+        if (tipoMaterial === "PEEK") {
+            // Usa el valor de color_peek para enviar en color
+            colorField.value = colorPeekField.value;
         }
 
         // Lista de materiales que requieren factor de contracción

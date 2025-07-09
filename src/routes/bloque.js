@@ -153,12 +153,21 @@ router.get('/edit/:id_bloque', isLoggedIn, async (req, res) => {
 
 router.post('/edit/:id_bloque', isLoggedIn, async (req, res) => {
     const { id_bloque } = req.params;
-    const { nombre, factor_contraccion, codigo_barras, cantidad, color, tamano, tipo_material, id_operario } = req.body;
+    const { nombre, factor_contraccion, codigo_barras, cantidad, color, color_peek, tamano, tipo_material, id_operario } = req.body;
     const usuario = req.user;
 
     // Validación para evitar que 'color' sea NULL
     const FactorFinal = (!factor_contraccion || factor_contraccion.trim() === "") ? '-' : factor_contraccion.trim();
-    const colorFinal = color ? color : '-'; // Asigna '-' si color está vacío o es null
+    let colorFinal = '-'; // Asigna '-' si color está vacío o es null
+
+    if (tipo_material === 'PEEK') {
+        colorFinal = color_peek || '-';
+    } else if (tipo_material === 'TITAN' || tipo_material === 'CRCO' || tipo_material === 'WAX') {
+        colorFinal = '-';
+    } else {
+        colorFinal = color || '-';
+    }
+
     const newBloque = {
         nombre,
         factor_contraccion: FactorFinal,
@@ -181,8 +190,8 @@ router.post('/edit/:id_bloque', isLoggedIn, async (req, res) => {
             mensaje += `- cambiando el tamaño de "${bloque.tamano}" a "${tamano}"`;
             cambiosDetectados = true;
         }
-        if (color && color != bloque.color) {
-            mensaje += ` - cambiando el color de "${bloque.color}" a "${color}"`;
+        if (colorFinal && colorFinal != bloque.color) {
+            mensaje += ` - cambiando el color de "${bloque.color}" a "${colorFinal}"`;
             cambiosDetectados = true;
         }
         if (cantidad && cantidad != bloque.cantidad) {
