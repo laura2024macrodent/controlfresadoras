@@ -49,7 +49,7 @@
                                 required>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" id="color-vita-group">
                             <label for="">Color (VITA Clásica):</label>
                             <select class="form-control" name="color" placeholder="Color (VITA Clásica):" autofocus
                                 required>
@@ -78,6 +78,15 @@
                                 <option value="BL4">BL4</option>
                                 <option value="WHITE">WHITE</option>
                                 <option value="BLANCOOPACO">BLANCOOPACO</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="color-peek-group" style="display: none;">
+                            <label for="">Color PEEK:</label>
+                            <select class="form-control" name="color_peek" placeholder="Color PEEK">
+                                <option value="WHITE">WHITE</option>
+                                <option value="PINK">PINK</option>
+                                <option value="YELLOW">YELLOW</option>
+                                <option value="NATURAL/BEIGE">NATURAL/BEIGE</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -180,7 +189,8 @@
     // Función para generar un nombre aleatorio para el bloque
     function generarNombreBloque() {
         const tipo_material = document.querySelector('[name="tipo_material"]').value;  // Tipo de material seleccionado
-        const color = document.querySelector('[name="color"]').value;  // Color VITA seleccionado
+        const colorVita = document.querySelector('[name="color"]').value;
+        const colorPeek = document.querySelector('[name="color_peek"]').value;
         const tamano = document.querySelector('[name="tamano"]').value;  // Tamaño seleccionado
 
         // Selección aleatoria de una fruta y un color
@@ -188,26 +198,35 @@
         const colorAleatorio = coloresAleatorios[Math.floor(Math.random() * coloresAleatorios.length)];
 
         // Generar el nombre del bloque en el formato: TipoMaterial-Fruta-Color-ColorVita-HTamaño
-        let nombreBloque = `${tipo_material} ${frutaAleatoria} ${colorAleatorio} ${color} H${tamano}`;
+        let nombreBloque = `${tipo_material} ${frutaAleatoria} ${colorAleatorio} ${colorVita} H${tamano}`;
 
-        // Si el tipo de material es TITAN o CR CO, no incluir color
-        if (tipo_material === 'TITAN' || tipo_material === 'CRCO' || tipo_material === 'PEEK' || tipo_material === 'WAX') {
+        // Referencias a los selects
+        const colorVitaGroup = document.querySelector('[name="color"]').closest('.form-group');
+        const colorPeekGroup = document.getElementById('color-peek-group');
+
+        // Mostrar u ocultar selects de color
+        if (tipo_material === 'PEEK') {
+            colorVitaGroup.style.display = 'none';
+            colorPeekGroup.style.display = 'block';
+        } else if (["TITAN", "CRCO", "WAX"].includes(tipo_material)) {
+            colorVitaGroup.style.display = 'none';
+            colorPeekGroup.style.display = 'none';
+        } else {
+            colorVitaGroup.style.display = 'block';
+            colorPeekGroup.style.display = 'none';
+        }
+
+        // Construir nombre
+        if (tipo_material === 'PEEK') {
+            nombreBloque = `${tipo_material} ${frutaAleatoria} ${colorAleatorio} ${colorPeek} H${tamano}`;
+        } else if (tipo_material === 'TITAN' || tipo_material === 'CRCO' || tipo_material === 'WAX') {
             nombreBloque = `${tipo_material} ${frutaAleatoria} ${colorAleatorio} H${tamano}`;
         } else {
-            nombreBloque = `${tipo_material} ${frutaAleatoria} ${colorAleatorio} ${color} H${tamano}`;
+            nombreBloque = `${tipo_material} ${frutaAleatoria} ${colorAleatorio} ${colorVita} H${tamano}`;
         }
 
         // Colocar el nombre generado en el campo de texto
         document.getElementById("nombre").value = nombreBloque;
-
-        // Mostrar u ocultar el campo de color dependiendo del tipo de material
-        const colorField = document.querySelector('[name="color"]').closest('.form-group');
-
-        if (tipo_material === 'TITAN' || tipo_material === 'CRCO' || tipo_material === 'PEEK' || tipo_material === 'WAX') {
-            colorField.style.display = 'none';
-        } else {
-            colorField.style.display = 'block';
-        }
 
         // Ocultar o mostrar el campo de factor de contracción dependiendo del tipo de material
         const factorContraccionField = document.querySelector('[name="factor_contraccion"]').closest('.form-group');
@@ -227,35 +246,35 @@
         generarNombreBloque();
 
         // Establecer eventos para actualizar el nombre cuando se cambian los campos
-        const campos = document.querySelectorAll('[name="tipo_material"], [name="color"], [name="tamano"]');
+        const campos = document.querySelectorAll('[name="tipo_material"], [name="color"], [name="color_peek"], [name="tamano"]');
         campos.forEach(campo => {
             campo.addEventListener("change", generarNombreBloque);
         });
 
         // Manejar el envío del formulario
         const form = document.querySelector("form");
-        form.addEventListener("submit", function (event) {
+        form.addEventListener("submit", function (e) {
             const tipo_material = document.querySelector('[name="tipo_material"]').value;
-            const colorField = document.querySelector('[name="color"]');
+            const colorVita = document.querySelector('[name="color"]');
+            const colorPeek = document.querySelector('[name="color_peek"]');
 
             //numeroIncremental++;  // Aumentar solo al guardar
             //localStorage.setItem("numeroIncremental", numeroIncremental);
 
-            // Si el material es Titan o CrCo, establecer el valor del color a 'sin color'
-            if (tipo_material === 'TITAN' || tipo_material === 'CRCO' || tipo_material === 'PEEK' || tipo_material === 'WAX') {
-                colorField.value = 'sin color'; // Asignar 'sin color' si es Titan o CrCo
+            if (tipo_material === 'PEEK') {
+                colorVita.value = colorPeek.value;
+            } else if (["TITAN", "CRCO", "WAX"].includes(tipo_material)) {
+                colorVita.value = 'sin color';
             }
-
-            // Si el valor de color es null o vacío, asignar 'sin color'
-            if (!colorField.value) {
-                colorField.value = 'sin color';
+            if (!colorVita.value) {
+                colorVita.value = 'sin color';
             }
 
             // const factorContraccion = document.getElementById("factor_contraccion").value;
             // alert("Factor de contracción: " + factorContraccion);
 
             // Verificar que el valor de color se cambió correctamente a 'sin color'
-            console.log('Valor de color antes de enviar:', colorField.value); // Para depuración, puedes verificar el valor aquí
+            console.log('Valor de color antes de enviar:', colorVita.value); // Para depuración, puedes verificar el valor aquí
             e.preventDefault();
         });
 
