@@ -86,7 +86,7 @@
                                 <option value="WHITE">WHITE</option>
                                 <option value="PINK">PINK</option>
                                 <option value="YELLOW">YELLOW</option>
-                                <option value="NATURAL/BEIGE">NATURAL/BEIGE</option>
+                                <option value="NATURALBEIGE">NATURALBEIGE</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -264,10 +264,10 @@
             if (tipo_material === 'PEEK') {
                 colorVita.value = colorPeek.value;
             } else if (["TITAN", "CRCO", "WAX"].includes(tipo_material)) {
-                colorVita.value = 'sin color';
+                colorVita.value = '-';
             }
             if (!colorVita.value) {
-                colorVita.value = 'sin color';
+                colorVita.value = '-';
             }
 
             // const factorContraccion = document.getElementById("factor_contraccion").value;

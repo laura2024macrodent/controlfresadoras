@@ -18,12 +18,20 @@ router.get('/add', isLoggedIn, async (req, res) => {
 });
 
 router.post('/add', isLoggedIn, async (req, res) => {
-    const { nombre, factor_contraccion, codigo_barras, cantidad, color, tamano, tipo_material, id_operario } = req.body;
+    const { nombre, factor_contraccion, codigo_barras, cantidad, color, color_peek, tamano, tipo_material, id_operario } = req.body;
     const usuario = req.user;
 
     // Aseguramos que 'color' nunca sea NULL
     const FactorFinal = (!factor_contraccion || factor_contraccion.trim() === "") ? '-' : factor_contraccion.trim();
-    const colorValue = color ? color : '-'; // Si 'color' está vacío o es NULL, asignamos '-'
+    // ✅ Color depende del tipo de material
+    let colorValue;
+    if (tipo_material === 'PEEK') {
+        colorValue = color_peek ? color_peek : '-';
+    } else if (["TITAN", "CRCO", "WAX"].includes(tipo_material)) {
+        colorValue = '-';
+    } else {
+        colorValue = color ? color : '-';
+    }
 
     const newBloque = {
         nombre,
@@ -48,7 +56,7 @@ router.post('/add', isLoggedIn, async (req, res) => {
 
         // Insertar la ubicación en la tabla 'ubicacion_bloque'
         // await pool.query('INSERT INTO ubicacion_bloque (id_bloque, cajon, fila, columna, id_operario) VALUES (?, ?, ?, ?, ?)',
-            // [id_bloque, ubicacion.cajon, ubicacion.fila, ubicacion.columna, id_operario]);
+        // [id_bloque, ubicacion.cajon, ubicacion.fila, ubicacion.columna, id_operario]);
 
         // Crear el mensaje de historial para el nuevo bloque
         const mensaje = `${usuario.fullname} agregó el bloque ${nombre}`;
@@ -351,7 +359,7 @@ router.get('/historial', isLoggedIn, async (req, res) => {
 });
 
 router.get('/location', isLoggedIn, async (req, res) => {
-        const ubicaciones = await pool.query(`
+    const ubicaciones = await pool.query(`
             SELECT 
                 u.*, 
                 b.nombre, 
@@ -366,7 +374,7 @@ router.get('/location', isLoggedIn, async (req, res) => {
             WHERE u.activo = 1
             ORDER BY u.fecha_movimiento DESC
         `);
-        res.render('bloque/location', { ubicaciones });
+    res.render('bloque/location', { ubicaciones });
 });
 
 // Ruta para obtener ubicación libre
